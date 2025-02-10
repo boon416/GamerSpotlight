@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamerSpotlight</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="navbar">
+            <div class="logo"><a href="#">GamerSpotlight</a></div>
+            
+            <ul class="nav-list">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Tournaments</a></li>
+                <li><a href="#">Videos</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Store</a></li>
+            </ul>
+            <a href="#" class="action_btn">Join Member</a>
+            <div class="toggle_btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+        <div class="dropdown_menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Tournaments</a></li>
+            <li><a href="#">Videos</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">Store</a></li>
+            <li><a href="#" class="action_btn">Join Member</a></li>
+        </div>
+
+                <!-- Hero Section -->
+                <section id="hero">
+                        <h1>Welcome to the GamerSpotlight</h1>
+                        <p>Compete, watch, and connect with gamers worldwide.</p>
+                        <a href="register.html" class="btn">Join Now</a>
+                    </div>
+                </section>
+    </header>
+
+    <script>
+        const toggleBtn = document.querySelector('.toggle_btn')
+        const toggleBtnIcon = document.querySelector('.toggle_btn i')
+        const dropDownMenu = document.querySelector('.dropdown_menu')
+
+        toggleBtn.onclick = function () {
+            dropDownMenu.classList.toggle('open')
+            const isOpen = dropDownMenu.classList.contains('open')
+
+            toggleBtnIcon.classList = isOpen
+                ? 'fa-solid fa-xmark'
+                : 'fa-solid fa-bars'
+        }
+
+
+
+        
+    </script>
+
+</body>

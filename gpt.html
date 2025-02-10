@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eSports Hub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+
+        header {
+            background-color: #070720;
+            position: relative;
+            padding: 0 2rem;
+        }
+
+        .navbar {
+            background-color: #070720;
+            width: 100%;
+            height: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar .logo a {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navbar .nav-list {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .navbar .toggle_btn {
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        .action_btn {
+            background-color: red;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border: none;
+            outline: none;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .action_btn:hover {
+            scale: 1.05;
+            color: #000000;
+        }
+
+        .action_btn:active {
+            scale: 0.95;
+        }
+
+        /* DROP DOWN */
+        .dropdown_menu {
+            position: absolute;
+            right: 2rem;
+            top: 60px;
+            width: 300px;
+            height: 0px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 999; /* Ensure it appears above the hero section */
+        }
+
+        .dropdown_menu.open {
+            height: 250px;
+        }
+
+        .dropdown_menu li {
+            padding: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dropdown_menu .action_btn {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            max-width: 100%;
+            height: 80vh;
+        }
+
+        .slider {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            animation: slide 12s infinite;
+        }
+
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            33% { transform: translateX(-100%); }
+            66% { transform: translateX(-200%); }
+            100% { transform: translateX(0); }
+        }
+
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            margin: 0;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+        }
+
+        .hero-text .action_btn {
+            margin-top: 1rem;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 992px) {
+            .navbar .nav-list,
+            .navbar .action_btn {
+                display: none;
+            }
+
+            .navbar .toggle_btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .dropdown_menu {
+                left: 2rem;
+                width: unset;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+            }
+        }
+
+        footer {
+            background-color: #111;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo"><a href="#">GamerSpotlight</a></div>
+            
+            <ul class="nav-list">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Tournaments</a></li>
+                <li><a href="#">Videos</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Store</a></li>
+            </ul>
+            <a href="#" class="action_btn">Join Member</a>
+            <div class="toggle_btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+        <div class="dropdown_menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Tournaments</a></li>
+            <li><a href="#">Videos</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">Store</a></li>
+            <li><a href="#" class="action_btn">Join Member</a></li>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="slider">
+            <img src="./img/hero/hero-1.jpg" alt="Slide 1">
+            <img src="./img/hero/hero-2.jpg" alt="Slide 2">
+            <img src="./img/hero/hero-3.jpg" alt="Slide 3">
+        </div>
+        <div class="hero-text">
+            <h1>Welcome to GamerSpotlight</h1>
+            <p>Your ultimate destination for esports action!</p>
+            <a href="#" class="action_btn">Get Started</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 eSports Hub. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const toggleBtn = document.querySelector('.toggle_btn');
+        const toggleBtnIcon = document.querySelector('.toggle_btn i');
+        const dropDownMenu = document.querySelector('.dropdown_menu');
+
+        toggleBtn.onclick = function () {
+            dropDownMenu.classList.toggle('open');
+            const isOpen = dropDownMenu.classList.contains('open');
+
+            toggleBtnIcon.classList = isOpen
+                ? 'fa-solid fa-xmark'
+                : 'fa-solid fa-bars';
+        };
+    </script>
+</body>
+</html>

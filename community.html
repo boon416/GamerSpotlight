@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamerSpotlight</title>
+    <link rel="stylesheet" href="./css/main copy.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="navbar">
+            <div class="logo"><a href="./Testing.html">GamerSpotlight</a></div>
+            <ul class="nav-list">
+                <li><a href="./Testing.html">Home</a></li>
+                <li><a href="tournament.html">Tournaments</a></li>
+                <li><a href="./video.html">Videos</a></li>
+                <li><a href="./community.html">Community</a></li>
+                <li><a href="./store.html">Store</a></li>
+            </ul>
+            <a href="./login.html" class="action_btn">Join Member</a>
+            <div class="toggle_btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+        <div class="dropdown_menu">
+            <li><a href="./Testing.html">Home</a></li>
+            <li><a href="./tournament.html">Tournaments</a></li>
+            <li><a href="./video.html">Videos</a></li>
+            <li><a href="./community.html">Community</a></li>
+            <li><a href="./store.html">Store</a></li>
+            <li><a href="./login.html" class="action_btn">Join Member</a></li>
+        </div>
+    </header>
+    
+    <section class="user-info">
+        <h2>User Information</h2>
+        <div class="info-card">
+            <p><strong>User ID:</strong> <span id="user-id">Loading...</span></p>
+            <p><strong>Balance:</strong> $<span id="user-balance">0.00</span></p>
+        </div>
+    </section>
+    <script>
+        // Simulating user data retrieval
+        document.addEventListener("DOMContentLoaded", () => {
+            const userId = "USER_123";
+            const balance = "150.75";
+            document.getElementById("user-id").textContent = userId;
+            document.getElementById("user-balance").textContent = balance;
+        });
+    </script>
+
+    <section class="community-content">
+        <h2>Community Updates</h2>
+        <p>Latest discussions and announcements will appear here.</p>
+    </section>
+
+
+    <!-- Community Section -->
+    <section class="community">
+        <div class="post-box">
+            <img src="./img/" alt="User" class="avatar">
+            <textarea placeholder="What's on your mind?"></textarea>
+            <div class="post-actions">
+                <input type="file" id="media-upload" accept="image/*,video/*">
+                <label for="media-upload"><i class="fa-solid fa-image"></i> Photo/Video</label>
+                <button class="post-btn">Post</button>
+            </div>
+        </div>
+        
+        <div class="feed">
+            <div class="post">
+                <div class="post-header">
+                    <img src="./img/hero/hero-faker1.jpg" alt="User" class="avatar">
+                    <div class="post-user">
+                        <h4>John Doe</h4>
+                        <p>2 hours ago</p>
+                    </div>
+                </div>
+                <p>Check out this amazing gaming moment! 🎮🔥</p>
+                <img src="./img/game-screenshot.jpg" alt="Post Image" class="post-media">
+                <div class="post-actions">
+                    <button><i class="fa-solid fa-thumbs-up"></i> Like</button>
+                    <button><i class="fa-solid fa-comment"></i> Comment</button>
+                    <button><i class="fa-solid fa-share"></i> Share</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>GamerSpotlight</h2>
+            </div>
+            <div class="footer-links">
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-socials">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 GamerSpotlight. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const toggleBtn = document.querySelector('.toggle_btn')
+        const toggleBtnIcon = document.querySelector('.toggle_btn i')
+        const dropDownMenu = document.querySelector('.dropdown_menu')
+
+        toggleBtn.onclick = function () {
+            dropDownMenu.classList.toggle('open')
+            const isOpen = dropDownMenu.classList.contains('open')
+
+            toggleBtnIcon.classList = isOpen
+                ? 'fa-solid fa-xmark'
+                : 'fa-solid fa-bars'
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamerSpotlight</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="navbar">
+            <div class="logo"><a href="#">GamerSpotlight</a></div>
+            
+            <ul class="nav-list">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Tournaments</a></li>
+                <li><a href="#">Videos</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Store</a></li>
+            </ul>
+            <a href="#" class="action_btn">Join Member</a>
+            <div class="toggle_btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+        <div class="dropdown_menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Tournaments</a></li>
+            <li><a href="#">Videos</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">Store</a></li>
+            <li><a href="#" class="action_btn">Join Member</a></li>
+        </div>
+    </header>
+                <!-- Hero Section -->
+                <section id="hero">
+                    <div class="slide active">
+                      <img src="./img/hero/hero-1.jpg" alt="Slide 1">
+                      <div class="slide-content">
+                        <h1>Welcome to Our Website</h1>
+                        <p>Explore amazing features and services.</p>
+                        <a href="#" class="cta-btn">Learn More</a>
+                      </div>
+                    </div>
+                    <div class="slide">
+                      <img src="./img/hero/hero-doublelift.jpg" alt="Slide 2">
+                      <div class="slide-content">
+                        <h1>Grow Your Business</h1>
+                        <p>Innovative solutions for your success.</p>
+                        <a href="#" class="cta-btn">Get Started</a>
+                      </div>
+                    </div>
+                    <div class="slide">
+                      <img src="./img/hero/hero-4.jpg" alt="Slide 3">
+                      <div class="slide-content">
+                        <h1>Join Our Community</h1>
+                        <p>Be part of something great today.</p>
+                        <a href="#" class="cta-btn">Sign Up</a>
+                      </div>
+                    </div>
+                    <div class="slider-controls">
+                      <button class="prev-btn"><i class="fa-solid fa-angles-left"></i></button>
+                      <button class="next-btn"><i class="fa-solid fa-angles-right"></i></button>
+                    </div>
+                  </div>
+                </section>
+                
+                <!-- Trending Section -->
+                <section id="trending">
+                        <div class="trending-section">
+                        <h2>Trending Videos</h2>
+                        <div class="video-grid">
+                            <!-- Example video card -->
+                                <div class="video-card">
+                                    <img src="./img/highlight/highlight-1.jpg" alt="Video Thumbnail">
+                                    <div class="video-info">
+                                        <h3>Video Title 1</h3>
+                                        <p>5M views • 3 days ago</p>
+                                    </div>
+                                </div>
+                                <div class="video-card">
+                                    <img src="./img/trending/trend-1.jpg" alt="Video Thumbnail">
+                                    <div class="video-info">
+                                        <h3>Video Title 2</h3>
+                                        <p>2.5M views • 5 days ago</p>
+                                    </div>
+                                </div>
+                                <div class="video-card">
+                                    <img src="thumbnail2.jpg" alt="Video Thumbnail">
+                                    <div class="video-info">
+                                        <h3>Video Title 2</h3>
+                                        <p>2.5M views • 5 days ago</p>
+                                    </div>
+                                </div>
+                                <div class="video-card">
+                                    <img src="thumbnail2.jpg" alt="Video Thumbnail">
+                                    <div class="video-info">
+                                        <h3>Video Title 2</h3>
+                                        <p>2.5M views • 5 days ago</p>
+                                    </div>
+                                </div>
+                                <div class="video-card">
+                                    <img src="thumbnail2.jpg" alt="Video Thumbnail">
+                                    <div class="video-info">
+                                        <h3>Video Title 2</h3>
+                                        <p>2.5M views • 5 days ago</p>
+                                    </div>
+                                </div>
+                                <div class="video-card">
+                                    <img src="thumbnail2.jpg" alt="Video Thumbnail">
+                                    <div class="video-info">
+                                        <h3>Video Title 2</h3>
+                                        <p>2.5M views • 5 days ago</p>
+                                    </div>
+                                </div>
+                                <div class="video-card">
+                                    <img src="thumbnail2.jpg" alt="Video Thumbnail">
+                                    <div class="video-info">
+                                        <h3>Video Title 2</h3>
+                                        <p>2.5M views • 5 days ago</p>
+                                    </div>
+                                </div>
+                                <div class="video-card">
+                                    <img src="thumbnail2.jpg" alt="Video Thumbnail">
+                                    <div class="video-info">
+                                        <h3>Video Title 2</h3>
+                                        <p>2.5M views • 5 days ago</p>
+                                    </div>
+                                </div>
+                            <!-- Add more video cards as needed -->
+                        </div>
+                </div>
+                  
+
+    
+
+    <script>
+        const toggleBtn = document.querySelector('.toggle_btn')
+        const toggleBtnIcon = document.querySelector('.toggle_btn i')
+        const dropDownMenu = document.querySelector('.dropdown_menu')
+
+        toggleBtn.onclick = function () {
+            dropDownMenu.classList.toggle('open')
+            const isOpen = dropDownMenu.classList.contains('open')
+
+            toggleBtnIcon.classList = isOpen
+                ? 'fa-solid fa-xmark'
+                : 'fa-solid fa-bars'
+        }
+
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+        slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+            if (i === index) {
+            slide.classList.add('active');
+            }
+        });
+        }
+
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+}
+
+function prevSlide() {
+  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+  showSlide(currentSlide);
+}
+
+nextBtn.addEventListener('click', nextSlide);
+prevBtn.addEventListener('click', prevSlide);
+
+// Optional: Auto-slide
+setInterval(nextSlide, 5000);
+
+    </script>
+
+</body>

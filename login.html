@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - GamerSpotlight</title>
+    <link rel="stylesheet" href="./css/main copy.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+        <!-- Header -->
+    <header>
+        <div class="navbar">
+            <div class="logo"><a href="./Testing.html">GamerSpotlight</a></div>
+            
+            <ul class="nav-list">
+                <li><a href="./Testing.html">Home</a></li>
+                <li><a href="./tournament.html">Tournaments</a></li>
+                <li><a href="./video.html">Videos</a></li>
+                <li><a href="./community.html">Community</a></li>
+                <li><a href="./store.html">Store</a></li>
+            </ul>
+            <a href="./login.html" class="action_btn">Join Member</a>
+            <div class="toggle_btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+        <div class="dropdown_menu">
+            <li><a href="./Testing.html">Home</a></li>
+            <li><a href="#">Tournaments</a></li>
+            <li><a href="./video.html">Videos</a></li>
+            <li><a href="./community.html">Community</a></li>
+            <li><a href="./store.html">Store</a></li>
+            <li><a href="./login.html" class="action_btn">Join Member</a></li>
+        </div>
+    </header>
+
+
+    <div class="login-container">
+        <h2>Login to GamerSpotlight</h2>
+        <form action="#" method="POST">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="login-options">
+                <label><input type="checkbox"> Remember Me</label>
+                <a href="#">Forgot Password?</a>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+        <div class="signup-link">
+            <p>New to GamerSpotlight ? <a href="./signin.html">Sign Up</a></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>GamerSpotlight</h2>
+            </div>
+            <div class="footer-links">
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-socials">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 GamerSpotlight. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        const toggleBtn = document.querySelector('.toggle_btn')
+        const toggleBtnIcon = document.querySelector('.toggle_btn i')
+        const dropDownMenu = document.querySelector('.dropdown_menu')
+
+        toggleBtn.onclick = function () {
+            dropDownMenu.classList.toggle('open')
+            const isOpen = dropDownMenu.classList.contains('open')
+
+            toggleBtnIcon.classList = isOpen
+                ? 'fa-solid fa-xmark'
+                : 'fa-solid fa-bars'
+        }
+    </script>
+
+
+
+
+</body>
+</html>
