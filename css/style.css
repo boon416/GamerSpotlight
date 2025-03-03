@@ -1,0 +1,420 @@
+/* import fonrs from google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Play:wght@400;700&family=Silkscreen:wght@400;700&family=Teko:wght@300..700&display=swap');
+
+:root{
+    --light-gray:#2b3032a1;
+    --primary-color:#1d1d1d;
+    --border:#2b303218;
+    --text-color:#ff686b;
+    --orbitron:"Orbitron", serif;
+    --teko:"Teko", serif;
+    --silkscreen:"Silkscreen", serif;
+    --play:"Play", serif;
+}
+
+.primary-color {
+    color: var(--primary-color)
+}
+
+.bg-primary-color {
+    background-color:var(--primary-color) !important;
+}
+
+.text-color {
+    color: var(--text-color);
+}
+
+.font-play {
+    font-family: var(--play);
+}
+
+.silkscreen {
+    font-family: var(--silkscreen);
+}
+
+.lightblue {
+    color: lightblue;
+}
+
+.darkred{
+    color: #6F2232;
+}
+
+body {
+    background: #141414;
+    color: rgb(2, 2, 2);
+}
+
+/* header */
+
+header {
+    background-color: var(--primary-color);
+    font-family: var(--play);
+}
+
+header .site-title {
+    font-family: var(--silkscreen);
+}
+
+.container .dropdown-toggle,
+.container .dropdown-item {
+    font-size: 0.7e,;
+}
+
+.header-links a{
+    font-size: 0.9em;
+    text-decoration: none;
+    color: white;
+}
+.bg-body-tertiary {
+    --bs-bg-opacity: 1;
+    background-color: var(--primary-color) !important;
+}
+
+/* Navigation Menu */
+
+.navbar-nav {
+    padding: 0.8em 0em;
+}
+
+.navbar-nav .nav-link {
+    font-size: 0.9em;
+    color: white !important;
+}
+
+.navbar-nav .nav-item .nav-link {
+    padding: 0 1.3em;
+}
+/* User Navifation */
+.navbar .dropdown-menu {
+    min-width: 200px;
+    text-align: center;
+}
+.navbar .dropdown-menu img {
+    border: 2px solid #ddd;
+}
+.navbar .dropdown-menu a {
+    font-size: 14px;
+}
+
+
+
+/* Slider one */
+/* Default slider styling */
+.site-slider {
+    position: relative;
+    width: 100vw; /* Full width */
+    height: auto; /* Allow height to adjust based on content */
+    overflow: hidden;
+}
+
+/* Ensure images are fully responsive */
+.site-slider img {
+    width: 100%;
+    height: auto; /* Ensure image scales properly */
+    object-fit: cover;
+}
+
+/* Adjust for mobile screens */
+@media (max-width: 768px) {
+    .site-slider {
+        height: auto; /* Let content determine height */
+    }
+
+    .site-slider img {
+        height: auto; /* Scale image properly */
+    }
+}
+
+
+/* Position the button container properly */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Style the navigation buttons */
+.site-slider .slider-btn .prev,
+.site-slider .slider-btn .next {
+    background-color: rgba(0, 0, 0, 0.5); /* Dark background for visibility */
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.3s ease-in-out;
+}
+
+/* Hover effect */
+.site-slider .slider-btn .prev:hover,
+.site-slider .slider-btn .next:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Ensure prev/next buttons are positioned correctly */
+.site-slider .slider-btn .prev {
+    left: 20px;
+}
+
+.site-slider .slider-btn .next {
+    right: 20px;
+}
+
+/* Hide arrows when screen is smaller than 600px */
+@media (max-width: 600px) {
+    .site-slider .slider-btn .prev,
+    .site-slider .slider-btn .next {
+        display: none !important; /* Completely hide the buttons */
+    }
+}
+
+
+/* Slick Dots */
+
+.slick-dots {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    padding: 1rem 0;
+    margin: 0;
+    list-style: none;
+    bottom: 0;
+    justify-content: center;
+}
+
+.slick-dots li{
+    margin:0 0.6rem;
+}
+
+.slick-dots button{
+    font-size: 0;
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
+    padding: 5px;
+    color: white;
+    border-radius: 100%;
+}
+
+.slick-dots li.slick-active button{
+    transform: scale(1.2);
+    color: black; 
+}
+
+/*Sign In*/
+.signin-container {
+
+    background-size: cover;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mb-3, .mb-4, .mt-2, .mt-3{
+    color: white;
+}
+
+/* Hero Video Slider*/
+.SliderHeroVideos{
+    position: relative;
+    width: 100vw; /* Full width of the viewport */
+    max-height: 100vh; /* Full height of the viewport */
+    overflow: hidden; /* Prevents any overflow */
+}
+
+.slider-videos img {
+    width: 100%;
+    height:100%;
+    object-fit: cover; /* Ensures the image fills the space without distortion */
+}
+
+.slider-videos-nav{
+    position: absolute;
+    bottom: 0;
+    width: 100vw; /* Full width of the viewport */
+    max-height: 100vh; /* Full height of the viewport */
+    overflow: hidden; /* Prevents any overflow */
+    padding: 5px;
+}
+
+.slider-videos-nav img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover; /* Ensures the image fills the space without distortion */
+    padding: 5px;
+}
+
+.nav-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+.nav-card:hover {
+    transform: scale(1.05);
+}
+
+/*search bar*/
+.search-bar {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 10px;
+}
+.search-bar::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-icon i {
+    color: white !important; /* Ensures the icon stays white */
+}
+
+/* Video Hero Section*/
+/* Ensure the slider container is positioned correctly */
+.SliderHeroVideos {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Ensure images fit properly */
+.SliderHeroVideos .slider-videos img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Position the navigation buttons */
+.video-slider-btn {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    pointer-events: none; /* Ensures only buttons are clickable */
+}
+
+/* Style the prev/next buttons */
+.video-slider-btn .prev,
+.video-slider-btn .next {
+    background-color: rgba(0, 0, 0, 0.6); /* Dark background for visibility */
+    border: none;
+    padding: 12px 18px;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.3s ease-in-out;
+    pointer-events: auto; /* Allows clicking */
+}
+
+/* Hover effect */
+.video-slider-btn .prev:hover,
+.video-slider-btn .next:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Position prev/next arrows */
+.video-slider-btn .prev {
+    left: 20px;
+}
+
+.video-slider-btn .next {
+    right: 20px;
+}
+
+/* Hide arrows by default and show on hover */
+.video-slider-btn .prev,
+.video-slider-btn .next {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.SliderHeroVideos:hover .video-slider-btn .prev,
+.SliderHeroVideos:hover .video-slider-btn .next {
+    opacity: 1;
+}
+
+/* Mobile fix: Ensure buttons stay in place */
+@media (max-width: 768px) {
+    .video-slider-btn .prev {
+        left: 10px;
+    }
+
+    .video-slider-btn .next {
+        right: 10px;
+    }
+
+    .video-slider-btn .prev,
+    .video-slider-btn .next {
+        padding: 10px 14px; /* Adjust button size for smaller screens */
+        font-size: 1.5rem; /* Smaller icons for better fit */
+    }
+}
+
+
+/* Video title section */
+.title-video{
+    position: relative;
+    width: 100vw; /* Full width of the viewport */
+    height: 35vh; /* Full height of the viewport */
+}
+
+.title-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.title-card:hover {
+    transform: scale(1.05);
+}
+
+/* Position the container holding title and buttons */
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensures space between title and buttons */
+    width: 100%;
+    padding: 0 20px; /* Add spacing on the sides */
+}
+
+/* Style the title */
+.title-container h3 {
+    margin: 0;
+    color: white;
+    font-family: var(--play);
+    
+}
+
+/* Style the button container */
+.title-slider-btn {
+    display: flex;
+    gap: 10px;
+}
+
+/* Style the buttons */
+.title-slider-btn .prev,
+.title-slider-btn .next {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    padding: 8px 12px;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out;
+}
+
+.title-slider-btn .prev:hover,
+.title-slider-btn .next:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* Lighten on hover */
+}
+
