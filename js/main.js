@@ -35,6 +35,19 @@ $(".slider-one")
     ]
 });
 
+/*Store Slider */
+$(".slider-two")
+.not(".slick-initialized") // Fix typo: "slick-intialized" -> "slick-initialized"
+.slick({
+    autoplay: true,
+    prevArrow: ".site-slider-two .prev",
+    nextArrow: ".site-slider-two .next",
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay: 3000
+});
+
+
 
 
 /* Video Hero Slider */
