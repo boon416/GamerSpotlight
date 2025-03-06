@@ -44,7 +44,31 @@ $(".slider-two")
     nextArrow: ".site-slider-two .next",
     slidesToShow: 5,
     slidesToScroll: 1,
-    autoplay: 3000
+    autoplay: 3000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
 });
 
 

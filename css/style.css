@@ -177,7 +177,6 @@ header .site-title {
 
 
 /* Slick Dots */
-
 .slick-dots {
     position: absolute;
     display: flex;
@@ -208,34 +207,116 @@ header .site-title {
     color: black; 
 }
 
-/*Store Slider*/
-.site-slider-two{
+/* Store Slider */
+.site-slider-two {
     position: relative;
-    height: 30%;
+    height: auto;
+    padding: 20px 0;
+    background: #141414;
 }
 
-.site-slider-two .products{
-    height: 25rem;
-    position: relative;
-    overflow: hidden;
+/* Product Card */
+.product-card {
+    width: 18%;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
 }
 
-.site-slider-two .product img{
-    width: 90%;
-    margin: auto;
+.product {
+    background: #212529;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
 }
 
-.site-btn.btn-span{
-    padding: 0.8rem 1.9rem;
-    border-radius: 4rem;
-    border: 1px solid var(--border);
-    background-color: white ;
-    color:var(--light-gray);
+.product:hover {
+    transform: translateY(-5px);
 }
 
-.site-slider-two .slick-tarck .product:hover span{
-    background-color: var(--primary-color);
+.product img {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
 
+/* Product Info */
+.product-info {
+    padding: 10px 0;
+}
+
+.product-info h5 {
+    font-size: 1.5rem;
+    margin: 5px 0;
+    color: #ffffff;
+}
+
+.price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: #b3b3b3;
+    margin-bottom: 10px;
+}
+
+/* Purchase Button */
+.purchase-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.purchase-btn:hover {
+    opacity: 0.8;
+}
+
+.purchase-btn:nth-child(odd) {
+    background: #ff5722;
+    color: white;
+}
+
+.purchase-btn:nth-child(even) {
+    background: #4caf50;
+    color: white;
+}
+
+/* Slider Navigation */
+.slider-btn-two {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.slider-btn-two span {
+    cursor: pointer;
+    pointer-events: all;
+    padding: 10px;
+    transition: background 0.3s ease;
+}
+
+
+.slider-btn-two .prev {
+    margin-left: 10px;
+}
+
+.slider-btn-two .next {
+    margin-right: 10px;
 }
 
 /*Sign In*/

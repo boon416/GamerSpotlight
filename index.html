@@ -16,6 +16,13 @@
 
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="./css/style.css">
+
+
+    <style>
+
+
+
+    </style>
 </head>
 <body>
 
@@ -34,7 +41,7 @@
                           <li class="nav-item"><a class="nav-link" href="#">Tournaments</a></li>
                           <li class="nav-item"><a class="nav-link" href="./videos.html">Videos</a></li>
                           <li class="nav-item"><a class="nav-link" href="./community.html">Community</a></li>
-                          <li class="nav-item"><a class="nav-link" href="#">Store</a></li>
+                          <li class="nav-item"><a class="nav-link" href="./store.html">Store</a></li>
                       </ul>
                       <div class="d-flex">
                           <a href="/signin.html" class="btn btn-outline-light me-2">Sign In</a>
@@ -68,39 +75,86 @@
 
         <!-- Store Slider -->
         <div class="container-fluid">
+            <div class="title-container">
+                <h3 class="fs-1 p-2 text-white">Latest Products</h3>
+                <h3><a href="./store.html">view more></a></h3>
+            </div>
             <div class="site-slider-two px-md-4">
                 <div class="row slider-two text-center">
-                    <div class="col-md-2 product pt-md-5 pt-4">
-                        <img src="./assets/img/news/news_game1.jpg" alt="Product 1">
-                        <span class="border site-btn btn-span">Product 1</span>
+                    <div class="col-md-2 product-card">
+                        <div class="product">
+                            <img src="./assets/img/news/news_game1.jpg" alt="Product 1">
+                            <div class="product-info">
+                                <h5>Product 1</h5>
+                                <p class="price">$19.99</p>
+                                <p class="description">High-quality gaming gear for professionals.</p>
+                                <button class="purchase-btn">Purchase Now</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-2 product pt-md-5 pt-4">
-                        <img src="./assets/img/news/news_game2.jpg" alt="Product 1">
-                        <span class="border site-btn btn-span">Product 2</span>
+                    <div class="col-md-2 product-card">
+                        <div class="product">
+                            <img src="./assets/img/news/news_game2.jpg" alt="Product 2">
+                            <div class="product-info">
+                                <h5>Product 2</h5>
+                                <p class="price">$29.99</p>
+                                <p class="description">Limited edition game accessories.</p>
+                                <button class="purchase-btn">Join Group Purchase</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-2 product pt-md-5 pt-4">
-                        <img src="./assets/img/news/news_game3.jpg" alt="Product 1">
-                        <span class="border site-btn btn-span">Product 3</span>
+                    <div class="col-md-2 product-card">
+                        <div class="product">
+                            <img src="./assets/img/news/news_game3.jpg" alt="Product 3">
+                            <div class="product-info">
+                                <h5>Product 3</h5>
+                                <p class="price">$15.99</p>
+                                <p class="description">Exclusive in-game merchandise.</p>
+                                <button class="purchase-btn">Purchase Now</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-2 product pt-md-5 pt-4">
-                        <img src="./assets/img/news/news_player1.jpg" alt="Product 1">
-                        <span class="border site-btn btn-span">Product 4</span>
+                    <div class="col-md-2 product-card">
+                        <div class="product">
+                            <img src="./assets/img/news/news_player1.jpg" alt="Product 4">
+                            <div class="product-info">
+                                <h5>Product 4</h5>
+                                <p class="price">$24.99</p>
+                                <p class="description">Pro gaming setup gear.</p>
+                                <button class="purchase-btn">Join Group Purchase</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-2 product pt-md-5 pt-4">
-                        <img src="./assets/img/news/news_player2.jpg" alt="Product 1">
-                        <span class="border site-btn btn-span">Product 5</span>
+                    <div class="col-md-2 product-card">
+                        <div class="product">
+                            <img src="./assets/img/news/news_player2.jpg" alt="Product 5">
+                            <div class="product-info">
+                                <h5>Product 5</h5>
+                                <p class="price">$39.99</p>
+                                <p class="description">Special edition controller.</p>
+                                <button class="purchase-btn">Purchase Now</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-2 product pt-md-5 pt-4">
-                        <img src="./assets/img/news/news_player3.jpg" alt="Product 1">
-                        <span class="border site-btn btn-span">Product 6</span>
+                    <div class="col-md-2 product-card">
+                        <div class="product">
+                            <img src="./assets/img/news/news_player3.jpg" alt="Product 6">
+                            <div class="product-info">
+                                <h5>Product 6</h5>
+                                <p class="price">$9.99</p>
+                                <p class="description">Essential gaming accessory.</p>
+                                <button class="purchase-btn">Join Group Purchase</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="slider-btn">
-                        <span class="prev position-top"><i class="fas fa-chevron-left fa-2x text bg-secondary"></i></span>
-                        <span class="next position-top right-0"><i class="fas fa-chevron-right fa-2x text bg-secondary"></i></span>
-                    </div>
+                </div>
+                <div class="slider-btn-two">
+                    <span class="prev position-top"><i class="fas fa-chevron-left fa-2x text bg-secondary"></i></span>
+                    <span class="next position-top right-0"><i class="fas fa-chevron-right fa-2x text bg-secondary"></i></span>
                 </div>
             </div>
         </div>
+
         <!--/Store Slider -->
 
         <!-- Live Tournament Matches -->
@@ -111,7 +165,7 @@
                     <div class="match-card bg-dark p-3 text-white">
                         <h5>Team A vs Team B</h5>
                         <p>Live Now | League of Legends Championship</p>
-                        <a href="#" class="btn btn-danger">Buy Ticket</a>
+                        <a href="#" class="btn btn-success">Buy Ticket</a>
                         <a href="#" class="btn btn-danger">Watch Live</a>
                     </div>
                 </div>
