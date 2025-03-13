@@ -113,65 +113,118 @@
     </section>
 
     <!-- Filter Section -->
-    <section class="filter-section bg-dark">
-      <div class="container bg-dark">
-        <h2 class="mb-3">Filter Products</h2>
+    <section class="filter-section bg-dark text-white py-3">
+      <div class="container">
+        <h2 class="mb-3"><i class="fas fa-filter"></i> Filter Products</h2>
         <form class="row g-3">
+          <!-- Filter by Brand -->
           <div class="col-auto">
-            <select class="form-select" aria-label="Filter by Brand">
+            <label class="form-label text-white"><i class="fas fa-tags"></i> Brand</label>
+            <select class="form-select">
               <option selected>Select Brand</option>
-              <option value="razer">Razer</option>
-              <option value="logitech">Logitech</option>
-              <option value="mouse">Mouse</option>
-              <!-- Additional options can be added here -->
+              <option value="razer"><i class="fas fa-mouse"></i> Razer</option>
+              <option value="logitech"><i class="fas fa-keyboard"></i> Logitech</option>
+              <option value="mouse"><i class="fas fa-laptop"></i> Mouse</option>
             </select>
           </div>
+
+          <!-- Filter by Category -->
           <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-3">Filter</button>
+            <label class="form-label text-white"><i class="fas fa-list"></i> Category</label>
+            <select class="form-select">
+              <option selected>Select Category</option>
+              <option value="mouse"><i class="fas fa-mouse"></i> Mouse</option>
+              <option value="keyboard"><i class="fas fa-keyboard"></i> Keyboard</option>
+              <option value="laptop"><i class="fas fa-laptop"></i> Laptop</option>
+            </select>
+          </div>
+
+          <!-- Filter Button -->
+          <div class="col-auto d-flex align-items-end">
+            <button type="submit" class="btn btn-primary mb-3">
+              <i class="fas fa-search"></i> Filter
+            </button>
           </div>
         </form>
       </div>
     </section>
 
+
     <!-- Products Section -->
     <section class="container my-5">
       <div class="row">
-        <!-- Example Product Card -->
-        <div class="col-md-4 mb-4 product-card">
+        <!-- Product 1 -->
+        <div class="col-12 col-sm-6 col-md-4 mb-3 product-store">
           <div class="card h-100">
-            <img src="./assets/img/trending/trend-1.jpg" class="card-img-top" alt="Razer Gaming Mouse">
+            <img src="./assets/img/products/razer_mouse.jpg" class="card-img-top bg-dark" alt="Razer Gaming Mouse">
             <div class="card-body">
               <h5 class="card-title">Razer Gaming Mouse</h5>
               <p class="card-text">$49.99</p>
-              <a href="#" class="btn btn-success">Purchase Now</a>
+              <a href="./product.html" class="btn btn-success">Purchase Now</a>
             </div>
           </div>
         </div>
-        <!-- Second Product Card -->
-        <div class="col-md-4 mb-4 product-card">
+        
+        <!-- Product 2 -->
+        <div class="col-12 col-sm-6 col-md-4 mb-3 product-store">
           <div class="card h-100">
-            <img src="./assets/img/trending/trend-2.jpg" class="card-img-top" alt="Logitech Wireless Mouse">
+            <img src="./assets/img/products/razer_mouse.jpg" class="card-img-top bg-dark" alt="Logitech Wireless Mouse">
             <div class="card-body">
               <h5 class="card-title">Logitech Wireless Mouse</h5>
               <p class="card-text">$39.99</p>
-              <a href="#" class="btn btn-success">Purchase Now</a>
+              <a href="./product.html" class="btn btn-success">Purchase Now</a>
             </div>
           </div>
         </div>
-        <!-- Third Product Card -->
-        <div class="col-md-4 mb-4 product-card">
+
+        <!-- Product 3 -->
+        <div class="col-12 col-sm-6 col-md-4 mb-3 product-store">
           <div class="card h-100">
-            <img src="./assets/img/trending/trend-3.jpg" class="card-img-top" alt="Ergonomic Mouse">
+            <img src="./assets/img/products/razer_mouse.jpg" class="card-img-top bg-dark" alt="Ergonomic Mouse">
             <div class="card-body">
               <h5 class="card-title">Ergonomic Mouse</h5>
               <p class="card-text">$29.99</p>
+              <a href="./product.html" class="btn btn-success">Purchase Now</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Products -->
+        <div class="col-12 col-sm-6 col-md-4 mb-3 product-store">
+          <div class="card h-100">
+            <img src="./assets/img/products/razer_mouse.jpg" class="card-img-top bg-dark" alt="Gaming Keyboard">
+            <div class="card-body">
+              <h5 class="card-title">Gaming Keyboard</h5>
+              <p class="card-text">$79.99</p>
               <a href="#" class="btn btn-success">Purchase Now</a>
             </div>
           </div>
         </div>
-        <!-- Additional product cards can be added here -->
+
+        <div class="col-12 col-sm-6 col-md-4 mb-3 product-store">
+          <div class="card h-100">
+            <img src="./assets/img/products/razer_mouse.jpg" class="card-img-top bg-dark" alt="Headset">
+            <div class="card-body">
+              <h5 class="card-title">Gaming Headset</h5>
+              <p class="card-text">$99.99</p>
+              <a href="#" class="btn btn-success">Purchase Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4 mb-3 product-store">
+          <div class="card h-100">
+            <img src="./assets/img/products/razer_mouse.jpg" class="card-img-top bg-dark" alt="Headset">
+            <div class="card-body">
+              <h5 class="card-title">Gaming Headset</h5>
+              <p class="card-text">$99.99</p>
+              <a href="#" class="btn btn-success">Purchase Now</a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
+
   </main>
   <!-- /Main Section -->
 
