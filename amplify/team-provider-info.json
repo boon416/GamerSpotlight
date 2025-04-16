@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-gamerspotlight-dev-b40d1-authRole",
+      "UnauthRoleArn": "arn:aws:iam::891376922505:role/amplify-gamerspotlight-dev-b40d1-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::891376922505:role/amplify-gamerspotlight-dev-b40d1-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-gamerspotlight-dev-b40d1-deployment",
+      "UnauthRoleName": "amplify-gamerspotlight-dev-b40d1-unauthRole",
+      "StackName": "amplify-gamerspotlight-dev-b40d1",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:891376922505:stack/amplify-gamerspotlight-dev-b40d1/6b5921d0-19d4-11f0-8175-06a96dce9b3b",
+      "AmplifyAppId": "d3744hmwully3z"
+    },
+    "categories": {
+      "auth": {
+        "gamerspotlight62b70f71": {}
+      }
+    }
+  }
+}
