@@ -82,37 +82,37 @@
     <!--/header-->
 
     <!--Main Section-->
-    <main>
-        <div class="container d-flex justify-content-center align-items-center vh-100">
-            <div class="card p-4 shadow-lg signup-container" style="width: 400px;">
-                <h3 class="text-center silkscreen mb-4">Sign Up</h3>
-                <form>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+        <main>
+            <div class="container d-flex justify-content-center align-items-center vh-100">
+                <div class="card p-4 shadow-lg signup-container" style="width: 400px;">
+                    <h3 class="text-center silkscreen mb-4">Sign Up</h3>
+                    <form id="signup-form">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm-password" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>Already have an account? <a href="signin.html" class="text-decoration-none">Sign In</a></p>
                     </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirm-password" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Sign Up</button>
-                </form>
-                <div class="text-center mt-3">
-                    <p>Already have an account? <a href="signin.html" class="text-decoration-none">Sign In</a></p>
                 </div>
             </div>
-        </div>
 
-    </main>
-    <!--/Main Section-->
+        </main>
+        <!--/Main Section-->
 
     <!--Footer Start-->
     <footer>    
@@ -157,43 +157,47 @@
     <script type="text/javascript" src="./slick-1.8.1/slick/slick.min.js"></script>
     <script src="./js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
-    <script src="aws-exports.js"></script>
+
+    <!--script for amplify-->
+    <script src="https://cdn.jsdelivr.net/npm/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
+    <script src="aws-exports-browser.js"></script> <!-- this must be the browser-friendly version -->
+
     <script>
-        aws_amplify.Amplify.configure(window.aws_exports);
-      
-        const { Auth } = aws_amplify;
-      
-        document.querySelector("form").addEventListener("submit", async (e) => {
-          e.preventDefault();
-      
-          const email = document.getElementById("email").value;
-          const username = document.getElementById("username").value; // 👈 custom field
-          const password = document.getElementById("password").value;
+    aws_amplify.Amplify.configure(window.aws_exports);
 
-          const confirmPassword = document.getElementById("confirm-password").value;
-            if (password !== confirmPassword) {
-            alert("Passwords do not match.");
-            return;
+    const { Auth } = aws_amplify;
+
+    document.querySelector("form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirm-password").value;
+
+        if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+        }
+
+        try {
+        const result = await Auth.signUp({
+            username: email,
+            password,
+            attributes: {
+            email,
+            name: username
             }
-
-          try {
-            const result = await Auth.signUp({
-              username: email, // email is used as the login
-              password,
-              attributes: {
-                email,
-                name: username, // 👈 store username as the "name" attribute
-              }
-            });
-            alert("Signup successful! Redirecting to sign-in page...");
-            window.location.href = "signin.html";
-          } catch (err) {
-            console.error(err);
-            alert(err.message || "Signup failed");
-          }
-
-          
         });
+        alert("Signup successful! Redirecting to sign-in page...");
+        window.location.href = "signin.html";
+        } catch (err) {
+        console.error(err);
+        alert(err.message || "Signup failed");
+        }
+    });
     </script>
+
+
 </body>
 </html>
