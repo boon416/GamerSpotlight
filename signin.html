@@ -50,7 +50,7 @@
                               <a class="nav-link active" href="./index.html">HOME</a>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="#">Tournaments</a>
+                              <a class="nav-link" href="./tournament.html">Tournaments</a>
                           </li>
                           <li class="nav-item">
                               <a class="nav-link" href="./videos.html">Videos</a>
@@ -85,7 +85,7 @@
       <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="card p-4 shadow-lg signin-container" style="width: 350px;">
             <h3 class="text-center silkscreen mb-4">Sign In</h3>
-            <form action="dashboard.html" method="POST">
+            <form>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
                     <input type="email" class="form-control" id="email" name="email" required>
@@ -154,5 +154,45 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="./slick-1.8.1/slick/slick.min.js"></script>
     <script src="./js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
+    <script src="aws-exports.js"></script>
+    <script>
+        aws_amplify.Amplify.configure(window.aws_exports);
+        const { Auth } = aws_amplify;
+
+        // 🔁 Auto-fill saved email on page load
+        window.addEventListener("DOMContentLoaded", () => {
+            const saved = localStorage.getItem("savedEmail");
+            if (saved) {
+                document.getElementById("email").value = saved;
+                document.getElementById("rememberMe").checked = true;
+            }
+        });
+
+        document.querySelector("form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // ✅ Remember Me logic
+            if (document.getElementById("rememberMe").checked) {
+                localStorage.setItem("savedEmail", email);
+            } else {
+                localStorage.removeItem("savedEmail");
+            }
+
+            try {
+                const user = await Auth.signIn(email, password);
+                alert("Login successful!");
+                window.location.href = "profile.html";
+            } catch (err) {
+                console.error(err);
+                alert(err.message || "Login failed");
+            }
+        });
+
+    </script>
+
 </body>
 </html>

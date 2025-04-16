@@ -27,31 +27,98 @@
 <body>
 
     <!-- Header -->
-    <header>
-      <div class="container">
-          <nav class="navbar navbar-expand-lg bg-body-tertiary">
-              <div class="container-fluid">
-                  <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                      <span class="fas fa-bars text-white"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="navbarNav">
-                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                          <li class="nav-item"><a class="nav-link active" href="./index.html">HOME</a></li>
-                          <li class="nav-item"><a class="nav-link" href="./tournament.html">Tournaments</a></li>
-                          <li class="nav-item"><a class="nav-link" href="./videos.html">Videos</a></li>
-                          <li class="nav-item"><a class="nav-link" href="./community.html">Community</a></li>
-                          <li class="nav-item"><a class="nav-link" href="./store.html">Store</a></li>
-                      </ul>
-                      <div class="d-flex">
-                          <a href="/signin.html" class="btn btn-outline-light me-2">Sign In</a>
-                          <a href="./signup.html" class="btn btn-light">Create an Account</a>
-                      </div>
-                  </div>
-              </div>
-          </nav>
-      </div>
+    <!-- GUEST HEADER (for users not logged in) -->
+    <header id="guest-header" style="display: none;">
+        <div class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+            <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fas fa-bars text-white"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" href="./index.html">HOME</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Tournaments</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Videos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Community</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Store</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">More</a>
+                    <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                </ul>
+                <div class="d-flex">
+                <a href="/signin.html" class="btn btn-outline-light me-2">Sign In</a>
+                <a href="./signup.html" class="btn btn-light">Create an Account</a>
+                </div>
+            </div>
+            </div>
+        </nav>
+        </div>
     </header>
+    
+    <!-- USER HEADER (for logged-in users) -->
+    <header id="user-header" style="display: none;">
+        <div class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+            <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fas fa-bars text-white"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" href="./index.html">HOME</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Tournaments</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Videos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Community</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Store</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">More</a>
+                    <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown"
+                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="./assets/img/hero/hero-theshy.jpg" alt="User Avatar" class="rounded-circle me-2" width="40"
+                        height="40">
+                    <span class="text-white d-none d-md-inline" id="nav-username">User</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li class="text-center"><img src="./assets/img/hero/hero-theshy.jpg" alt="User Avatar"
+                        class="rounded-circle my-2" width="80" height="80"></li>
+                    <li class="text-center"><strong id="header-username">JohnDoe</strong></li>
+                    <li class="text-center text-muted" id="header-email">johndoe@example.com</li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-center" href="#">Profile</a></li>
+                    <li><a class="dropdown-item text-center text-danger" href="#" onclick="logout()">Logout</a></li>
+                    </ul>
+                </li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+        </div>
+    </header>  
     <!-- /Header -->
 
     <!-- Main Section -->
@@ -239,6 +306,33 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="./slick-1.8.1/slick/slick.min.js"></script>
     <script src="./js/main.js"></script>
+    <script>
+        aws_amplify.Amplify.configure(window.aws_exports);
+        const { Auth } = aws_amplify;
+      
+        async function checkUser() {
+          try {
+            const user = await Auth.currentAuthenticatedUser();
+            document.getElementById("user-header").style.display = "block";
+            document.getElementById("nav-username").innerText = user.attributes.name || "User";
+            document.getElementById("header-username").innerText = user.attributes.name || "User";
+            document.getElementById("header-email").innerText = user.attributes.email;
+          } catch (err) {
+            document.getElementById("guest-header").style.display = "block";
+          }
+        }
+      
+        async function logout() {
+          try {
+            await Auth.signOut();
+            window.location.reload(); // refresh to show guest view
+          } catch (err) {
+            console.error("Logout failed:", err);
+          }
+        }
+      
+        checkUser();
+    </script>      
 
 </body>
 </html>
