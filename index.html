@@ -304,36 +304,32 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="./slick-1.8.1/slick/slick.min.js"></script>
-    <script src="./js/main.js"></script>
+    <script src="./js/main.js"></script> <!-- jQuery, Slick -->
     <script type="module">
-        import { userManager, signOutRedirect } from './main.js';
+        import { userManager, signOutRedirect } from './auth.js';
       
-        // 用户是否登录
         userManager.getUser().then(user => {
           if (user && !user.expired) {
-            // ✅ 用户已登录
             document.getElementById("guest-header").style.display = "none";
             document.getElementById("user-header").style.display = "block";
             document.getElementById("nav-username").innerText = user.profile.name || "User";
             document.getElementById("header-username").innerText = user.profile.name || "User";
             document.getElementById("header-email").innerText = user.profile.email;
           } else {
-            // ❌ 未登录
             document.getElementById("guest-header").style.display = "block";
             document.getElementById("user-header").style.display = "none";
           }
         });
       
-        // 登录按钮跳转
         document.getElementById("signInBtn")?.addEventListener("click", async () => {
           await userManager.signinRedirect();
         });
       
-        // 登出按钮逻辑
         window.logout = async function () {
           await signOutRedirect();
         };
       </script>
+      
        
 
 </body>
