@@ -136,3 +136,5 @@ $(".slider-two")
     });
   });
   
+
+  import { UserManager } from 'https://cdn.skypack.dev/oidc-client-ts';
