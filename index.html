@@ -57,9 +57,8 @@
                 </li>
                 </ul>
                 <div class="d-flex">
-                <a href="https://ap-southeast-1ypgkwwghv.auth.ap-southeast-1.amazoncognito.com/login?client_id=p36ba0bp3u8sqr55fc682n714&redirect_uri=https://staging.d3744hmwully3z.amplifyapp.com/index.html&response_type=code&scope=email+openid+phone" class="btn btn-outline-light me-2">Sign In</a>
-                <a href="https://ap-southeast-1ypgkwwghv.auth.ap-southeast-1.amazoncognito.com/signup?client_id=p36ba0bp3u8sqr55fc682n714&redirect_uri=https%3A%2F%2Fstaging.d3744hmwully3z.amplifyapp.com%2Findex.html&response_type=code&scope=email+openid+phone" class="btn btn-light">Create an Account</a>
-                </div>
+                    <button id="signInBtn" class="btn btn-outline-light me-2">Sign In</button>
+                  </div>                  
             </div>
             </div>
         </nav>
@@ -306,33 +305,36 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="./slick-1.8.1/slick/slick.min.js"></script>
     <script src="./js/main.js"></script>
-    <!--<script>
-        aws_amplify.Amplify.configure(window.aws_exports);
-        const { Auth } = aws_amplify;
+    <script type="module">
+        import { userManager, signOutRedirect } from './main.js';
       
-        async function checkUser() {
-          try {
-            const user = await Auth.currentAuthenticatedUser();
+        // 用户是否登录
+        userManager.getUser().then(user => {
+          if (user && !user.expired) {
+            // ✅ 用户已登录
+            document.getElementById("guest-header").style.display = "none";
             document.getElementById("user-header").style.display = "block";
-            document.getElementById("nav-username").innerText = user.attributes.name || "User";
-            document.getElementById("header-username").innerText = user.attributes.name || "User";
-            document.getElementById("header-email").innerText = user.attributes.email;
-          } catch (err) {
+            document.getElementById("nav-username").innerText = user.profile.name || "User";
+            document.getElementById("header-username").innerText = user.profile.name || "User";
+            document.getElementById("header-email").innerText = user.profile.email;
+          } else {
+            // ❌ 未登录
             document.getElementById("guest-header").style.display = "block";
+            document.getElementById("user-header").style.display = "none";
           }
-        }
+        });
       
-        async function logout() {
-          try {
-            await Auth.signOut();
-            window.location.reload(); // refresh to show guest view
-          } catch (err) {
-            console.error("Logout failed:", err);
-          }
-        }
+        // 登录按钮跳转
+        document.getElementById("signInBtn")?.addEventListener("click", async () => {
+          await userManager.signinRedirect();
+        });
       
-        checkUser();
-    </script>-->  
+        // 登出按钮逻辑
+        window.logout = async function () {
+          await signOutRedirect();
+        };
+      </script>
+       
 
 </body>
 </html>
