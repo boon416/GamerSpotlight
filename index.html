@@ -58,7 +58,7 @@
                 </ul>
                 <div class="d-flex">
                     <button id="signInBtn" class="btn btn-outline-light me-2">Sign In</button>
-                  </div>                  
+                </div>                  
             </div>
             </div>
         </nav>
@@ -305,32 +305,40 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="./slick-1.8.1/slick/slick.min.js"></script>
     <script src="./js/main.js"></script> <!-- jQuery, Slick -->
-    <script type="module">
-        import { userManager, signOutRedirect } from './auth.js';
-      
-        userManager.getUser().then(user => {
-          if (user && !user.expired) {
-            document.getElementById("guest-header").style.display = "none";
-            document.getElementById("user-header").style.display = "block";
-            document.getElementById("nav-username").innerText = user.profile.name || "User";
-            document.getElementById("header-username").innerText = user.profile.name || "User";
-            document.getElementById("header-email").innerText = user.profile.email;
-          } else {
-            document.getElementById("guest-header").style.display = "block";
-            document.getElementById("user-header").style.display = "none";
-          }
-        });
-      
-        document.getElementById("signInBtn")?.addEventListener("click", async () => {
-          await userManager.signinRedirect();
-        });
-      
-        window.logout = async function () {
-          await signOutRedirect();
-        };
-      </script>
-      
-       
+    <!-- 引入 Amplify core -->
+    <script src="https://cdn.jsdelivr.net/npm/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
 
+    <!-- 初始化 Amplify -->
+    <script type="module">
+    import awsExports from './aws-exports.js'; // 这里路径根据你项目实际调整
+
+    const { Amplify, Auth } = window.aws_amplify;
+    Amplify.configure(awsExports);
+
+    // 登录按钮绑定
+    document.getElementById("signInBtn").addEventListener("click", () => {
+        Auth.federatedSignIn(); // 会跳到 Cognito 登录页
+    });
+
+    // 登出按钮绑定
+    document.getElementById("signOutBtn").addEventListener("click", () => {
+        Auth.signOut(); // 登出并回到 Sign Out URL
+    });
+
+    // 页面加载时自动检查用户是否已登录
+    Auth.currentAuthenticatedUser()
+        .then(user => {
+        console.log("Logged in user:", user);
+        document.getElementById("username").textContent = `Welcome, ${user.attributes.email}`;
+        document.getElementById("signInBtn").style.display = "none";
+        document.getElementById("signOutBtn").style.display = "inline-block";
+        })
+        .catch(() => {
+        document.getElementById("signInBtn").style.display = "inline-block";
+        document.getElementById("signOutBtn").style.display = "none";
+        });
+    </script>
+
+      
 </body>
 </html>
