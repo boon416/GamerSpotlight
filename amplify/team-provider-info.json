@@ -9,14 +9,31 @@
       "UnauthRoleName": "amplify-gamerspotlight-dev-b40d1-unauthRole",
       "StackName": "amplify-gamerspotlight-dev-b40d1",
       "StackId": "arn:aws:cloudformation:ap-southeast-1:891376922505:stack/amplify-gamerspotlight-dev-b40d1/6b5921d0-19d4-11f0-8175-06a96dce9b3b",
-      "AmplifyAppId": "d3744hmwully3z"
+      "AmplifyAppId": "d3744hmwully3z",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-gamerspotlight-dev-b40d1-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
         "gamerspotlight62b70f71": {}
       },
+      "function": {
+        "postMessageFunction": {
+          "deploymentBucketName": "amplify-gamerspotlight-dev-b40d1-deployment",
+          "s3Key": "amplify-builds/postMessageFunction-7a7a4f2f545754664534-build.zip"
+        }
+      },
+      "storage": {
+        "MessageTable": {}
+      },
+      "api": {
+        "messageapi": {}
+      },
       "hosting": {
-        "S3AndCloudFront": {}
+        "S3AndCloudFront": {},
+        "amplifyhosting": {
+          "appId": "d3744hmwully3z",
+          "type": "manual"
+        }
       }
     }
   }

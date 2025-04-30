@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "paths": {
+    "/message": {
+      "name": "/message",
+      "lambdaFunction": "postMessageFunction",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}

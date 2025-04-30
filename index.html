@@ -311,45 +311,54 @@
     <script src="./js/main.js"></script>
 <!-- load your aws-exports-browser.js first -->
 <!-- Load Amplify config -->
-<script src="./aws-exports-browser.js"></script>
+<!--<script src="./aws-exports-browser.js"></script> -->
 
-<script>
+<script type="module">
+    import { Amplify, Auth } from 'https://cdn.jsdelivr.net/npm/aws-amplify@6.14.3/+esm';
+    import awsconfig from './aws-exports.js'; // 确保你这行路径对
+  
     Amplify.configure({
-      ...window.aws_exports,
+      ...awsconfig,
       oauth: {
-        ...window.aws_exports.oauth,
-        responseType: 'token'
-      },
-      Auth: {
-        storage: window.localStorage
+        ...awsconfig.oauth,
+        responseType: 'token' // 用 implicit flow
       }
     });
   
-    // 登录按钮
+    const signInUrl = awsconfig.oauth.domain +
+      "/login?client_id=" + awsconfig.aws_user_pools_web_client_id +
+      "&response_type=token&scope=email+openid+phone" +
+      "&redirect_uri=" + encodeURIComponent(awsconfig.oauth.redirectSignIn);
+  
+    const signOutUrl = awsconfig.oauth.domain +
+      "/logout?client_id=" + awsconfig.aws_user_pools_web_client_id +
+      "&logout_uri=" + encodeURIComponent(awsconfig.oauth.redirectSignOut);
+  
     document.getElementById("signInBtn").addEventListener("click", () => {
-      Amplify.Auth.federatedSignIn();
+      window.location.href = signInUrl;
     });
   
-    // 登录状态检测
-    Amplify.Auth.currentAuthenticatedUser()
+    document.getElementById("signOutBtn").addEventListener("click", () => {
+      window.location.href = signOutUrl;
+    });
+  
+    // 判断登录状态
+    Auth.currentAuthenticatedUser()
       .then(user => {
-        console.log("User:", user);
+        console.log("✅ Logged in as:", user);
         document.getElementById("signInBtn").style.display = "none";
         document.getElementById("signOutBtn").style.display = "inline-block";
-        document.getElementById("nav-username").textContent = user.attributes.email;
-        document.getElementById("guest-header").style.display = "none";
-        document.getElementById("user-header").style.display = "block";
-      })
-      .catch(err => {
-        console.log("Not signed in", err);
-      });
   
-    // 登出功能
-    window.logout = async () => {
-      await Amplify.Auth.signOut();
-      window.location.href = "index.html";
-    };
+        // 你还可以把用户名显示在 navbar 上，比如：
+        // document.getElementById("nav-username").textContent = user.username;
+      })
+      .catch(() => {
+        console.log("🔒 Not logged in");
+        document.getElementById("signInBtn").style.display = "inline-block";
+        document.getElementById("signOutBtn").style.display = "none";
+      });
   </script>
+  
   
   
   

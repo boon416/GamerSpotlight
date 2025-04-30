@@ -1,0 +1,10 @@
+{
+  "resourceName": "MessageTable",
+  "tableName": "MessageTable",
+  "partitionKey": {
+    "fieldName": "id",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

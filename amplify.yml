@@ -1,9 +1,10 @@
+version: 1
 frontend:
-  phases:
-    build:
-      commands: []
+  build:
+    commands:
+      - echo "No build needed for static site"
   artifacts:
-    baseDirectory: .
+    baseDirectory: . # ✅ 表示发布项目根目录
     files:
       - '**/*'
   cache:
