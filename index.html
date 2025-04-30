@@ -17,7 +17,9 @@
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="./css/style.css">
 
-    
+    <script src="https://unpkg.com/aws-amplify@5.3.1/dist/aws-amplify.min.js"></script>
+
+
     <style>
 
 
@@ -58,7 +60,8 @@
                 </ul>
                 <div class="d-flex">
                     <button id="signInBtn" class="btn btn-outline-light me-2">Sign In</button>
-                </div>                  
+                    <button id="signOutBtn" class="btn btn-danger" style="display:none;">Sign Out</button>                    
+                </div>                               
             </div>
             </div>
         </nav>
@@ -301,44 +304,57 @@
     <!-- /Footer -->
 
     <!-- Scripts -->
+    <!-- Bootstrap / jQuery / Slick -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="./slick-1.8.1/slick/slick.min.js"></script>
-    <script src="./js/main.js"></script> <!-- jQuery, Slick -->
-    <!-- 引入 Amplify core -->
-    <script src="https://cdn.jsdelivr.net/npm/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
+    <script src="./js/main.js"></script>
+<!-- load your aws-exports-browser.js first -->
+<!-- Load Amplify config -->
+<script src="./aws-exports-browser.js"></script>
 
-    <!-- 初始化 Amplify -->
-    <script type="module">
-    import awsExports from './aws-exports.js'; // 这里路径根据你项目实际调整
-
-    const { Amplify, Auth } = window.aws_amplify;
-    Amplify.configure(awsExports);
-
-    // 登录按钮绑定
+<script>
+    Amplify.configure({
+      ...window.aws_exports,
+      oauth: {
+        ...window.aws_exports.oauth,
+        responseType: 'token'
+      },
+      Auth: {
+        storage: window.localStorage
+      }
+    });
+  
+    // 登录按钮
     document.getElementById("signInBtn").addEventListener("click", () => {
-        Auth.federatedSignIn(); // 会跳到 Cognito 登录页
+      Amplify.Auth.federatedSignIn();
     });
-
-    // 登出按钮绑定
-    document.getElementById("signOutBtn").addEventListener("click", () => {
-        Auth.signOut(); // 登出并回到 Sign Out URL
-    });
-
-    // 页面加载时自动检查用户是否已登录
-    Auth.currentAuthenticatedUser()
-        .then(user => {
-        console.log("Logged in user:", user);
-        document.getElementById("username").textContent = `Welcome, ${user.attributes.email}`;
+  
+    // 登录状态检测
+    Amplify.Auth.currentAuthenticatedUser()
+      .then(user => {
+        console.log("User:", user);
         document.getElementById("signInBtn").style.display = "none";
         document.getElementById("signOutBtn").style.display = "inline-block";
-        })
-        .catch(() => {
-        document.getElementById("signInBtn").style.display = "inline-block";
-        document.getElementById("signOutBtn").style.display = "none";
-        });
-    </script>
+        document.getElementById("nav-username").textContent = user.attributes.email;
+        document.getElementById("guest-header").style.display = "none";
+        document.getElementById("user-header").style.display = "block";
+      })
+      .catch(err => {
+        console.log("Not signed in", err);
+      });
+  
+    // 登出功能
+    window.logout = async () => {
+      await Amplify.Auth.signOut();
+      window.location.href = "index.html";
+    };
+  </script>
+  
+  
+  
+        
 
-      
+
 </body>
 </html>
