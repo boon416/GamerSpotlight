@@ -2,9 +2,7 @@ import {
   DynamoDBClient,
   UpdateItemCommand,
   QueryCommand,
-  PutItemCommand,
-  GetItemCommand,
-  DeleteItemCommand
+  ScanCommand
 } from "@aws-sdk/client-dynamodb";
 
 const ddb = new DynamoDBClient({ region: "ap-southeast-1" });
@@ -37,7 +35,7 @@ export const handler = async (event) => {
       };
     }
 
-    // Step 1: Stop bidding
+    // Step 1: Close bidding
     await ddb.send(new UpdateItemCommand({
       TableName: PRODUCTS_TABLE,
       Key: { productId: { S: productId } },
@@ -45,60 +43,66 @@ export const handler = async (event) => {
       ExpressionAttributeValues: { ":false": { BOOL: false } }
     }));
 
-    // Step 2: Get all bids
+    // Step 2: Get all bids for the product
     const allBidsRes = await ddb.send(new QueryCommand({
       TableName: BIDS_TABLE,
       KeyConditionExpression: "productId = :pid",
       ExpressionAttributeValues: { ":pid": { S: productId } },
-      ScanIndexForward: false
+      ScanIndexForward: false // Get highest bid first
     }));
 
     const allBids = allBidsRes.Items || [];
     const topBid = allBids[0];
 
-    // Step 3: Write refunding orders for lower bids
-    for (const bid of allBids) {
-      const isWinner = bid.bidId?.S === topBid?.bidId?.S;
-      if (!isWinner) {
-        const refundOrderId = `order_refund_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
-        await ddb.send(new PutItemCommand({
-          TableName: ORDERS_TABLE,
-          Item: {
-            orderId: { S: refundOrderId },
-            productId: { S: productId },
-            bidAmount: { N: bid.bidAmount?.N || "0" },
-            username: { S: bid.username?.S || "unknown" },
-            status: { S: "Refunding" },
-            createdAt: { S: new Date().toISOString() }
-          }
-        }));
-      }
+    if (!topBid) {
+      return {
+        statusCode: 404,
+        headers: { "Access-Control-Allow-Origin": "*" },
+        body: JSON.stringify({ error: "No bids found for this product." })
+      };
     }
 
-    // Step 4: Delete winning bidder's order from Orders table
-    const winnerOrderId = `order_${topBid.timestamp?.S}`;
-    await ddb.send(new DeleteItemCommand({
+    const winningUsername = topBid.username?.S;
+    const winningBidAmount = topBid.bidAmount?.N;
+
+    // Step 3: Get all orders for the product
+    const ordersRes = await ddb.send(new ScanCommand({
       TableName: ORDERS_TABLE,
-      Key: { orderId: { S: winnerOrderId } }
+      FilterExpression: "productId = :pid",
+      ExpressionAttributeValues: {
+        ":pid": { S: productId }
+      }
     }));
 
-    // Step 5: Delete product from Products table
-    await ddb.send(new DeleteItemCommand({
-      TableName: PRODUCTS_TABLE,
-      Key: { productId: { S: productId } }
-    }));
+    // Step 4: Update each order's status based on matching username AND bidAmount
+    for (const order of ordersRes.Items || []) {
+      const isWinner =
+        order.username?.S === winningUsername &&
+        order.bidAmount?.N === winningBidAmount;
+
+      const newStatus = isWinner ? "Pending Payment" : "Refunding";
+
+      await ddb.send(new UpdateItemCommand({
+        TableName: ORDERS_TABLE,
+        Key: { orderId: { S: order.orderId.S } },
+        UpdateExpression: "SET #s = :status",
+        ExpressionAttributeNames: { "#s": "status" },
+        ExpressionAttributeValues: { ":status": { S: newStatus } }
+      }));
+    }
 
     return {
       statusCode: 200,
       headers: { "Access-Control-Allow-Origin": "*" },
-      body: JSON.stringify({ message: "Bidding stopped, refunds initiated, product removed." })
+      body: JSON.stringify({ message: "✅ Bidding closed, orders updated." })
     };
+
   } catch (err) {
     console.error("❌ StopBid Error:", err);
     return {
       statusCode: 500,
       headers: { "Access-Control-Allow-Origin": "*" },
-      body: JSON.stringify({ error: "Failed to complete bidding stop flow", detail: err.message })
+      body: JSON.stringify({ error: "Failed to complete stopBid flow", detail: err.message })
     };
   }
 };

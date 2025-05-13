@@ -67,6 +67,15 @@ export const handler = async (event) => {
       };
     }
 
+    // ❌ Prevent placing order on own product
+    if (product.username?.S === username) {
+      return {
+        statusCode: 403,
+        headers: { "Access-Control-Allow-Origin": "*" },
+        body: JSON.stringify({ error: "You cannot place an order on your own product." })
+      };
+    }
+
     const price = product.price?.N || "0";
     const orderId = `order_${Date.now()}`;
 
@@ -75,14 +84,13 @@ export const handler = async (event) => {
       Item: {
         orderId: { S: orderId },
         productId: { S: productId },
-        productName: { S: product.name?.S || "Unknown Product" }, // ✅ 新增
+        productName: { S: product.name?.S || "Unknown Product" },
         bidAmount: { N: price },
         username: { S: username },
         status: { S: "Pending Payment" },
         createdAt: { S: new Date().toISOString() }
       }
     }));
-    
 
     await ddb.send(new UpdateItemCommand({
       TableName: PRODUCTS_TABLE,

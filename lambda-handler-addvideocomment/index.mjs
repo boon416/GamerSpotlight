@@ -1,12 +1,22 @@
 import {
   DynamoDBClient,
   PutItemCommand,
-  QueryCommand
+  QueryCommand,
+  UpdateItemCommand
 } from "@aws-sdk/client-dynamodb";
-import { jwtDecode } from "jwt-decode";
 
 const ddb = new DynamoDBClient({ region: "ap-southeast-1" });
 const TABLE_NAME = "Comments";
+
+function decodeJWT(token) {
+  try {
+    const base64Url = token.split('.')[1];
+    return JSON.parse(Buffer.from(base64Url, 'base64').toString('utf-8'));
+  } catch (err) {
+    console.error("Failed to decode JWT:", err);
+    return {};
+  }
+}
 
 export const handler = async (event) => {
   const method = event.requestContext?.http?.method || event.httpMethod;
@@ -30,7 +40,7 @@ export const handler = async (event) => {
       };
     }
 
-    const decoded = jwtDecode(token.replace("Bearer ", ""));
+    const decoded = decodeJWT(token.replace("Bearer ", ""));
     const username = decoded.preferred_username || decoded.email || "guest";
 
     const body = JSON.parse(event.body || "{}");
@@ -53,7 +63,8 @@ export const handler = async (event) => {
         timestamp: { S: timestamp },
         commentId: { S: crypto.randomUUID() },
         username: { S: username },
-        content: { S: content }
+        content: { S: content },
+        isDeleted: { BOOL: false }
       }
     }));
 
@@ -83,7 +94,7 @@ export const handler = async (event) => {
       ScanIndexForward: true
     }));
 
-    const comments = res.Items.map(item => ({
+    const comments = res.Items.filter(item => !item.isDeleted?.BOOL).map(item => ({
       commentId: item.commentId.S,
       username: item.username.S,
       content: item.content.S,
@@ -97,6 +108,59 @@ export const handler = async (event) => {
     };
   }
 
+  if (method === "DELETE") {
+    const token = event.headers?.authorization || event.headers?.Authorization || "";
+    if (!token.startsWith("Bearer ")) {
+      return {
+        statusCode: 401,
+        headers: corsHeaders(),
+        body: JSON.stringify({ error: "Unauthorized" })
+      };
+    }
+
+    const decoded = decodeJWT(token.replace("Bearer ", ""));
+    const username = decoded.preferred_username || decoded.email || "guest";
+
+    const body = JSON.parse(event.body || "{}");
+    const { topicId, timestamp } = body;
+
+    if (!topicId || !timestamp) {
+      return {
+        statusCode: 400,
+        headers: corsHeaders(),
+        body: JSON.stringify({ error: "Missing topicId or timestamp" })
+      };
+    }
+
+    try {
+      await ddb.send(new UpdateItemCommand({
+        TableName: TABLE_NAME,
+        Key: {
+          topicId: { S: topicId },
+          timestamp: { S: timestamp }
+        },
+        UpdateExpression: "SET isDeleted = :true",
+        ConditionExpression: "username = :u",
+        ExpressionAttributeValues: {
+          ":true": { BOOL: true },
+          ":u": { S: username }
+        }
+      }));
+
+      return {
+        statusCode: 200,
+        headers: corsHeaders(),
+        body: JSON.stringify({ message: "Comment deleted" })
+      };
+    } catch (err) {
+      return {
+        statusCode: 403,
+        headers: corsHeaders(),
+        body: JSON.stringify({ error: "Delete failed or unauthorized", detail: err.message })
+      };
+    }
+  }
+
   return {
     statusCode: 405,
     headers: corsHeaders(),
@@ -108,6 +172,6 @@ function corsHeaders() {
   return {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "*",
-    "Access-Control-Allow-Methods": "GET,POST,OPTIONS"
+    "Access-Control-Allow-Methods": "GET,POST,DELETE,OPTIONS"
   };
 }
