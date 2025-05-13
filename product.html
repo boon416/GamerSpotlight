@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Details - GamerSpotlight</title>
+  <title>GamerSpotlight - Product Details</title>
 
   <!-- Bootstrap CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -14,115 +14,73 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="./css/style.css">
 
-  <style>
-    /* Set the default text color to white */
-    body {
-      color: white;
-    }
-    
-    /* Ensure common text elements inherit white color */
-    h1, h2, h3, h4, h5, h6,
-    p, span, a, li, label {
-      color: white;
-    }
-  </style>
 </head>
 <body>
-
-  <!-- Header -->
-  <header>
-    <div class="container">
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-                  aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="fas fa-bars text-white"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" href="./index.html">HOME</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./tournament.html">Tournaments</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./videos.html">Videos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./community.html">Community</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./store.html">Store</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  More
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-            </ul>
-            <div class="d-flex">
-              <a href="/signin.html" class="btn btn-outline-light me-2">Sign In</a>
-              <a href="./signup.html" class="btn btn-light">Create an Account</a>
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <span class="fas fa-bars text-white"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="./index.html">HOME</a></li>
+                <li class="nav-item"><a class="nav-link" href="./videos.html">Videos</a></li>
+                <li class="nav-item"><a class="nav-link active" href="./store.html">MarketPlace</a></li>
+                <li class="nav-item"><a class="nav-link" href="./community.html">Community</a></li>
+              </ul>
+              <p id="welcomeText" class="text-white mt-3 me-3">Welcome!</p>
+              <div class="d-flex">
+                <button id="signInBtn" class="btn btn-outline-light me-2">Sign In</button>
+                <button id="signOutBtn" class="btn btn-outline-danger" style="display:none;">Sign Out</button>
+              </div>
             </div>
           </div>
-        </div>
-      </nav>
-    </div>
-  </header>
+        </nav>
+      </div>
+    </header>
   <!-- /Header -->
 
   <!-- Main Section -->
-  <main class="container my-5">
+  <main class="container my-5 bg-dark text-white p-4 rounded">
     <div class="row">
       <!-- Product Image Slider -->
       <div class="col-md-6">
         <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="./assets/img/products/razer_mouse.jpg" class="d-block w-100 img-fluid rounded" alt="Razer Gaming Mouse">
-            </div>
-            <!-- Add additional carousel items for more images -->
-            <div class="carousel-item">
-              <img src="./assets/img/products/razer_mouse.jpg" class="d-block w-100 img-fluid rounded" alt="Razer Mouse Side View">
-            </div>
-            <div class="carousel-item">
-              <img src="./assets/img/products/razer_mouse.jpg" class="d-block w-100 img-fluid rounded" alt="Razer Mouse Back View">
+              <img src="" class="d-block w-100 img-fluid rounded" alt="Product image">
             </div>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
         </div>
       </div>
+  
       <!-- Product Details -->
       <div class="col-md-6">
-        <h1>Razer Gaming Mouse</h1>
-        <p class="lead">$49.99</p>
-        <p>Experience precision and performance with the Razer Gaming Mouse, designed for competitive gaming. Its ergonomic design, customizable buttons, and ultra-fast response time make it a must-have for gamers.</p>
-        <ul class="list-unstyled">
-          <li><strong>Brand:</strong> Razer</li>
-          <li><strong>Category:</strong> Mouse</li>
-          <li><strong>Features:</strong> Ergonomic, customizable buttons, RGB lighting</li>
-        </ul>
-        <a href="#" class="btn btn-success btn-lg">
-          <i class="fas fa-shopping-cart"></i> Purchase Now
-        </a>
+        <h2 id="productName" class="d-flex align-items-center gap-2 flex-wrap">Loading...</h2>
+        <p id="productDescription">Loading...</p>
+        <p><strong>Price:</strong> RM <span id="productPrice">0</span></p>
+  
+        <!-- Bidding Area -->
+        <div id="biddingSection" class="mt-5 d-none">
+          <h4>🔥 Current Bids</h4>
+          <div class="mb-3">
+            <strong>Highest Bid:</strong> <span id="highestBid">Loading...</span>
+          </div>
+          <ul class="list-group mb-3" id="bidList"></ul>
+  
+          <div id="bidFormContainer" class="input-group mb-3">
+            <input type="number" id="bidAmount" class="form-control me-2" placeholder="Enter your bid (RM)">
+            <button class="btn btn-warning" onclick="placeBid()">💸 Place Bid</button>
+          </div>
+        </div>
       </div>
     </div>
   </main>
+  
   <!-- /Main Section -->
 
   <!-- Footer -->
@@ -132,26 +90,15 @@
         <div class="row">
           <div class="col-md-4">
             <h5>About GamerSpotlight</h5>
-            <p>Your ultimate destination for esports news, live tournaments, and community events. Stay updated with the latest happenings in the gaming world.</p>
+            <p>Empowering gamers to buy, bid, share, and discuss esports products and videos — all in one unified platform.</p>
           </div>
           <div class="col-md-4">
-            <h5>Quick Links</h5>
             <ul class="list-unstyled">
-              <li><a href="#" class="text-white">Home</a></li>
-              <li><a href="#" class="text-white">Tournaments</a></li>
-              <li><a href="#" class="text-white">Videos</a></li>
-              <li><a href="#" class="text-white">Community</a></li>
-              <li><a href="#" class="text-white">Store</a></li>
             </ul>
           </div>
           <div class="col-md-4">
-            <h5>Follow Us</h5>
-            <ul class="list-inline">
-              <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a></li>
-              <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-twitter"></i></a></li>
-              <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
-              <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-youtube"></i></a></li>
-            </ul>
+            <h5>Lim Boon Chong | 19ACB03229</h5>
+            <p>E-Sports Web Page Development Hosted in AWS</p>
           </div>
         </div>
         <div class="text-center mt-3">
@@ -160,9 +107,309 @@
       </div>
     </div>
   </footer>
-  <!-- /Footer -->
 
-  <!-- Bootstrap JS Bundle -->
+  <!--  Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+
+  <script>
+    const clientId = "p36ba0bp3u8sqr55fc682n714";
+    const domain = "https://ap-southeast-1ypgkwwghv.auth.ap-southeast-1.amazoncognito.com";
+    const redirectUri = window.location.origin + window.location.pathname;
+    const logoutUri = redirectUri;
+
+    let currentUsername = null;
+    const productId = new URLSearchParams(location.search).get("pid");
+
+    window.addEventListener("load", () => {
+      const { idToken, accessToken } = getTokenFromHash();
+      if (idToken) {
+        sessionStorage.setItem("idToken", idToken);
+        sessionStorage.setItem("accessToken", accessToken);
+        window.history.replaceState(null, null, window.location.pathname);
+      }
+
+      const stored = sessionStorage.getItem("idToken");
+      if (stored) {
+        const user = jwt_decode(stored);
+        currentUsername = user.preferred_username || user.email || "User";
+        document.getElementById("welcomeText").innerText = `Welcome, ${name}`;
+        document.getElementById("signInBtn").style.display = "none";
+        document.getElementById("signOutBtn").style.display = "inline-block";
+      }
+
+      document.getElementById("signInBtn").addEventListener("click", () => {
+        const url = `${domain}/login?client_id=${clientId}&response_type=token&scope=email+openid&redirect_uri=${encodeURIComponent(redirectUri)}`;
+        window.location.href = url;
+      });
+
+      document.getElementById("signOutBtn").addEventListener("click", () => {
+        sessionStorage.clear();
+        const url = `${domain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+        window.location.href = url;
+      });
+    });
+
+    function getTokenFromHash() {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      return {
+        idToken: params.get("id_token"),
+        accessToken: params.get("access_token")
+      };
+    }
+
+    //load Products
+    async function loadProduct() {
+      try {
+        const res = await fetch("https://q9h5tl8i5j.execute-api.ap-southeast-1.amazonaws.com/dev/getProducts");
+        const products = await res.json();
+
+        const product = products.find(p => p.productId === productId);
+        if (!product) {
+          document.querySelector("main").innerHTML = "<p class='text-danger'>❌ Product not found</p>";
+          return;
+        }
+
+        // 用户信息
+        const token = sessionStorage.getItem("idToken");
+        const currentUsername = token ? jwt_decode(token).preferred_username || jwt_decode(token).email : null;
+
+        // 产品名 + Badge
+        const nameTag = document.getElementById("productName");
+        nameTag.innerHTML = `<span>${product.name}</span>`;
+        if (product.isBiddable === true) {
+          if (product.isBidOpen === true) {
+            nameTag.appendChild(createBadge("Bidding Open", "bg-success"));
+          } else {
+            nameTag.appendChild(createBadge("Bidding Stopped", "bg-secondary"));
+          }
+        } else if (product.isBidOpen === false) {
+          nameTag.appendChild(createBadge("SOLD", "bg-danger"));
+        }
+
+        // 填入文字内容
+        document.getElementById("productDescription").textContent = product.description;
+        document.getElementById("productPrice").textContent = product.price;
+
+        // 图片 Carousel
+        const carousel = document.querySelector("#productCarousel .carousel-inner");
+        carousel.innerHTML = `
+          <div class="carousel-item active">
+            <img src="${product.coverUrl}" class="d-block w-100 img-fluid rounded" alt="${product.name}"
+                onerror="this.src='https://via.placeholder.com/600x400?text=Image+Unavailable'">
+          </div>`;
+
+        // 清空旧按钮区域
+        const oldAction = document.getElementById("actionButtons");
+        if (oldAction) oldAction.remove();
+
+        const actionDiv = document.createElement("div");
+        actionDiv.id = "actionButtons";
+        actionDiv.className = "mt-3 d-flex gap-2";
+
+        // 下单按钮（普通购买商品 + 未售出）
+        if (product.isBiddable === false && product.isBidOpen !== false) {
+          const btn = document.createElement("button");
+          btn.className = "btn btn-primary";
+          btn.innerHTML = "🛒 Place Order";
+          btn.onclick = async () => {
+            btn.disabled = true;
+            btn.innerHTML = "⏳ Placing...";
+
+            if (!token) {
+              alert("⚠️ Please log in.");
+              btn.disabled = false;
+              btn.innerHTML = "🛒 Place Order";
+              return;
+            }
+
+            const res = await fetch("https://bnnhdrhw7l.execute-api.ap-southeast-1.amazonaws.com/dev/placeOrders", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+              },
+              body: JSON.stringify({ productId: product.productId })
+            });
+
+            const result = await res.json();
+            if (res.ok) {
+              alert("✅ Order placed!");
+              loadProduct(); // 重新加载状态
+            } else {
+              alert("❌ Failed: " + (result.error || result.message));
+              btn.disabled = false;
+              btn.innerHTML = "🛒 Place Order";
+            }
+          };
+          actionDiv.appendChild(btn);
+        }
+
+        // Stop Bidding Button (only for owner and if bid is open)
+        if (product.isBiddable === true && product.isBidOpen === true && currentUsername === product.username) {
+          const stopBtn = document.createElement("button");
+          stopBtn.className = "btn btn-outline-warning";
+          stopBtn.innerHTML = "🛑 Stop Bidding";
+          stopBtn.onclick = () => stopBidding(product.productId);
+          actionDiv.appendChild(stopBtn);
+        }
+
+        // 删除按钮（只有作者能见）
+        if (currentUsername === product.username) {
+          const removeBtn = document.createElement("button");
+          removeBtn.className = "btn btn-outline-danger";
+          removeBtn.innerHTML = "🗑️ Remove Product";
+          removeBtn.onclick = async () => {
+            if (!confirm("Are you sure you want to remove this product?")) return;
+            if (!token) {
+              alert("⚠️ Please log in.");
+              return;
+            }
+
+            const res = await fetch("https://a7r4qglchh.execute-api.ap-southeast-1.amazonaws.com/dev/deleteProducts", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+              },
+              body: JSON.stringify({ productId: product.productId })
+            });
+
+            const result = await res.json().catch(() => ({}));
+            if (res.ok) {
+              alert("✅ Product removed.");
+              window.location.href = "https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/store.html"; // 返回首页
+            } else {
+              alert("❌ Failed to delete: " + (result.detail || result.message || "Unknown error"));
+            }
+          };
+          actionDiv.appendChild(removeBtn);
+        }
+
+        // 加入按钮区域
+        document.getElementById("productDescription").parentNode.appendChild(actionDiv);
+
+        // 显示竞标区（如适用）
+        const biddingSection = document.getElementById("biddingSection");
+        biddingSection.classList.add("d-none");
+        if (product.isBiddable === true && product.isBidOpen !== false) {
+          biddingSection.classList.remove("d-none");
+          loadBids(product.productId); // 若你已定义这个函数
+        }
+
+      } catch (err) {
+        console.error("❌ Failed to load product:", err);
+      }
+    }
+
+    function createBadge(text, colorClass) {
+      const badge = document.createElement("span");
+      badge.className = `badge ${colorClass} ms-2`;
+      badge.textContent = text;
+      return badge;
+    }
+
+    //load bids
+    async function loadBids(productId) {
+      try {
+        const res = await fetch(`https://ew7cuasfb5.execute-api.ap-southeast-1.amazonaws.com/dev/getBids?productId=${productId}`);
+        const json = await res.json();
+        const bids = json.bids || [];
+
+        const bidList = document.getElementById("bidList");
+        bidList.innerHTML = "";
+
+        bids.sort((a, b) => parseFloat(b.amount) - parseFloat(a.amount));
+
+        if (bids.length === 0) {
+          bidList.innerHTML = "<li class='list-group-item'>No bids yet.</li>";
+          document.getElementById("highestBid").textContent = "-";
+        } else {
+          document.getElementById("highestBid").textContent = `RM ${bids[0].amount}`;
+          bids.forEach(bid => {
+            const li = document.createElement("li");
+            li.className = "list-group-item d-flex justify-content-between align-items-center";
+            li.innerHTML = `<span><strong>${bid.username}</strong></span><span>RM ${bid.amount}</span>`;
+            bidList.appendChild(li);
+          });
+        }
+      } catch (err) {
+        console.error("❌ Failed to load bids:", err);
+        document.getElementById("bidList").innerHTML = "<li class='list-group-item text-danger'>Failed to load bids.</li>";
+      }
+    }
+    
+    //place bids
+    async function placeBid() {
+      const amount = parseFloat(document.getElementById("bidAmount").value);
+      const token = sessionStorage.getItem("idToken");
+      if (!token || !currentUsername) return alert("⚠️ Please log in first.");
+      if (!amount || amount <= 0) return alert("⚠️ Enter a valid bid amount.");
+
+      try {
+        const res = await fetch("https://ggc0i7q7oa.execute-api.ap-southeast-1.amazonaws.com/dev/placeBids", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ productId, bidAmount: amount })
+        });
+
+        const result = await res.json().catch(() => ({}));
+        if (res.ok) {
+          alert("✅ Bid placed!");
+          document.getElementById("bidAmount").value = "";
+          loadBids(productId);
+        } else {
+          alert("❌ Failed to bid: " + (result.detail || result.message || "You cannot bid lower then the highest bid!"));
+        }
+      } catch (err) {
+        console.error("❌ Error placing bid:", err);
+        alert("❌ Failed to place bid.");
+      }
+    }
+
+    //stop bids
+    async function stopBidding(productId) {
+      const token = sessionStorage.getItem("idToken");
+      if (!token) return alert("⚠️ Please log in");
+
+      try {
+        const res = await fetch("https://p3n3knrnv6.execute-api.ap-southeast-1.amazonaws.com/dev/stopBid", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ productId })
+        });
+        const result = await res.json().catch(() => ({}));
+        if (res.ok) {
+          alert("✅ Bidding stopped");
+          window.location.reload();
+        } else {
+          alert("❌ Failed to stop bidding: " + (result.detail || result.message || "The bidding session have stop"));
+        }
+      } catch (err) {
+        console.error("❌ Error stopping bid:", err);
+        alert("❌ Failed to stop bidding.");
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", loadProduct);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>

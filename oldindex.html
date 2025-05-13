@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esport | GamerSpotlight</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/e5be5961bd.js" crossorigin="anonymous"></script>
+
+    <!-- Slick Slider -->
+    <link rel="stylesheet" type="text/css" href="./slick-1.8.1/slick/slick.css"/>
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="./css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.0.1/dist/amazon-cognito-identity.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="fas fa-bars text-white"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="./index.html">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./tournament.html">Tournaments</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./videos.html">Videos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./community.html">Community</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./store.html">Store</a></li>
+                </ul>
+                <p id="welcomeText" class="text-white me-3">Welcome!</p>
+                <div class="d-flex">
+                    <button id="signInBtn" class="btn btn-outline-light me-2">Sign In</button>
+                    <button id="signOutBtn" class="btn btn-danger" style="display:none;">Sign Out</button>
+                </div>
+                </div>
+            </div>
+            </nav>
+        </div>
+        </header>
+    <!-- /Header -->
+
+    <!-- Main Section -->
+    <main>
+        <!-- First Slider -->
+        <div class="container-fluid p-0">
+            <div class="site-slider">
+                <div class="slider-one">
+                    <div><img src="./assets/img/hero/hero-1.jpg" class="img-fluid" alt="Banner 1"></div>
+                    <div><img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid" alt="Banner 2"></div>
+                    <div><img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid" alt="Banner 3"></div>
+                    <div><img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid" alt="Banner 4"></div>
+                </div>
+                <div class="slider-btn">
+                    <span class="prev position-top"><i class="fas fa-chevron-left"></i></span>
+                    <span class="next position-top right-0"><i class="fas fa-chevron-right"></i></span>
+                </div>
+            </div>
+        </div>
+        <!-- /First Slider -->
+
+        <!-- Store Slider -->
+        <div class="container-fluid">
+            <div class="title-container">
+                <h3 class="fs-1 p-2 text-white">Latest Products</h3>
+                <h3><a href="./store.html">view more></a></h3>
+            </div>
+            <div class="site-slider-two px-md-4">
+                <div class="row slider-two text-center">
+                    <div class="col-md-2 product-card">
+                        <div class="product">
+                            <img src="./assets/img/news/news_game1.jpg" alt="Product 1">
+                            <div class="product-info">
+                                <h5>Product 1</h5>
+                                <p class="price">$19.99</p>
+                                <p class="description">High-quality gaming gear for professionals.</p>
+                                <button class="purchase-btn">Purchase Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 product-card">
+                        <div class="product">
+                            <img src="./assets/img/news/news_game2.jpg" alt="Product 2">
+                            <div class="product-info">
+                                <h5>Product 2</h5>
+                                <p class="price">$29.99</p>
+                                <p class="description">Limited edition game accessories.</p>
+                                <button class="purchase-btn">Join Group Purchase</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 product-card">
+                        <div class="product">
+                            <img src="./assets/img/news/news_game3.jpg" alt="Product 3">
+                            <div class="product-info">
+                                <h5>Product 3</h5>
+                                <p class="price">$15.99</p>
+                                <p class="description">Exclusive in-game merchandise.</p>
+                                <button class="purchase-btn">Purchase Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 product-card">
+                        <div class="product">
+                            <img src="./assets/img/news/news_player1.jpg" alt="Product 4">
+                            <div class="product-info">
+                                <h5>Product 4</h5>
+                                <p class="price">$24.99</p>
+                                <p class="description">Pro gaming setup gear.</p>
+                                <button class="purchase-btn">Join Group Purchase</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 product-card">
+                        <div class="product">
+                            <img src="./assets/img/news/news_player2.jpg" alt="Product 5">
+                            <div class="product-info">
+                                <h5>Product 5</h5>
+                                <p class="price">$39.99</p>
+                                <p class="description">Special edition controller.</p>
+                                <button class="purchase-btn">Purchase Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 product-card">
+                        <div class="product">
+                            <img src="./assets/img/news/news_player3.jpg" alt="Product 6">
+                            <div class="product-info">
+                                <h5>Product 6</h5>
+                                <p class="price">$9.99</p>
+                                <p class="description">Essential gaming accessory.</p>
+                                <button class="purchase-btn">Join Group Purchase</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-btn-two">
+                    <span class="prev position-top"><i class="fas fa-chevron-left fa-2x text bg-secondary"></i></span>
+                    <span class="next position-top right-0"><i class="fas fa-chevron-right fa-2x text bg-secondary"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <!--/Store Slider -->
+
+        <!-- Live Tournament Matches -->
+        <section class="container mt-5">
+            <h2 class="text-white">Live Tournament Matches</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="match-card bg-dark p-3 text-white">
+                        <h5>Team A vs Team B</h5>
+                        <p>Live Now | League of Legends Championship</p>
+                        <a href="#" class="btn btn-success">Buy Ticket</a>
+                        <a href="#" class="btn btn-danger">Watch Live</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="match-card bg-dark p-3 text-white">
+                        <h5>Team X vs Team Y</h5>
+                        <p>Live Now | CS:GO Major Tournament</p>
+                        <a href="#" class="btn btn-danger">Watch Replay</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /Live Tournament Matches -->
+
+        <!-- Featured Esports News -->
+        <section class="container mt-5">
+            <h2 class="text-white">Latest Esports News</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card bg-dark text-white">
+                        <img src="./assets/img/news/news_player1.jpg" class="card-img-top" alt="News 1">
+                        <div class="card-body">
+                            <h5 class="card-title">New Championship Announced</h5>
+                            <p class="card-text">The 2025 Esports World Championship is set to take place...</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-dark text-white">
+                        <img src="./assets/img/news/news_player2.jpg" class="card-img-top" alt="News 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Pro Player Transfers</h5>
+                            <p class="card-text">Top players are switching teams for the upcoming season...</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-dark text-white">
+                        <img src="./assets/img/news/news_player3.jpg" class="card-img-top" alt="News 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Meta Shift in Competitive Play</h5>
+                            <p class="card-text">New patches are changing the way the game is played...</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /Featured Esports News -->
+
+        <!-- Community Engagement -->
+        <section class="container mt-5 text-center">
+            <h2 class="text-white">Join the Esports Community</h2>
+            <p class="text-white">Connect with other gamers, discuss strategies, and stay updated on the latest esports news.</p>
+            <a href="./community.html" class="btn btn-success">Join Now</a>
+        </section>
+        <!-- /Community Engagement -->
+    </main>
+    <!-- /Main Section -->
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white py-4 mt-5 text-center">
+        <p>&copy; 2025 GamerSpotlight. All Rights Reserved.</p>
+    </footer>
+    <!-- /Footer -->
+
+    <!-- Scripts -->
+    <!-- Bootstrap / jQuery / Slick -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="./slick-1.8.1/slick/slick.min.js"></script>
+    <script src="./js/main.js"></script>
+
+    <script>
+    const clientId = "p36ba0bp3u8sqr55fc682n714";
+    const domain = "https://ap-southeast-1ypgkwwghv.auth.ap-southeast-1.amazoncognito.com";
+    const redirectUri = "https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/index.html";
+    const logoutUri = redirectUri;
+
+    window.addEventListener('load', () => {
+        const { idToken, accessToken } = getTokenFromHash();
+        if (idToken) {
+            sessionStorage.setItem('idToken', idToken);
+            sessionStorage.setItem('accessToken', accessToken);
+            window.history.replaceState(null, null, window.location.pathname);
+        }
+        const stored = sessionStorage.getItem('idToken');
+        if (stored) {
+            const user = jwt_decode(stored);
+            const name = user.preferred_username || user.email || "User";
+            document.getElementById('welcomeText').innerText = `Welcome, ${name}`;
+            document.getElementById('signInBtn').style.display = 'none';
+            document.getElementById('signOutBtn').style.display = 'inline-block';
+        }
+
+        document.getElementById('signInBtn').addEventListener('click', () => {
+            const url = `${domain}/login?client_id=${clientId}&response_type=token&scope=email+openid+profile&redirect_uri=${encodeURIComponent(redirectUri)}`;
+            window.location.href = url;
+        });
+        document.getElementById('signOutBtn').addEventListener('click', () => {
+            sessionStorage.clear();
+            const url = `${domain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+            window.location.href = url;
+        });
+        });
+
+        function getTokenFromHash() {
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        return { idToken: params.get('id_token'), accessToken: params.get('access_token') };
+        }
+
+        const endpoint = "https://c5c4dn0f95.execute-api.ap-southeast-1.amazonaws.com/dev/uploadProduct";
+
+    document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const token = sessionStorage.getItem("idToken");
+    if (!token) {
+        alert("⚠️ 请先登录");
+        return;
+    }
+
+    const form = e.target;
+    const formData = new FormData();
+
+    formData.append("name", form.name.value);
+    formData.append("description", form.description.value);
+    formData.append("price", form.price.value);
+    formData.append("tags", form.tags.value);
+    formData.append("isBiddable", form.isBiddable.checked.toString());
+
+    const images = document.getElementById("images").files;
+    for (let i = 0; i < images.length; i++) {
+        formData.append(`file${i}`, images[i]); // ⬅️ 每张图都用不同 key
+    }
+
+    try {
+        const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        body: formData
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+        window.location.href = "store.html?success=1";
+        } else {
+        alert("❌ 上传失败：" + (result.detail || result.message));
+        }
+    } catch (err) {
+        alert("❌ 上传失败：" + err.message);
+        console.error("上传失败:", err);
+    }
+    });
+
+
+
+
+    </script>
+
+  
+</body>
+</html>

@@ -78,7 +78,7 @@ header .site-title {
 }
 
 .navbar-nav .nav-link {
-    font-size: 0.9em;
+    font-size: 1.2em;
     color: white !important;
 }
 
@@ -125,6 +125,23 @@ header .site-title {
         height: auto; /* Scale image properly */
     }
 }
+
+.slider-overlay {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+.slider-card-container:hover .slider-overlay {
+  opacity: 1;
+}
+.slider-card-container:hover img {
+  filter: brightness(70%);
+}
+.slider-videos-nav img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  width: 100%;
+}
+
 
 
 /* Position the button container properly */

@@ -1,369 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esport | GamerSpotlight</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GamerSpotlight-Home</title>
 
-    <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
 
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/e5be5961bd.js" crossorigin="anonymous"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
-    <!-- Slick Slider -->
-    <link rel="stylesheet" type="text/css" href="./slick-1.8.1/slick/slick.css"/>
+  <!-- Slick Slider CSS (if needed) -->
+  <link rel="stylesheet" type="text/css" href="./slick-1.8.1/slick/slick.css" />
 
-    <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="./css/style.css">
-
-    <script src="https://unpkg.com/aws-amplify@5.3.1/dist/aws-amplify.min.js"></script>
-
-
-    <style>
-
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.0.1/dist/amazon-cognito-identity.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
-    </style>
+  <style>
+    .carousel-inner img {
+      aspect-ratio: 16 / 9;
+      height: 700px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    body {
+      background-color: #121212;
+      color: #fff;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .section-title {
+      margin-bottom: 1.5rem;
+    }
+    /* Ticket Section */
+    .ticket-section {
+      background-color: #1e1e1e;
+      padding: 2rem;
+      border-radius: 8px;
+    }
+
+    .list-group-item {
+      background-color: #1e1e1e;
+      color: white;
+      font-weight: 500;
+      border: 1px solid #333;
+    }
+
+    .list-group-item:hover {
+      background-color: #333;
+      color: #0d6efd; /* 蓝色高亮 */
+      font-weight: bold;
+    }
+
+    .list-group-item:focus {
+      background-color: #222;
+      outline: none;
+      box-shadow: 0 0 0 2px #0d6efd55;
+    }
+
+  </style>
 </head>
 <body>
 
     <!-- Header -->
-    <!-- GUEST HEADER (for users not logged in) -->
-    <header id="guest-header">
+    <header>
         <div class="container">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-            <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fas fa-bars text-white"></span>
-            </button>
-    
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link active" href="./index.html">HOME</a></li>
-                <li class="nav-item"><a class="nav-link" href="./tournament.html">Tournaments</a></li>
-                <li class="nav-item"><a class="nav-link" href="./videos.html">Videos</a></li>
-                <li class="nav-item"><a class="nav-link" href="./community.html">Community</a></li>
-                <li class="nav-item"><a class="nav-link" href="./store.html">Store</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">More</a>
-                    <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-                </ul>
-                <div class="d-flex">
-                    <button id="signInBtn" class="btn btn-outline-light me-2">Sign In</button>
-                    <button id="signOutBtn" class="btn btn-danger" style="display:none;">Sign Out</button>                    
-                </div>                               
-            </div>
-            </div>
-        </nav>
+          <nav class="navbar navbar-expand-lg bg-body-tertiary">
+              <div class="container-fluid">
+              <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                  <span class="fas fa-bars text-white"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav me-auto">
+                  <li class="nav-item"><a class="nav-link active" href="./index.html">HOME</a></li>
+                  <li class="nav-item"><a class="nav-link" href="./videos.html">Videos</a></li>
+                  <li class="nav-item"><a class="nav-link" href="./store.html">MarketPlace</a></li>
+                  <li class="nav-item"><a class="nav-link" href="./community.html">Community</a></li>
+                  </ul>
+                  <p id="welcomeText" class="text-white mt-3 me-3">Welcome!</p>
+                  <div class="d-flex">
+                  <button id="signInBtn" class="btn btn-outline-light me-2">Sign In</button>
+                  <button id="signOutBtn" class="btn btn-outline-danger" style="display:none;">Sign Out</button>
+                  </div>
+              </div>
+              </div>
+          </nav>
         </div>
     </header>
-    
-    <!-- USER HEADER (for logged-in users) -->
-    <header id="user-header" style="display: none;">
-        <div class="container">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-            <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fas fa-bars text-white"></span>
-            </button>
-    
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link active" href="./index.html">HOME</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Tournaments</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Videos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Community</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Store</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">More</a>
-                    <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown"
-                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="./assets/img/hero/hero-theshy.jpg" alt="User Avatar" class="rounded-circle me-2" width="40"
-                        height="40">
-                    <span class="text-white d-none d-md-inline" id="nav-username">User</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li class="text-center"><img src="./assets/img/hero/hero-theshy.jpg" alt="User Avatar"
-                        class="rounded-circle my-2" width="80" height="80"></li>
-                    <li class="text-center"><strong id="header-username">JohnDoe</strong></li>
-                    <li class="text-center text-muted" id="header-email">johndoe@example.com</li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-center" href="#">Profile</a></li>
-                    <li><a class="dropdown-item text-center text-danger" href="#" onclick="logout()">Logout</a></li>
-                    </ul>
-                </li>
-                </ul>
-            </div>
-            </div>
-        </nav>
-        </div>
-    </header>  
     <!-- /Header -->
 
-    <!-- Main Section -->
-    <main>
-        <!-- First Slider -->
-        <div class="container-fluid p-0">
-            <div class="site-slider">
-                <div class="slider-one">
-                    <div><img src="./assets/img/hero/hero-1.jpg" class="img-fluid" alt="Banner 1"></div>
-                    <div><img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid" alt="Banner 2"></div>
-                    <div><img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid" alt="Banner 3"></div>
-                    <div><img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid" alt="Banner 4"></div>
-                </div>
-                <div class="slider-btn">
-                    <span class="prev position-top"><i class="fas fa-chevron-left"></i></span>
-                    <span class="next position-top right-0"><i class="fas fa-chevron-right"></i></span>
-                </div>
-            </div>
-        </div>
-        <!-- /First Slider -->
+  <!-- Main Section -->
+  <main>
+    <!-- 1. Hero Section: Highlights & Features -->
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
 
-        <!-- Store Slider -->
-        <div class="container-fluid">
-            <div class="title-container">
-                <h3 class="fs-1 p-2 text-white">Latest Products</h3>
-                <h3><a href="./store.html">view more></a></h3>
-            </div>
-            <div class="site-slider-two px-md-4">
-                <div class="row slider-two text-center">
-                    <div class="col-md-2 product-card">
-                        <div class="product">
-                            <img src="./assets/img/news/news_game1.jpg" alt="Product 1">
-                            <div class="product-info">
-                                <h5>Product 1</h5>
-                                <p class="price">$19.99</p>
-                                <p class="description">High-quality gaming gear for professionals.</p>
-                                <button class="purchase-btn">Purchase Now</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 product-card">
-                        <div class="product">
-                            <img src="./assets/img/news/news_game2.jpg" alt="Product 2">
-                            <div class="product-info">
-                                <h5>Product 2</h5>
-                                <p class="price">$29.99</p>
-                                <p class="description">Limited edition game accessories.</p>
-                                <button class="purchase-btn">Join Group Purchase</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 product-card">
-                        <div class="product">
-                            <img src="./assets/img/news/news_game3.jpg" alt="Product 3">
-                            <div class="product-info">
-                                <h5>Product 3</h5>
-                                <p class="price">$15.99</p>
-                                <p class="description">Exclusive in-game merchandise.</p>
-                                <button class="purchase-btn">Purchase Now</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 product-card">
-                        <div class="product">
-                            <img src="./assets/img/news/news_player1.jpg" alt="Product 4">
-                            <div class="product-info">
-                                <h5>Product 4</h5>
-                                <p class="price">$24.99</p>
-                                <p class="description">Pro gaming setup gear.</p>
-                                <button class="purchase-btn">Join Group Purchase</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 product-card">
-                        <div class="product">
-                            <img src="./assets/img/news/news_player2.jpg" alt="Product 5">
-                            <div class="product-info">
-                                <h5>Product 5</h5>
-                                <p class="price">$39.99</p>
-                                <p class="description">Special edition controller.</p>
-                                <button class="purchase-btn">Purchase Now</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 product-card">
-                        <div class="product">
-                            <img src="./assets/img/news/news_player3.jpg" alt="Product 6">
-                            <div class="product-info">
-                                <h5>Product 6</h5>
-                                <p class="price">$9.99</p>
-                                <p class="description">Essential gaming accessory.</p>
-                                <button class="purchase-btn">Join Group Purchase</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="slider-btn-two">
-                    <span class="prev position-top"><i class="fas fa-chevron-left fa-2x text bg-secondary"></i></span>
-                    <span class="next position-top right-0"><i class="fas fa-chevron-right fa-2x text bg-secondary"></i></span>
-                </div>
-            </div>
+        <!-- Slide 1 - Welcome & About -->
+        <div class="carousel-item active position-relative">
+          <img src="./assets/img/hero1.jpg" class="d-block w-100" alt="About">
+          <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 top-0 start-0 position-absolute w-100 bg-dark bg-opacity-50">
+            <h1 class="display-4 text-white">🎮 What is GamerSpotlight?</h1>
+            <p class="lead text-white">A platform to watch, shop, and talk all things esports—powered by AWS.</p>
+            <a href="#featureSection" class="btn btn-light btn-lg">Discover More</a>
+          </div>
         </div>
 
-        <!--/Store Slider -->
+        <!-- Slide 2 - Video Library -->
+        <div class="carousel-item position-relative">
+          <img src="./assets/img/hero2.jpg" class="d-block w-100" alt="Videos">
+          <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 top-0 start-0 position-absolute w-100 bg-dark bg-opacity-50">
+            <h1 class="display-4 text-white">🎬 Watch Highlight Clips</h1>
+            <p class="lead text-white">Explore epic plays and legendary moments with our dynamic video player.</p>
+            <a href="videos.html" class="btn btn-primary btn-lg">Start Watching</a>
+          </div>
+        </div>
 
-        <!-- Live Tournament Matches -->
-        <section class="container mt-5">
-            <h2 class="text-white">Live Tournament Matches</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="match-card bg-dark p-3 text-white">
-                        <h5>Team A vs Team B</h5>
-                        <p>Live Now | League of Legends Championship</p>
-                        <a href="#" class="btn btn-success">Buy Ticket</a>
-                        <a href="#" class="btn btn-danger">Watch Live</a>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="match-card bg-dark p-3 text-white">
-                        <h5>Team X vs Team Y</h5>
-                        <p>Live Now | CS:GO Major Tournament</p>
-                        <a href="#" class="btn btn-danger">Watch Replay</a>
-                    </div>
-                </div>
+        <!-- Slide 3 - Marketplace -->
+        <div class="carousel-item position-relative">
+          <img src="./assets/img/hero3.jpg" class="d-block w-100" alt="Marketplace">
+          <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 top-0 start-0 position-absolute w-100 bg-dark bg-opacity-50">
+            <h1 class="display-4 text-white">🛒 Esports MarketPlace</h1>
+            <p class="lead text-white">Buy exclusive esports merchandise and in-game gear from the community.</p>
+            <a href="store.html" class="btn btn-success btn-lg">MarketPlace</a>
+          </div>
+        </div>
+
+        <!-- Slide 4 - Community -->
+        <div class="carousel-item position-relative">
+          <img src="./assets/img/hero4.jpg" class="d-block w-100" alt="Community">
+          <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 top-0 start-0 position-absolute w-100 bg-dark bg-opacity-50">
+            <h1 class="display-4 text-white">💬 Gamer Community</h1>
+            <p class="lead text-white">Post highlights, drop comments, and connect with other players.</p>
+            <a href="community.html" class="btn btn-info btn-lg">Join Discussion</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+
+
+    <!-- 2. Feature Overview Section - Fancy Version with Animation -->
+    <section id="featureSection" class="container my-5">
+      <div class="row g-4">
+
+        <!-- Video Player Feature -->
+        <div class="col-md-4">
+          <div class="card bg-dark text-white h-100 shadow-lg border border-secondary rounded-4 animate__animated animate__fadeInUp">
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title fs-4 mb-3">🎬 Pro-Grade Video Playback</h5>
+                <p class="card-text">Watch highlight reels, montages, and voice comms with seamless routing and smooth playback. Dive into epic plays anytime.</p>
+              </div>
+              <a href="videos.html" class="btn btn-outline-light mt-4 align-self-start">Explore Videos</a>
             </div>
-        </section>
-        <!-- /Live Tournament Matches -->
+          </div>
+        </div>
 
-        <!-- Featured Esports News -->
-        <section class="container mt-5">
-            <h2 class="text-white">Latest Esports News</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card bg-dark text-white">
-                        <img src="./assets/img/news/news_player1.jpg" class="card-img-top" alt="News 1">
-                        <div class="card-body">
-                            <h5 class="card-title">New Championship Announced</h5>
-                            <p class="card-text">The 2025 Esports World Championship is set to take place...</p>
-                            <a href="#" class="btn btn-primary">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card bg-dark text-white">
-                        <img src="./assets/img/news/news_player2.jpg" class="card-img-top" alt="News 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Pro Player Transfers</h5>
-                            <p class="card-text">Top players are switching teams for the upcoming season...</p>
-                            <a href="#" class="btn btn-primary">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card bg-dark text-white">
-                        <img src="./assets/img/news/news_player3.jpg" class="card-img-top" alt="News 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Meta Shift in Competitive Play</h5>
-                            <p class="card-text">New patches are changing the way the game is played...</p>
-                            <a href="#" class="btn btn-primary">Read More</a>
-                        </div>
-                    </div>
-                </div>
+        <!-- Shop Feature -->
+        <div class="col-md-4">
+          <div class="card bg-dark text-white h-100 shadow-lg border border-success rounded-4 animate__animated animate__fadeInUp animate__delay-1s">
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title fs-4 mb-3">🛒 Gamer Marketplace</h5>
+                <p class="card-text">Purchase exclusive esports gear, collectibles, and player merch. Built for fans, by fans.</p>
+              </div>
+              <a href="store.html" class="btn btn-outline-success mt-4 align-self-start">Visit Store</a>
             </div>
-        </section>
-        <!-- /Featured Esports News -->
+          </div>
+        </div>
 
-        <!-- Community Engagement -->
-        <section class="container mt-5 text-center">
-            <h2 class="text-white">Join the Esports Community</h2>
-            <p class="text-white">Connect with other gamers, discuss strategies, and stay updated on the latest esports news.</p>
-            <a href="./community.html" class="btn btn-success">Join Now</a>
-        </section>
-        <!-- /Community Engagement -->
-    </main>
-    <!-- /Main Section -->
+        <!-- Community Feature -->
+        <div class="col-md-4">
+          <div class="card bg-dark text-white h-100 shadow-lg border border-info rounded-4 animate__animated animate__fadeInUp animate__delay-2s">
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title fs-4 mb-3">💬 Interactive Community Hub</h5>
+                <p class="card-text">Share highlights, comment on plays, and interact with fellow gamers in a modern discussion zone.</p>
+              </div>
+              <a href="community.html" class="btn btn-outline-info mt-4 align-self-start">Join Discussion</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="footer bg-dark text-white py-4 mt-5 text-center">
-        <p>&copy; 2025 GamerSpotlight. All Rights Reserved.</p>
-    </footer>
-    <!-- /Footer -->
 
-    <!-- Scripts -->
-    <!-- Bootstrap / jQuery / Slick -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="./slick-1.8.1/slick/slick.min.js"></script>
-    <script src="./js/main.js"></script>
-<!-- load your aws-exports-browser.js first -->
-<!-- Load Amplify config -->
-<!--<script src="./aws-exports-browser.js"></script> -->
+    <!-- 3. Highlight Video Section -->
+    <section class="container my-5">
+      <h2 class="section-title text-white">🎮 Match Highlights</h2>
+      <div class="row">
+        <div class="col-md-8">
+          <!-- Main Highlight Video -->
+          <div class="mb-4">
+            <video id="mainHighlightVideo" class="w-100" controls>
+              <source id="mainHighlightSource" src="./assets/videos/lol2023/topplay_final.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <!-- Video Thumbnails -->
+          <div class="list-group">
+            <button class="list-group-item list-group-item-action" onclick="changeHighlight('./assets/videos/lol2023/topplay_final.mp4')">🏆 Grand Final</button>
+            <button class="list-group-item list-group-item-action" onclick="changeHighlight('./assets/videos/lol2023/topplay_semi.mp4')">🏆 Semi Final</button>
+            <button class="list-group-item list-group-item-action" onclick="changeHighlight('./assets/videos/lol2023/topplay_quate.mp4')">🏆 Quate Final</button>
+            <button class="list-group-item list-group-item-action" onclick="changeHighlight('./assets/videos/best_doublelift.mp4')"> Best_doublelift</button>
+            <button class="list-group-item list-group-item-action" onclick="changeHighlight('./assets/videos/best_faker1.mp4')">Best_Faker</button>
+            <button class="list-group-item list-group-item-action" onclick="changeHighlight('./assets/videos/best_faker2.mp4')">Best_Fakerv2</button>
+            <button class="list-group-item list-group-item-action" onclick="changeHighlight('./assets/videos/mh_final.mp4')">🏆 MH Final</button>
+            <button class="list-group-item list-group-item-action" onclick="changeHighlight('./assets/videos/vl_final.mp4')">🏆 Valorant Final</button>
+            <button class="list-group-item list-group-item-action" onclick="changeHighlight('./assets/videos/fakerdoublelift.mp4')"> Faker X Doublelift</button>
+            <button class="list-group-item list-group-item-action" onclick="changeHighlight('./assets/videos/BestPlaysVALORANTChampionsSeoul.mp4')"> Seoul Valorant Champions </button>
+            <button class="list-group-item list-group-item-action" onclick="changeHighlight('./assets/videos/KidaADC.mp4')"> Clean ADC mechanics </button>
+            <button class="list-group-item list-group-item-action" onclick="changeHighlight('./assets/videos/KidaAzir.mp4')"> Azir shuffle </button>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<script type="module">
-    import { Amplify, Auth } from 'https://cdn.jsdelivr.net/npm/aws-amplify@6.14.3/+esm';
-    import awsconfig from './aws-exports.js'; // 确保你这行路径对
-  
-    Amplify.configure({
-      ...awsconfig,
-      oauth: {
-        ...awsconfig.oauth,
-        responseType: 'token' // 用 implicit flow
-      }
-    });
-  
-    const signInUrl = awsconfig.oauth.domain +
-      "/login?client_id=" + awsconfig.aws_user_pools_web_client_id +
-      "&response_type=token&scope=email+openid+phone" +
-      "&redirect_uri=" + encodeURIComponent(awsconfig.oauth.redirectSignIn);
-  
-    const signOutUrl = awsconfig.oauth.domain +
-      "/logout?client_id=" + awsconfig.aws_user_pools_web_client_id +
-      "&logout_uri=" + encodeURIComponent(awsconfig.oauth.redirectSignOut);
-  
-    document.getElementById("signInBtn").addEventListener("click", () => {
-      window.location.href = signInUrl;
-    });
-  
-    document.getElementById("signOutBtn").addEventListener("click", () => {
-      window.location.href = signOutUrl;
-    });
-  
-    // 判断登录状态
-    Auth.currentAuthenticatedUser()
-      .then(user => {
-        console.log("✅ Logged in as:", user);
-        document.getElementById("signInBtn").style.display = "none";
-        document.getElementById("signOutBtn").style.display = "inline-block";
-  
-        // 你还可以把用户名显示在 navbar 上，比如：
-        // document.getElementById("nav-username").textContent = user.username;
-      })
-      .catch(() => {
-        console.log("🔒 Not logged in");
-        document.getElementById("signInBtn").style.display = "inline-block";
-        document.getElementById("signOutBtn").style.display = "none";
-      });
+  </main>
+  <!-- /Main Section -->
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-complete bg-dark text-white py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>About GamerSpotlight</h5>
+            <p>Empowering gamers to buy, bid, share, and discuss esports products and videos — all in one unified platform.</p>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-unstyled">
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Lim Boon Chong | 19ACB03229</h5>
+            <p>E-Sports Web Page Development Hosted in AWS</p>
+          </div>
+        </div>
+        <div class="text-center mt-3">
+          <p>&copy; 2025 GamerSpotlight. All Rights Reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap & JS Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="./slick-1.8.1/slick/slick.min.js"></script>
+  <script src="./js/main.js"></script>
+  <script>
+    function changeHighlight(videoPath) {
+      const video = document.getElementById('mainHighlightVideo');
+      const source = document.getElementById('mainHighlightSource');
+      source.src = videoPath;
+      video.load();
+      video.play(); // Optional: autoplay when switched
+    }
   </script>
+  <script>
+    const clientId = "p36ba0bp3u8sqr55fc682n714";
+    const domain = "https://ap-southeast-1ypgkwwghv.auth.ap-southeast-1.amazoncognito.com";
+    const redirectUri = "https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/index.html";
+    const logoutUri = redirectUri;
+    const uploadEndpoint = "https://c5c4dn0f95.execute-api.ap-southeast-1.amazonaws.com/dev/uploadProduct";
+    const getEndpoint = "https://q9h5tl8i5j.execute-api.ap-southeast-1.amazonaws.com/dev/getProducts";
   
+    window.addEventListener('load', () => {
+      const { idToken, accessToken } = getTokenFromHash();
+      if (idToken) {
+        sessionStorage.setItem('idToken', idToken);
+        sessionStorage.setItem('accessToken', accessToken);
+        window.history.replaceState(null, null, window.location.pathname);
+      }
   
+      const stored = sessionStorage.getItem('idToken');
+      if (stored) {
+        try {
+          const user = jwt_decode(stored);
+          const name = user.preferred_username || user.email || "User";
+          document.getElementById('welcomeText').innerText = `Welcome, ${name}`;
+          document.getElementById('signInBtn').style.display = 'none';
+          document.getElementById('signOutBtn').style.display = 'inline-block';
+        } catch (e) {
+          console.warn("Token decode error:", e);
+        }
+      }
   
+      document.getElementById('signInBtn').addEventListener('click', () => {
+        const url = `${domain}/login?client_id=${clientId}&response_type=token&scope=email+openid+profile&redirect_uri=${encodeURIComponent(redirectUri)}`;
+        window.location.href = url;
+      });
   
-        
+      document.getElementById('signOutBtn').addEventListener('click', () => {
+        sessionStorage.clear();
+        const url = `${domain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+        window.location.href = url;
+      });
+    });
+  
+    function getTokenFromHash() {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      return { idToken: params.get('id_token'), accessToken: params.get('access_token') };
+    }
 
-
+    </script>
 </body>
 </html>

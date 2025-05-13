@@ -1,275 +1,454 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Esport - Store</title>
+  <title>GamerSpotlight-MarketPlace</title>
 
   <!-- Bootstrap CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Font Awesome CDN -->
+  <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/e5be5961bd.js" crossorigin="anonymous"></script>
 
   <!-- Slick Slider -->
   <link rel="stylesheet" type="text/css" href="./slick-1.8.1/slick/slick.css"/>
-  <!-- You can add additional Slick CSS if needed -->
 
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="./css/style.css">
 
+  <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.0.1/dist/amazon-cognito-identity.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+
   <style>
-    /* Hero Section */
-    .hero {
-      background: url('./assets/hero-bg.jpg') no-repeat center center/cover;
-      color: #fff;
-      padding: 100px 0;
-      text-align: center;
+    #uploadCard {
+      background-color: #1e1e1e;
+      color: white;
+      border: 1px solid #444;
+      border-radius: 12px;
     }
-    /* Filter Section */
-    .filter-section {
-      background-color: #f8f9fa;
-      padding: 20px 0;
+  
+    #uploadCard .card-header {
+      background-color: #0d6efd; /* Bootstrap primary */
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
     }
-    /* Products Section */
-    .product-card .card {
-      transition: transform 0.3s ease;
+  
+    #uploadCard input,
+    #uploadCard textarea {
+      background-color: #2a2a2a;
+      color: white;
+      border: 1px solid #555;
     }
-    .product-card .card:hover {
-      transform: translateY(-5px);
+  
+    #uploadCard input::placeholder,
+    #uploadCard textarea::placeholder {
+      color: #ccc;
     }
+  
+    #uploadCard input:focus,
+    #uploadCard textarea:focus {
+      border-color: #0d6efd;
+      box-shadow: none;
+    }
+  
+    #uploadCard .form-check-label {
+      color: #ddd;
+    }
+  
+    #uploadCard .btn-success {
+      font-weight: bold;
+    }
+
+    .product-controls {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    border: 1px solid #333;
+  }
+
+  .product-controls h4 {
+    color: white;
+    font-weight: bold;
+  }
+
+  .product-controls .form-control {
+    background-color: #2a2a2a;
+    color: white;
+    border: 1px solid #444;
+  }
+
+  .product-controls .form-control::placeholder {
+    color: #aaa;
+  }
+
+  .product-controls .btn {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 576px) {
+    .product-controls .d-flex {
+      flex-direction: column;
+      gap: 0.5rem !important;
+    }
+  }
+
+  #productContainer .card {
+    background-color: #1e1e1e;
+    color: white;
+    border: 1px solid #333;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  #productContainer .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+  }
+
+  #productContainer .card .card-title {
+    font-weight: bold;
+    color: #fff;
+  }
+
+  #productContainer .card .card-text {
+    color: #ccc;
+  }
+
+  #productContainer .card-footer {
+    background-color: #111;
+    color: #aaa;
+  }
+
+  #productContainer .btn-success,
+  #productContainer .btn-warning {
+    font-weight: bold;
+  }
+
   </style>
+
 </head>
 <body>
-
-  <!-- Header -->
-  <header>
-    <div class="container">
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-                  aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="fas fa-bars text-white"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" href="./index.html">HOME</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./tournament.html">Tournaments</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./videos.html">Videos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./community.html">Community</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./store.html">Store</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  More
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-            </ul>
-            <div class="d-flex">
-              <a href="/signin.html" class="btn btn-outline-light me-2">Sign In</a>
-              <a href="./signup.html" class="btn btn-light">Create an Account</a>
-            </div>
+    <!-- Header -->
+    <header>
+      <div class="container">
+          <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+              <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <span class="fas fa-bars text-white"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="./index.html">HOME</a></li>
+                <li class="nav-item"><a class="nav-link" href="./videos.html">Videos</a></li>
+                <li class="nav-item"><a class="nav-link" href="./store.html">MarketPlace</a></li>
+                <li class="nav-item"><a class="nav-link" href="./community.html">Community</a></li>
+              </ul>
+              <p id="welcomeText" class="text-white mt-3 me-3">Welcome!</p>
+              <div class="d-flex">
+                  <button id="signInBtn" class="btn btn-outline-light me-2">Sign In</button>
+                  <button id="signOutBtn" class="btn btn-outline-danger" style="display:none;">Sign Out</button>
+              </div>
+              </div>
           </div>
-        </div>
-      </nav>
-    </div>
-  </header>
+          </nav>
+      </div>
+      </header>
   <!-- /Header -->
 
-  <!-- Main Section -->
-  <main>
-    <!-- Search Bar Section -->
-    <section class="container my-4">
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <input type="text" class="form-control" placeholder="Search products, brands...">
+  <!-- Upload Form (hidden by default) -->
+  <div class="card shadow-sm mb-4 d-none" id="uploadCard">
+    <div class="card-header">🛒 Upload Product</div>
+    <div class="card-body">
+      <form id="uploadForm">
+        <div class="mb-3">
+          <input type="text" class="form-control" name="name" placeholder="Product Name" required>
         </div>
-      </div>
-    </section>
-
-    <!-- Hero Section for Upcoming Group Purchase -->
-    <section class="hero">
-      <div class="container">
-        <h1 class="display-4">Upcoming Group Purchase</h1>
-        <p class="lead">Join our group purchase to enjoy amazing deals on your favorite products!</p>
-        <a href="#" class="btn btn-success btn-lg">Learn More</a>
-      </div>
-    </section>
-
-    <!-- Filter Section -->
-    <section class="filter-section bg-dark text-white py-3">
-      <div class="container">
-        <h2 class="mb-3"><i class="fas fa-filter"></i> Filter Products</h2>
-        <form class="row g-3">
-          <!-- Filter by Brand -->
-          <div class="col-auto">
-            <label class="form-label text-white"><i class="fas fa-tags"></i> Brand</label>
-            <select class="form-select">
-              <option selected>Select Brand</option>
-              <option value="razer"><i class="fas fa-mouse"></i> Razer</option>
-              <option value="logitech"><i class="fas fa-keyboard"></i> Logitech</option>
-              <option value="mouse"><i class="fas fa-laptop"></i> Mouse</option>
-            </select>
-          </div>
-
-          <!-- Filter by Category -->
-          <div class="col-auto">
-            <label class="form-label text-white"><i class="fas fa-list"></i> Category</label>
-            <select class="form-select">
-              <option selected>Select Category</option>
-              <option value="mouse"><i class="fas fa-mouse"></i> Mouse</option>
-              <option value="keyboard"><i class="fas fa-keyboard"></i> Keyboard</option>
-              <option value="laptop"><i class="fas fa-laptop"></i> Laptop</option>
-            </select>
-          </div>
-
-          <!-- Filter Button -->
-          <div class="col-auto d-flex align-items-end">
-            <button type="submit" class="btn btn-primary mb-3">
-              <i class="fas fa-search"></i> Filter
-            </button>
-          </div>
-        </form>
-      </div>
-    </section>
-
-
-    <!-- Products Section -->
-    <section class="container my-5">
-      <div class="row">
-        <!-- Product 1 -->
-        <div class="col-12 col-sm-6 col-md-4 mb-3 product-store">
-          <div class="card h-100">
-            <img src="./assets/img/products/razer_mouse.jpg" class="card-img-top bg-dark" alt="Razer Gaming Mouse">
-            <div class="card-body">
-              <h5 class="card-title">Razer Gaming Mouse</h5>
-              <p class="card-text">$49.99</p>
-              <a href="./product.html" class="btn btn-success">Purchase Now</a>
-            </div>
-          </div>
+        <div class="mb-3">
+          <textarea class="form-control" name="description" placeholder="Product Description" rows="3" required></textarea>
         </div>
-        
-        <!-- Product 2 -->
-        <div class="col-12 col-sm-6 col-md-4 mb-3 product-store">
-          <div class="card h-100">
-            <img src="./assets/img/products/razer_mouse.jpg" class="card-img-top bg-dark" alt="Logitech Wireless Mouse">
-            <div class="card-body">
-              <h5 class="card-title">Logitech Wireless Mouse</h5>
-              <p class="card-text">$39.99</p>
-              <a href="./product.html" class="btn btn-success">Purchase Now</a>
-            </div>
-          </div>
+        <div class="mb-3">
+          <input type="number" class="form-control" name="price" placeholder="Price (RM)" required>
         </div>
-
-        <!-- Product 3 -->
-        <div class="col-12 col-sm-6 col-md-4 mb-3 product-store">
-          <div class="card h-100">
-            <img src="./assets/img/products/razer_mouse.jpg" class="card-img-top bg-dark" alt="Ergonomic Mouse">
-            <div class="card-body">
-              <h5 class="card-title">Ergonomic Mouse</h5>
-              <p class="card-text">$29.99</p>
-              <a href="./product.html" class="btn btn-success">Purchase Now</a>
-            </div>
-          </div>
+        <div class="mb-3">
+          <input type="text" class="form-control" name="tags" placeholder="Tags1,Tags2,Tags3 (comma-separated)">
         </div>
-
-        <!-- Additional Products -->
-        <div class="col-12 col-sm-6 col-md-4 mb-3 product-store">
-          <div class="card h-100">
-            <img src="./assets/img/products/razer_mouse.jpg" class="card-img-top bg-dark" alt="Gaming Keyboard">
-            <div class="card-body">
-              <h5 class="card-title">Gaming Keyboard</h5>
-              <p class="card-text">$79.99</p>
-              <a href="#" class="btn btn-success">Purchase Now</a>
-            </div>
-          </div>
+        <div class="mb-3">
+          <input type="file" class="form-control" name="file0" accept="image/*" required>
         </div>
-
-        <div class="col-12 col-sm-6 col-md-4 mb-3 product-store">
-          <div class="card h-100">
-            <img src="./assets/img/products/razer_mouse.jpg" class="card-img-top bg-dark" alt="Headset">
-            <div class="card-body">
-              <h5 class="card-title">Gaming Headset</h5>
-              <p class="card-text">$99.99</p>
-              <a href="#" class="btn btn-success">Purchase Now</a>
-            </div>
-          </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" name="isBiddable" id="biddableCheck">
+          <label class="form-check-label" for="biddableCheck">Biddable</label>
         </div>
-
-        <div class="col-12 col-sm-6 col-md-4 mb-3 product-store">
-          <div class="card h-100">
-            <img src="./assets/img/products/razer_mouse.jpg" class="card-img-top bg-dark" alt="Headset">
-            <div class="card-body">
-              <h5 class="card-title">Gaming Headset</h5>
-              <p class="card-text">$99.99</p>
-              <a href="#" class="btn btn-success">Purchase Now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-  <!-- /Main Section -->
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-complete bg-dark text-white py-4">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <h5>About GamerSpotlight</h5>
-            <p>Your ultimate destination for esports news, live tournaments, and community events. Stay updated with the latest happenings in the gaming world.</p>
-          </div>
-          <div class="col-md-4">
-            <h5>Quick Links</h5>
-            <ul class="list-unstyled">
-              <li><a href="#" class="text-white">Home</a></li>
-              <li><a href="#" class="text-white">Tournaments</a></li>
-              <li><a href="#" class="text-white">Videos</a></li>
-              <li><a href="#" class="text-white">Community</a></li>
-              <li><a href="#" class="text-white">Store</a></li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <h5>Follow Us</h5>
-            <ul class="list-inline">
-              <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a></li>
-              <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-twitter"></i></a></li>
-              <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
-              <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-youtube"></i></a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="text-center mt-3">
-          <p>&copy; 2025 GamerSpotlight. All Rights Reserved.</p>
-        </div>
-      </div>
+        <button type="submit" class="btn btn-success w-100">📤 Upload Product</button>
+      </form>
     </div>
-  </footer>
-  <!-- /Footer -->
+  </div>
 
-  <!-- Bootstrap & Slick JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <script src="./slick-1.8.1/slick/slick.min.js"></script>
-  <script src="./js/main.js"></script>
+  <!-- Product Control Bar -->
+  <div class="d-flex justify-content-between align-items-center mb-3 product-controls">
+    <h4 class="mb-0">📋 Product List</h4>
+    <div class="d-flex gap-2">
+      <button id="toggleUploadBtn" class="btn btn-outline-success btn-sm d-none">➕ Upload</button>
+      <input type="text" id="searchInput" class="form-control" placeholder="🔍 Search..." oninput="filterProducts()">
+      <button class="btn btn-outline-primary btn-sm" onclick="filterProducts('mine')">👤 My Uploads</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="filterProducts('all')">🌐 All Products</button>
+    </div>
+  </div>
+  
+
+  <!-- Product List Container -->
+  <div class="row row-cols-1 row-cols-md-5 g-4" id="productContainer"></div>
+
+    
+    <!-- Footer -->
+    <footer>
+      <div class="footer-complete bg-dark text-white py-4">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <h5>About GamerSpotlight</h5>
+              <p>Empowering gamers to buy, bid, share, and discuss esports products and videos — all in one unified platform.</p>
+            </div>
+            <div class="col-md-4">
+              <ul class="list-unstyled">
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <h5>Lim Boon Chong | 19ACB03229</h5>
+              <p>E-Sports Web Page Development Hosted in AWS</p>
+            </div>
+          </div>
+          <div class="text-center mt-3">
+            <p>&copy; 2025 GamerSpotlight. All Rights Reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Bootstrap / jQuery / Slick -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="./slick-1.8.1/slick/slick.min.js"></script>
+    <script src="./js/main.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script>
+      const clientId = "p36ba0bp3u8sqr55fc682n714";
+      const domain = "https://ap-southeast-1ypgkwwghv.auth.ap-southeast-1.amazoncognito.com";
+      const redirectUri = "https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/store.html";
+      const logoutUri = redirectUri;
+      const uploadEndpoint = "https://c5c4dn0f95.execute-api.ap-southeast-1.amazonaws.com/dev/uploadProduct";
+      const getEndpoint = "https://q9h5tl8i5j.execute-api.ap-southeast-1.amazonaws.com/dev/getProducts";
+    
+      window.addEventListener('load', () => {
+        const { idToken, accessToken } = getTokenFromHash();
+        if (idToken) {
+          sessionStorage.setItem('idToken', idToken);
+          sessionStorage.setItem('accessToken', accessToken);
+          window.history.replaceState(null, null, window.location.pathname);
+          location.reload();
+        }
+    
+        const stored = sessionStorage.getItem('idToken');
+        if (stored) {
+          try {
+            const user = jwt_decode(stored);
+            const name = user.preferred_username || user.email || "User";
+            document.getElementById('welcomeText').innerText = `Welcome, ${name}`;
+            document.getElementById('signInBtn').style.display = 'none';
+            document.getElementById('signOutBtn').style.display = 'inline-block';
+          } catch (e) {
+            console.warn("Token decode error:", e);
+          }
+        }
+    
+        document.getElementById('signInBtn').addEventListener('click', () => {
+          const url = `${domain}/login?client_id=${clientId}&response_type=token&scope=email+openid+profile&redirect_uri=${encodeURIComponent(redirectUri)}`;
+          window.location.href = url;
+        });
+    
+        document.getElementById('signOutBtn').addEventListener('click', () => {
+          sessionStorage.clear();
+          const url = `${domain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+          window.location.href = url;
+        });
+      });
+    
+      function getTokenFromHash() {
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        return { idToken: params.get('id_token'), accessToken: params.get('access_token') };
+      }
+    
+      // 上传商品
+      document.getElementById("uploadForm")?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const token = sessionStorage.getItem("idToken");
+        if (!token) return alert("⚠️ 请先登录");
+    
+        const form = e.target;
+        const formData = new FormData(form);
+    
+        try {
+          const decoded = jwt_decode(token);
+          const username = decoded.preferred_username || decoded.email || "guest";
+          formData.append("username", username); // ✅ 添加上传者
+    
+          const res = await fetch(uploadEndpoint, {
+            method: "POST",
+            headers: { Authorization: `Bearer ${token}` },
+            body: formData
+          });
+    
+          const result = await res.json();
+          if (res.ok) {
+            alert("✅ 上传成功");
+            window.location.href = "store.html?success=1";
+          } else {
+            alert("❌ 上传失败：" + (result.detail || result.message));
+          }
+        } catch (err) {
+          alert("❌ 上传失败：" + err.message);
+          console.error("上传错误:", err);
+        }
+      });
+    
+      // load Product
+      async function loadProducts() {
+        try {
+          const res = await fetch(getEndpoint);
+          const products = await res.json();
+          const container = document.getElementById("productContainer");
+          container.innerHTML = "";
+    
+          if (!Array.isArray(products) || products.length === 0) {
+            container.innerHTML = `<p class="text-center">暂无商品</p>`;
+            return;
+          }
+    
+          products.forEach(p => {
+            const col = document.createElement("div");
+            col.className = "col";
+    
+            col.innerHTML = `
+              <div class="card h-100 shadow-sm">
+                <img src="${p.coverUrl}" class="card-img-top" alt="${p.name}" style="height: 200px; object-fit: cover;" onerror="this.src='https://placehold.co/300x200?text=No+Image';">
+                <div class="card-body">
+                  <h5 class="card-title">${p.name}</h5>
+                  <p class="card-text">${p.description}</p>
+                  <p class="fw-bold text-success">RM ${p.price}</p>
+                  <a href="product.html?pid=${p.productId}" class="btn btn-${p.isBiddable ? 'warning' : 'success'} w-100">
+                    ${p.isBiddable ? '参与竞标' : '立即购买'}
+                  </a>
+                </div>
+                <div class="card-footer text-muted small">by ${p.username}</div>
+              </div>
+            `;
+            container.appendChild(col);
+          });
+        } catch (err) {
+          console.error("❌ Failed to load products:", err);
+          document.getElementById("productContainer").innerHTML = `
+            <div class="alert alert-danger text-center text-white">Failed to load products 😢</div>`;
+        }
+      }
+
+        let allProducts = [];
+        let currentUsername = null;
+
+        async function loadProducts() {
+          try {
+            const token = sessionStorage.getItem("idToken");
+            if (token) {
+              const decoded = jwt_decode(token);
+              currentUsername = decoded.preferred_username || decoded.email;
+            }
+
+            const res = await fetch("https://q9h5tl8i5j.execute-api.ap-southeast-1.amazonaws.com/dev/getProducts");
+            const products = await res.json();
+            allProducts = Array.isArray(products) ? products : [];
+            renderProducts(allProducts);
+          } catch (err) {
+            console.error("❌ Failed to load products:", err);
+            document.getElementById("productContainer").innerHTML = `<div class="alert alert-danger">Failed to load products</div>`;
+          }
+        }
+
+        function renderProducts(products) {
+          const container = document.getElementById("productContainer");
+          container.innerHTML = "";
+
+          if (products.length === 0) {
+            container.innerHTML = `<p class="text-center text-white">😢 No matching products found</p>`;
+            return;
+          }
+
+          products.forEach(p => {
+            const col = document.createElement("div");
+            col.className = "col";
+
+            col.innerHTML = `
+              <div class="card h-100 shadow-sm">
+                <img src="${p.coverUrl}" class="card-img-top" alt="${p.name}" style="height: 200px; object-fit: cover;" onerror="this.src='https://placehold.co/300x200?text=No+Image';">
+                <div class="card-body">
+                  <h5 class="card-title">${p.name}</h5>
+                  <p class="card-text">${p.description}</p>
+                  <p class="fw-bold text-success">RM ${p.price}</p>
+                  <a href="product.html?pid=${p.productId}" class="btn btn-${p.isBiddable ? 'warning' : 'success'} w-100">
+                    ${p.isBiddable ? 'Bid Now' : 'Buy Now'}
+                  </a>
+                </div>
+                <div class="card-footer text-white small">by ${p.username}</div>
+              </div>
+            `;
+            container.appendChild(col);
+          });
+        }
+
+        function filterProducts(type = "all") {
+          const keyword = document.getElementById("searchInput").value.toLowerCase();
+          let filtered = allProducts;
+
+          if (type === "mine" && currentUsername) {
+            filtered = filtered.filter(p => p.username === currentUsername);
+          }
+
+          if (keyword) {
+            filtered = filtered.filter(p =>
+              p.name.toLowerCase().includes(keyword) || 
+              p.description.toLowerCase().includes(keyword) || 
+              (p.tags || "").toLowerCase().includes(keyword)
+            );
+          }
+
+          renderProducts(filtered);
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+          const token = sessionStorage.getItem("idToken");
+          const toggleBtn = document.getElementById("toggleUploadBtn");
+          const uploadCard = document.getElementById("uploadCard");
+
+          if (token) {
+            toggleBtn.classList.remove("d-none");
+            toggleBtn.addEventListener("click", () => {
+              uploadCard.classList.toggle("d-none");
+              toggleBtn.innerText = uploadCard.classList.contains("d-none") ? "➕ Upload" : "✖️ Cancel";
+            });
+          }
+
+          loadProducts(); // 加载商品
+        });
+
+    
+       window.addEventListener("DOMContentLoaded", loadProducts);
+    </script>
+    
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Esport</title>
+  <title>GamerSpotlight-Video</title>
 
   <!--Boostrap cdn-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
@@ -13,12 +13,30 @@
 
   <!--Slick Slider-->
   <link rel="stylesheet" type="text/css" href="./slick-1.8.1/slick/slick.css" />
-  <link rel="stylesheet" type="text/css" href="" />
 
   <!--Custom Stylesheet-->
   <link rel="stylesheet" href="./css/style.css" />
 
+  <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.0.1/dist/amazon-cognito-identity.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
   <style>
+
+    .slider-videos-nav img {
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .video-card img.card-img-top {
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .card-text {
+        color: white !important;
+    }
+
     /* Video Thumbnail Hover Effect */
     .video-thumb-container {
       position: relative;
@@ -43,55 +61,42 @@
     .video-thumb-container:hover .video-overlay {
       opacity: 1;
     }
+
+    .hover-shadow:hover {
+      transform: translateY(-5px);
+      transition: transform 0.3s ease;
+    }
+
   </style>
 </head>
 <body>
-
-  <!--header-->
+  <!-- Header -->
   <header>
     <div class="container">
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-                  aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="fas fa-bars text-white"></span>
-          </button>
-          <div class="collapse navbar-collapse " id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" href="./index.html">HOME</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./tournament.html">Tournaments</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./videos.html">Videos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./community.html">Community</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./store.html">Store</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  More
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link" href="./index.html">HOME</a></li>
+            <li class="nav-item"><a class="nav-link active" href="./videos.html">Videos</a></li>
+            <li class="nav-item"><a class="nav-link" href="./store.html">MarketPlace</a></li>
+            <li class="nav-item"><a class="nav-link" href="./community.html">Community</a></li>
             </ul>
-          </div>
+            <p id="welcomeText" class="text-white mt-3 me-3">Welcome!</p>
+            <div class="d-flex">
+            <button id="signInBtn" class="btn btn-outline-light me-2">Sign In</button>
+            <button id="signOutBtn" class="btn btn-outline-danger" style="display:none;">Sign Out</button>
+            </div>
         </div>
-      </nav>
+        </div>
+    </nav>
     </div>
   </header>
-  <!--/header-->
+  <!-- /Header -->
 
   <main>
     <!--Hero Section-->
@@ -104,30 +109,30 @@
         <!-- Search Bar -->
         <input type="text" class="form-control search-bar flex-grow-1" placeholder="Search videos...">
         <!-- Filter Dropdown -->
-        <select class="form-select w-auto">
-          <option selected>Filter by</option>
-          <option value="1">Most Popular</option>
-          <option value="2">Newest</option>
-          <option value="3">Oldest</option>
+        <select class="form-select w-auto" id="gameFilter">
+          <option value="all" selected>Filter by</option>
+          <option value="League of Legends">League of Legends</option>
+          <option value="Valorant">Velorant</option>
+          <option value="Apex">Apex Legends</option>
         </select>
       </div>
 
       <!-- Hero Slider -->
-      <div class="container-fluid p-0">
+      <div id="heroSlider" class="container-fluid p-0">
         <div class="SliderHeroVideos">
           <!-- Main Slider -->
           <div class="slider-videos">
             <div>
-              <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid" alt="Banner 1">
+              <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid" alt="Banner 1">
             </div>
             <div>
-              <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid" alt="Banner 2">
+              <img src="./assets/img/hero/hero-4.jpg" class="img-fluid" alt="Banner 2">
             </div>
             <div>
-              <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid" alt="Banner 3">
+              <img src="./assets/img/apex2.jpg" class="img-fluid" alt="Banner 3">
             </div>
             <div>
-              <img src="./assets/img/hero/hero-1.jpg" class="img-fluid" alt="Banner 4">
+              <img src="./assets/img/ADC.jpg" class="img-fluid" alt="Banner 4">
             </div>
             <div>
               <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid" alt="Banner 5">
@@ -136,21 +141,46 @@
 
           <!-- Thumbnail Navigation -->
           <div class="slider-videos-nav">
-            <div>
-              <img src="./assets/img/hero/hero-1.jpg" class="img-fluid nav-card" alt="Banner 1">
+            <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/best_faker2.mp4">
+            <div class="slider-card-container position-relative">
+                <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid" alt="Video Title">
+                <div class="slider-overlay position-absolute w-100 h-100 top-0 start-0 d-flex align-items-end px-3 pb-2 bg-dark bg-opacity-50">
+                <h5 class="text-white m-0">🔥 Outplays from the Unkillable Demon King.</h5>
+                </div>
             </div>
-            <div>
-              <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid nav-card" alt="Banner 2">
+            </a>
+            <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/fakerdoublelift.mp4">
+            <div class="slider-card-container position-relative">
+                <img src="./assets/img/news/news_player2.jpg" class="img-fluid" alt="Video Title">
+                <div class="slider-overlay position-absolute w-100 h-100 top-0 start-0 d-flex align-items-end px-3 pb-2 bg-dark bg-opacity-50">
+                <h5 class="text-white m-0">🔥 Collab montage: Faker + Doublelift domination.</h5>
+                </div>
             </div>
-            <div>
-              <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid nav-card" alt="Banner 3">
+            </a>
+            <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/Apex Legends Montage.mp4">
+            <div class="slider-card-container position-relative">
+                <img src="./assets/img/apex1.jpg" class="img-fluid" alt="Video Title">
+                <div class="slider-overlay position-absolute w-100 h-100 top-0 start-0 d-flex align-items-end px-3 pb-2 bg-dark bg-opacity-50">
+                <h5 class="text-white m-0">🔥 High-kill Apex montage highlight.</h5>
+                </div>
             </div>
-            <div>
-              <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid nav-card" alt="Banner 4">
+            </a>
+            <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/KidaAzir.mp4">
+            <div class="slider-card-container position-relative">
+                <img src="./assets/img/Azir.jpg" class="img-fluid" alt="Video Title">
+                <div class="slider-overlay position-absolute w-100 h-100 top-0 start-0 d-flex align-items-end px-3 pb-2 bg-dark bg-opacity-50">
+                <h5 class="text-white m-0">🔥 Kida's Azir shuffle montage.</h5>
+                </div>
             </div>
-            <div>
-              <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid nav-card" alt="Banner 5">
+            </a>
+            <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/best_doublelift.mp4">
+            <div class="slider-card-container position-relative">
+                <img src="./assets/img/hero/hero-2.jpg" class="img-fluid" alt="Video Title">
+                <div class="slider-overlay position-absolute w-100 h-100 top-0 start-0 d-flex align-items-end px-3 pb-2 bg-dark bg-opacity-50">
+                <h5 class="text-white m-0">🔥Legendary ADC gameplay and montage.</h5>
+                </div>
             </div>
+            </a>
           </div>
 
           <!-- Navigation Buttons -->
@@ -160,557 +190,551 @@
           </div>
         </div>
       </div>
-      <!-- /Hero Slider -->
     </div>
     <!--Hero Section-->
 
     <!--Space-->
     <div class="container-fluid p-2">
       <div class="title-container">
-        <h3 class="fs-1 p-2 text-black">Just for Spacing</h3>
+        <h3 class="fs-1 p-2 text-black">Hey you found me :D </h3>
       </div>
     </div>
 
+    
     <!--Title Section 1 with Hover Effect-->
+    <dic id="MainVideoSection">
+       
     <div class="container-fluid p-2">
-      <div class="title-container">
-        <h3 class="fs-1 p-2 text-white">League of Legends Highlights</h3>
-        <!-- Navigation Buttons beside title -->
-        <div class="title-slider-btn">
-          <span class="prev"><i class="fas fa-chevron-left"></i></span>
-          <span class="next"><i class="fas fa-chevron-right"></i></span>
+        <div class="title-container">
+            <h3 class="fs-1 p-2 text-white">🎮 Match Highlights</h3>
+            <div class="title-slider-btn">
+                <span class="prev"><i class="fas fa-chevron-left"></i></span>
+                <span class="next"><i class="fas fa-chevron-right"></i></span>
+            </div>
         </div>
-      </div>
-      <div class="title-video">
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 1">
-            <div class="video-overlay"><p>Banner 1 Description</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 2">
-            <div class="video-overlay"><p>Banner 2 Description</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid title-card" alt="Banner 3">
-            <div class="video-overlay"><p>Banner 3 Description</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid title-card" alt="Banner 4">
-            <div class="video-overlay"><p>Banner 4 Description</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 5">
-            <div class="video-overlay"><p>Banner 5 Description</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 6">
-            <div class="video-overlay"><p>Banner 6 Description</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid title-card" alt="Banner 7">
-            <div class="video-overlay"><p>Banner 7 Description</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid title-card" alt="Banner 8">
-            <div class="video-overlay"><p>Banner 8 Description</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 9">
-            <div class="video-overlay"><p>Banner 9 Description</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 10">
-            <div class="video-overlay"><p>Banner 10 Description</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 11">
-            <div class="video-overlay"><p>Banner 11 Description</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 12">
-            <div class="video-overlay"><p>Banner 12 Description</p></div>
-          </div>
-        </a>
-      </div>
+        <div class="title-video">
+            
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/mh_final.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/highlight/highlight-4.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="mh_final">
+            <div class="video-overlay"><p>Monster Hunter boss final fight highlight.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/mhw.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/news/news_game2.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="mhw">
+            <div class="video-overlay"><p>Wild Monster Hunter World hunt moments.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/vl_final.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/highlight/highlight-5.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="vl_final">
+            <div class="video-overlay"><p>Valorant final clutch moments.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/topplay_final.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/videos/final.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="topplay_final">
+            <div class="video-overlay"><p>Top 10 plays in LoL finals.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/topplay_quate.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/videos/quate filnal.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="topplay_quate">
+            <div class="video-overlay"><p>Quarterfinal legendary moments.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/topplay_semi.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/videos/semi final.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="topplay_semi">
+            <div class="video-overlay"><p>Semifinal tactical highlights.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/BestPlaysVALORANTChampionsSeoul.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/VLS.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="BestPlaysVALORANTChampionsSeoul">
+            <div class="video-overlay"><p>Seoul Valorant Champions best moments.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/BestPlaysVALORANTChampionsSeoul.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/VLS2.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="2022VLChampion">
+            <div class="video-overlay"><p>Valorant Champion clutch moments.</p></div>
+        </div>
+    </a>
+    
+        </div>
     </div>
-
-    <!--Title Section 2-->
+    
     <div class="container-fluid p-2">
-      <div class="title-container">
-        <h3 class="fs-1 p-2 text-white">League of Legends_</h3>
-        <div class="title-slider-btn">
-          <span class="prev"><i class="fas fa-chevron-left"></i></span>
-          <span class="next"><i class="fas fa-chevron-right"></i></span>
+        <div class="title-container">
+            <h3 class="fs-1 p-2 text-white">🎙️ Iconic Voice Comms</h3>
+            <div class="title-slider-btn">
+                <span class="prev"><i class="fas fa-chevron-left"></i></span>
+                <span class="next"><i class="fas fa-chevron-right"></i></span>
+            </div>
         </div>
-      </div>
-      <div class="title-video">
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Match 1">
-            <div class="video-overlay"><p>Match 1 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 2">
-            <div class="video-overlay"><p>Banner 2 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid title-card" alt="Banner 3">
-            <div class="video-overlay"><p>Banner 3 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid title-card" alt="Banner 4">
-            <div class="video-overlay"><p>Banner 4 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 5">
-            <div class="video-overlay"><p>Banner 5 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 6">
-            <div class="video-overlay"><p>Banner 6 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid title-card" alt="Banner 7">
-            <div class="video-overlay"><p>Banner 7 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid title-card" alt="Banner 8">
-            <div class="video-overlay"><p>Banner 8 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 9">
-            <div class="video-overlay"><p>Banner 9 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 10">
-            <div class="video-overlay"><p>Banner 10 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 11">
-            <div class="video-overlay"><p>Banner 11 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 12">
-            <div class="video-overlay"><p>Banner 12 Details</p></div>
-          </div>
-        </a>
-      </div>
+        <div class="title-video">
+            
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/VoiceCommsyouHearwhenMovistarKOIStompsSKGaming.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/v1.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="VoiceCommsyouHearwhenMovistarKOIStompsSKGaming">
+            <div class="video-overlay"><p>Movistar KOI voice comms domination.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/Vitality voice comms_ apEX forgets to plant the bomb.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/v2.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="Vitality voice comms_ apEX forgets to plant the bomb">            
+            <div class="video-overlay"><p>Funny moment as apEX forgets the spike.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/FNATIC Secures The Round Against DRX.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/v3.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="FNATIC Secures The Round Against DRX">
+            <div class="video-overlay"><p>FNATIC's clutch callouts.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/Holding A Site during a 5v5 Retake.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/v4.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="Holding A Site during a 5v5 Retake">
+            <div class="video-overlay"><p>How to anchor A site like a pro.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/XERXIA Pulls Off A Devious Fake Against XSET.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/v5.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="XERXIA Pulls Off A Devious Fake Against XSET">
+            <div class="video-overlay"><p>Big brain fake setup by XERXIA.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/T1 perfect shotcalling against JDG _ English Sub _ Worlds 2022.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/v6.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="T1 perfect shotcalling against JDG _ English Sub _ Worlds 2022">
+            <div class="video-overlay"><p>T1's comms brilliance in Worlds.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/JDG s Voice Comms in the Series Winning Fight Against T1.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/v7.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="JDG s Voice Comms in the Series Winning Fight Against T1">
+            <div class="video-overlay"><p>Final fight win with JDG team comms.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/[Compilation] Casters & Streamers  reaction to Gumayusi insane 1v2 Ruler & 369 _ T1 vs JDG 2023.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/v8.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="[Compilation] Casters & Streamers  reaction to Gumayusi insane 1v2 Ruler & 369 _ T1 vs JDG 2023">
+            <div class="video-overlay"><p>Community reaction to Gumayusi's 1v2.</p></div>
+        </div>
+    </a>
+    
+        </div>
     </div>
-
-    <!--Title Section 3-->
+    
     <div class="container-fluid p-2">
-      <div class="title-container">
-        <h3 class="fs-1 p-2 text-white">League of Legends_</h3>
-        <div class="title-slider-btn">
-          <span class="prev"><i class="fas fa-chevron-left"></i></span>
-          <span class="next"><i class="fas fa-chevron-right"></i></span>
+        <div class="title-container">
+            <h3 class="fs-1 p-2 text-white">🔥 Montage</h3>
+            <div class="title-slider-btn">
+                <span class="prev"><i class="fas fa-chevron-left"></i></span>
+                <span class="next"><i class="fas fa-chevron-right"></i></span>
+            </div>
         </div>
-      </div>
-      <div class="title-video">
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 1">
-            <div class="video-overlay"><p>Banner 1 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 2">
-            <div class="video-overlay"><p>Banner 2 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid title-card" alt="Banner 3">
-            <div class="video-overlay"><p>Banner 3 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid title-card" alt="Banner 4">
-            <div class="video-overlay"><p>Banner 4 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 5">
-            <div class="video-overlay"><p>Banner 5 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 6">
-            <div class="video-overlay"><p>Banner 6 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid title-card" alt="Banner 7">
-            <div class="video-overlay"><p>Banner 7 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid title-card" alt="Banner 8">
-            <div class="video-overlay"><p>Banner 8 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 9">
-            <div class="video-overlay"><p>Banner 9 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 10">
-            <div class="video-overlay"><p>Banner 10 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 11">
-            <div class="video-overlay"><p>Banner 11 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 12">
-            <div class="video-overlay"><p>Banner 12 Details</p></div>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!--Title Section 4-->
-    <div class="container-fluid p-2">
-      <div class="title-container">
-        <h3 class="fs-1 p-2 text-white">League of Legends_</h3>
-        <div class="title-slider-btn">
-          <span class="prev"><i class="fas fa-chevron-left"></i></span>
-          <span class="next"><i class="fas fa-chevron-right"></i></span>
+        <div class="title-video">
+            
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/best_doublelift.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="best_doublelift">
+            <div class="video-overlay"><p>Legendary ADC gameplay and montage.</p></div>
         </div>
-      </div>
-      <div class="title-video">
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 1">
-            <div class="video-overlay"><p>Banner 1 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 2">
-            <div class="video-overlay"><p>Banner 2 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid title-card" alt="Banner 3">
-            <div class="video-overlay"><p>Banner 3 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid title-card" alt="Banner 4">
-            <div class="video-overlay"><p>Banner 4 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 5">
-            <div class="video-overlay"><p>Banner 5 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 6">
-            <div class="video-overlay"><p>Banner 6 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid title-card" alt="Banner 7">
-            <div class="video-overlay"><p>Banner 7 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid title-card" alt="Banner 8">
-            <div class="video-overlay"><p>Banner 8 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 9">
-            <div class="video-overlay"><p>Banner 9 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 10">
-            <div class="video-overlay"><p>Banner 10 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 11">
-            <div class="video-overlay"><p>Banner 11 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 12">
-            <div class="video-overlay"><p>Banner 12 Details</p></div>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!--Title Section 5-->
-    <div class="container-fluid p-2">
-      <div class="title-container">
-        <h3 class="fs-1 p-2 text-white">League of Legends_</h3>
-        <div class="title-slider-btn">
-          <span class="prev"><i class="fas fa-chevron-left"></i></span>
-          <span class="next"><i class="fas fa-chevron-right"></i></span>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/best_faker1.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="best_faker1">
+            <div class="video-overlay"><p>Faker showing his signature moves.</p></div>
         </div>
-      </div>
-      <div class="title-video">
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 1">
-            <div class="video-overlay"><p>Banner 1 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 2">
-            <div class="video-overlay"><p>Banner 2 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid title-card" alt="Banner 3">
-            <div class="video-overlay"><p>Banner 3 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid title-card" alt="Banner 4">
-            <div class="video-overlay"><p>Banner 4 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 5">
-            <div class="video-overlay"><p>Banner 5 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 6">
-            <div class="video-overlay"><p>Banner 6 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid title-card" alt="Banner 7">
-            <div class="video-overlay"><p>Banner 7 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid title-card" alt="Banner 8">
-            <div class="video-overlay"><p>Banner 8 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 9">
-            <div class="video-overlay"><p>Banner 9 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 10">
-            <div class="video-overlay"><p>Banner 10 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 11">
-            <div class="video-overlay"><p>Banner 11 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 12">
-            <div class="video-overlay"><p>Banner 12 Details</p></div>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!--Title Section 6-->
-    <div class="container-fluid p-2">
-      <div class="title-container">
-        <h3 class="fs-1 p-2 text-white">League of Legends_</h3>
-        <div class="title-slider-btn">
-          <span class="prev"><i class="fas fa-chevron-left"></i></span>
-          <span class="next"><i class="fas fa-chevron-right"></i></span>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/best_faker2.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="best_faker2">
+            <div class="video-overlay"><p>Outplays from the Unkillable Demon King.</p></div>
         </div>
-      </div>
-      <div class="title-video">
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 1">
-            <div class="video-overlay"><p>Banner 1 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 2">
-            <div class="video-overlay"><p>Banner 2 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid title-card" alt="Banner 3">
-            <div class="video-overlay"><p>Banner 3 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid title-card" alt="Banner 4">
-            <div class="video-overlay"><p>Banner 4 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 5">
-            <div class="video-overlay"><p>Banner 5 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 6">
-            <div class="video-overlay"><p>Banner 6 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker2.jpg" class="img-fluid title-card" alt="Banner 7">
-            <div class="video-overlay"><p>Banner 7 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-faker1.jpg" class="img-fluid title-card" alt="Banner 8">
-            <div class="video-overlay"><p>Banner 8 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 9">
-            <div class="video-overlay"><p>Banner 9 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 10">
-            <div class="video-overlay"><p>Banner 10 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-1.jpg" class="img-fluid title-card" alt="Banner 11">
-            <div class="video-overlay"><p>Banner 11 Details</p></div>
-          </div>
-        </a>
-        <a href="videoPlayer.html?video=best_doublelift.mp4">
-          <div class="video-thumb-container">
-            <img src="./assets/img/hero/hero-doublelift.jpg" class="img-fluid title-card" alt="Banner 12">
-            <div class="video-overlay"><p>Banner 12 Details</p></div>
-          </div>
-        </a>
-      </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/My_Future.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/news/news_game1.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="My Future">
+            <div class="video-overlay"><p>League-themed music video tribute.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/KidaAzir.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/Azir.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="KidaAzir">
+            <div class="video-overlay"><p>Kida's Azir shuffle montage.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/KidaADC.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/ADC.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="KidaADC">
+            <div class="video-overlay"><p>Clean ADC mechanics from Kida.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/Apex Legends Montage.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/apex1.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="Apex Legends">
+            <div class="video-overlay"><p>High-kill Apex montage highlight.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/Octane.exe in 3AM.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/Octane.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="Octane.exe in 3AM">
+            <div class="video-overlay"><p>Chaotic Octane dash at night.</p></div>
+        </div>
+    </a>
+    
+    <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/Loba.exe at 3am.mp4">
+        <div class="video-thumb-container">
+            <img src="./assets/img/Loba.jpg" class="img-fluid w-100" style="aspect-ratio: 16 / 9; object-fit: cover;" alt="Loba.exe at 3am">
+            <div class="video-overlay"><p>Loba's loot and teleport montage.</p></div>
+        </div>
+    </a>
+    
+        </div>
     </div>
-    <!--Title Section End-->
-  </main>
+    
+        </div>
 
-  <!--Footer-->
+        <!--Title Section End-->
+    </main>
+
+        <!-- Grid Section for Searching-->
+<div id="searchSection" style="display: none;">
+  <section class="container-fluid px-4 my-4">
+    <h3 class="fs-3 text-white mb-3">🎥 Search Results</h3>
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 gx-3 gy-4">
+      
+    <div class="col video-card" data-title="best_doublelift" data-game="League of Legends" data-category="montage">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/hero/hero-doublelift.jpg" class="card-img-top" alt="best_doublelift">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">best_doublelift</h6>
+                <p class="card-text small">Legendary ADC gameplay and montage.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/best_doublelift.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="best_faker1" data-game="League of Legends" data-category="montage">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/hero/hero-faker1.jpg" class="card-img-top" alt="best_faker1">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">best_faker1</h6>
+                <p class="card-text small ">Faker showing his signature moves.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/best_faker1.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="best_faker2" data-game="League of Legends" data-category="montage">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/hero/hero-faker2.jpg" class="card-img-top" alt="best_faker2">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">best_faker2</h6>
+                <p class="card-text small ">Outplays from the Unkillable Demon King.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/best_faker2.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="fakerdoublelift" data-game="League of Legends" data-category="montage">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/news/news_player2.jpg" class="card-img-top" alt="fakerdoublelift">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">fakerdoublelift</h6>
+                <p class="card-text small ">Collab montage: Faker + Doublelift domination.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/fakerdoublelift.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="mh_final" data-game="Monster Hunter" data-category="highlight">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/highlight/highlight-4.jpg" class="card-img-top" alt="mh_final">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">mh_final</h6>
+                <p class="card-text small ">Monster Hunter boss final fight highlight.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/mh_final.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="mhw" data-game="Monster Hunter" data-category="highlight">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/news/news_game2.jpg" class="card-img-top" alt="mhw">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">mhw</h6>
+                <p class="card-text small">Wild Monster Hunter World hunt moments.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/mhw.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="vl_final" data-game="Valorant" data-category="highlight">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/highlight/highlight-5.jpg" class="card-img-top" alt="vl_final">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">vl_final</h6>
+                <p class="card-text small ">Valorant final clutch moments.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/vl_final.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="My Future" data-game="League of Legends" data-category="montage">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/news/news_player1.jpg" class="card-img-top" alt="My Future">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">My Future</h6>
+                <p class="card-text small ">League-themed music video tribute.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/My_Future.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="topplay_final" data-game="League of Legends" data-category="highlight">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/videos/final.jpg" class="card-img-top" alt="topplay_final">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">topplay_final</h6>
+                <p class="card-text small">Top 10 plays in LoL finals.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/topplay_final.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="topplay_quate" data-game="League of Legends" data-category="highlight">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/videos/quate filnal.jpg" class="card-img-top" alt="topplay_quate">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">topplay_quate</h6>
+                <p class="card-text small">Quarterfinal legendary moments.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/topplay_quate.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="topplay_semi" data-game="League of Legends" data-category="highlight">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/videos/semi final.jpg" class="card-img-top" alt="topplay_semi">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">topplay_semi</h6>
+                <p class="card-text small">Semifinal tactical highlights.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/topplay_semi.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="KidaAzir" data-game="League of Legends" data-category="montage">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/Azir.jpg" class="card-img-top" alt="KidaAzir">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">KidaAzir</h6>
+                <p class="card-text small">Kida's Azir shuffle montage.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/KidaAzir.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="KidaADC" data-game="League of Legends" data-category="montage">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/ADC.jpg" class="card-img-top" alt="KidaADC">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">KidaADC</h6>
+                <p class="card-text small">Clean ADC mechanics from Kida.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/KidaADC.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="Apex Legends" data-game="Apex" data-category="montage">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/apex1.jpg" class="card-img-top" alt="Apex Legends">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">Apex Legends</h6>
+                <p class="card-text small ">High-kill Apex montage highlight.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/Apex Legends Montage.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="BestPlaysVALORANTChampionsSeoul" data-game="Valorant" data-category="highlight">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/VLS.jpg" class="card-img-top" alt="BestPlaysVALORANTChampionsSeoul">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">BestPlaysVALORANTChampionsSeoul</h6>
+                <p class="card-text small">Seoul Valorant Champions best moments.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/BestPlaysVALORANTChampionsSeoul.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="Octane.exe in 3AM" data-game="Apex" data-category="montage">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/Octane.jpg" class="card-img-top" alt="Octane.exe in 3AM">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">Octane.exe in 3AM</h6>
+                <p class="card-text small ">Chaotic Octane dash at night.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/Octane.exe in 3AM.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="Loba.exe at 3am" data-game="Apex" data-category="montage">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/Loba.jpg" class="card-img-top" alt="Loba.exe at 3am">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">Loba.exe at 3am</h6>
+                <p class="card-text small ">Loba's loot and teleport montage.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/Loba.exe at 3am.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="2022VLChampion" data-game="Valorant" data-category="highlight">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/VLS2.jpg" class="card-img-top" alt="2022VLChampion">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">2022VLChampion</h6>
+                <p class="card-text small ">Valorant Champion clutch moments.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/BestPlaysVALORANTChampionsSeoul.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="VoiceCommsyouHearwhenMovistarKOIStompsSKGaming" data-game="League of Legends" data-category="voice">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/v1.jpg" class="card-img-top" alt="VoiceCommsyouHearwhenMovistarKOIStompsSKGaming">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">VoiceCommsyouHearwhenMovistarKOIStompsSKGaming</h6>
+                <p class="card-text small">Movistar KOI voice comms domination.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/VoiceCommsyouHearwhenMovistarKOIStompsSKGaming.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="Vitality voice comms_ apEX forgets to plant the bomb" data-game="CSGO" data-category="voice">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/v2.jpg" class="card-img-top" alt="Vitality voice comms_ apEX forgets to plant the bomb">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">Vitality voice comms_ apEX forgets to plant the bomb</h6>
+                <p class="card-text small">Funny moment as apEX forgets the spike.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/Vitality voice comms_ apEX forgets to plant the bomb.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="FNATIC Secures The Round Against DRX" data-game="Valorant" data-category="voice">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/v3.jpg" class="card-img-top" alt="FNATIC Secures The Round Against DRX">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">FNATIC Secures The Round Against DRX</h6>
+                <p class="card-text small">FNATIC's clutch callouts.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/FNATIC Secures The Round Against DRX.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="Holding A Site during a 5v5 Retake" data-game="Valorant" data-category="voice">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/v4.jpg" class="card-img-top" alt="Holding A Site during a 5v5 Retake">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">Holding A Site during a 5v5 Retake</h6>
+                <p class="card-text small ">How to anchor A site like a pro.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/Holding A Site during a 5v5 Retake.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="XERXIA Pulls Off A Devious Fake Against XSET" data-game="Valorant" data-category="voice">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/v5.jpg" class="card-img-top" alt="XERXIA Pulls Off A Devious Fake Against XSET">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">XERXIA Pulls Off A Devious Fake Against XSET</h6>
+                <p class="card-text small ">Big brain fake setup by XERXIA.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/XERXIA Pulls Off A Devious Fake Against XSET.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="T1 perfect shotcalling against JDG _ English Sub _ Worlds 2022" data-game="League of Legends" data-category="voice">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/v6.jpg" class="card-img-top" alt="T1 perfect shotcalling against JDG _ English Sub _ Worlds 2022">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">T1 perfect shotcalling against JDG _ English Sub _ Worlds 2022</h6>
+                <p class="card-text small ">T1's comms brilliance in Worlds.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/T1 perfect shotcalling against JDG _ English Sub _ Worlds 2022.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="JDG s Voice Comms in the Series Winning Fight Against T1" data-game="League of Legends" data-category="voice">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/v7.jpg" class="card-img-top" alt="JDG s Voice Comms in the Series Winning Fight Against T1">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">JDG s Voice Comms in the Series Winning Fight Against T1</h6>
+                <p class="card-text small">Final fight win with JDG team comms.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/JDG s Voice Comms in the Series Winning Fight Against T1.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col video-card" data-title="[Compilation] Casters & Streamers  reaction to Gumayusi insane 1v2 Ruler & 369 _ T1 vs JDG 2023" data-game="League of Legends" data-category="voice">
+        <div class="card bg-dark text-white border-0 h-100 shadow-sm">
+            <img src="./assets/img/v8.jpg" class="card-img-top" alt="[Compilation] Casters & Streamers  reaction to Gumayusi insane 1v2 Ruler & 369 _ T1 vs JDG 2023">
+            <div class="card-body py-2 px-3 d-flex flex-column">
+                <h6 class="card-title fs-4 mb-2">[Compilation] Casters & Streamers  reaction to Gumayusi insane 1v2 Ruler & 369 _ T1 vs JDG 2023</h6>
+                <p class="card-text small">Community reaction to Gumayusi's 1v2.</p>
+                <a href="videoPlayer.html?video=https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/assets/videos/[Compilation] Casters & Streamers  reaction to Gumayusi insane 1v2 Ruler & 369 _ T1 vs JDG 2023.mp4" class="btn btn-outline-light btn-sm mt-auto">▶ Watch</a>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+  </section>
+</div>
+
+  <!-- Footer -->
   <footer>
     <div class="footer-complete bg-dark text-white py-4">
       <div class="container">
         <div class="row">
           <div class="col-md-4">
             <h5>About GamerSpotlight</h5>
-            <p>Your ultimate destination for esports news, live tournaments, and community events. Stay updated with the latest happenings in the gaming world.</p>
+            <p>Empowering gamers to buy, bid, share, and discuss esports products and videos — all in one unified platform.</p>
           </div>
           <div class="col-md-4">
-            <h5>Quick Links</h5>
             <ul class="list-unstyled">
-              <li><a href="#" class="text-white">Home</a></li>
-              <li><a href="#" class="text-white">Tournaments</a></li>
-              <li><a href="#" class="text-white">Videos</a></li>
-              <li><a href="#" class="text-white">Community</a></li>
-              <li><a href="#" class="text-white">Store</a></li>
             </ul>
           </div>
           <div class="col-md-4">
-            <h5>Follow Us</h5>
-            <ul class="list-inline">
-              <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a></li>
-              <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-twitter"></i></a></li>
-              <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
-              <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-youtube"></i></a></li>
-            </ul>
+            <h5>Lim Boon Chong | 19ACB03229</h5>
+            <p>E-Sports Web Page Development Hosted in AWS</p>
           </div>
         </div>
         <div class="text-center mt-3">
@@ -719,12 +743,92 @@
       </div>
     </div>
   </footer>
-  <!--Footer-->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script type="text/javascript" src="./slick-1.8.1/slick/slick.min.js"></script>
   <script src="./js/main.js"></script>
+  <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector(".search-bar");
+        const gameFilter = document.getElementById("gameFilter");
+        const heroSlider = document.getElementById("heroSlider");
+        const heroSection = document.getElementById("heroSection");
+        const mainVideoSection = document.getElementById("MainVideoSection");
+        const searchSection = document.getElementById("searchSection"); // ✅ 新增
+        const videoCards = document.querySelectorAll(".video-card");
+
+        function filterCards() {
+            const query = searchInput.value.trim().toLowerCase();
+            const selectedGame = gameFilter.value;
+            const isFiltering = query !== "" || selectedGame !== "all";
+
+            videoCards.forEach(card => {
+            const title = card.dataset.title.toLowerCase();
+            const game = card.dataset.game;
+
+            const matchesTitle = title.includes(query);
+            const matchesGame = selectedGame === "all" || game === selectedGame;
+
+            card.style.display = (matchesTitle && matchesGame) ? "block" : "none";
+            });
+
+            // Toggle section visibility
+            heroSlider.style.display = isFiltering ? "none" : "block";
+            if (heroSection) heroSection.style.display = isFiltering ? "none" : "block";
+            if (mainVideoSection) mainVideoSection.style.display = isFiltering ? "none" : "block";
+            if (searchSection) searchSection.style.display = isFiltering ? "block" : "none"; // ✅ 控制 search 区
+        }
+
+        searchInput.addEventListener("input", filterCards);
+        gameFilter.addEventListener("change", filterCards);
+        });
+  </script>
+  <script>
+    const clientId = "p36ba0bp3u8sqr55fc682n714";
+    const domain = "https://ap-southeast-1ypgkwwghv.auth.ap-southeast-1.amazoncognito.com";
+    const redirectUri = "https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/videos.html";
+    const logoutUri = redirectUri;
+
+    window.addEventListener('load', () => {
+        const { idToken, accessToken } = getTokenFromHash();
+        if (idToken) {
+            sessionStorage.setItem('idToken', idToken);
+            sessionStorage.setItem('accessToken', accessToken);
+            window.history.replaceState(null, null, window.location.pathname);
+        }
+        const stored = sessionStorage.getItem('idToken');
+        if (stored) {
+            try {
+            const user = jwt_decode(stored);
+            const name = user.preferred_username || user.email || "User";
+            document.getElementById('welcomeText').innerText = `Welcome, ${name}`;
+            document.getElementById('signInBtn').style.display = 'none';
+            document.getElementById('signOutBtn').style.display = 'inline-block';
+            } catch (e) {
+            console.warn("Token decode error:", e);
+            }
+        }
+    
+        document.getElementById('signInBtn').addEventListener('click', () => {
+        const loginUrl = `${domain}/login?client_id=${clientId}&response_type=token&scope=email+openid+profile&redirect_uri=${encodeURIComponent(window.location.href)}`;
+        window.location.href = loginUrl;
+        });
+    
+        document.getElementById('signOutBtn').addEventListener('click', () => {
+            sessionStorage.clear();
+            const url = `${domain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+            window.location.href = url;
+        });
+        });
+    
+        function getTokenFromHash() {
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        return { idToken: params.get('id_token'), accessToken: params.get('access_token') };
+        }
+
+    </script>
 </body>
 </html>

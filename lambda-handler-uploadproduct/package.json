@@ -1,0 +1,18 @@
+{
+  "name": "lambda-handler-uploadproduct",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-multipart-parser": "^0.2.1",
+    "aws-sdk": "^2.1692.0",
+    "jwt-decode": "^4.0.0",
+    "uuid": "^11.1.0"
+  },
+  "description": ""
+}

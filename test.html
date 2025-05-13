@@ -1,0 +1,24 @@
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="商品名称" required><br>
+    <input type="number" name="price" placeholder="价格" required><br>
+    <input type="text" name="tags" placeholder="标签"><br>
+    <input type="text" name="description" placeholder="描述"><br>
+    <input type="file" name="file" accept="image/*" required><br>
+    <input type="checkbox" name="isBiddable"> 可竞标<br>
+    <input type="hidden" name="username" value="testuser"><br>
+    <button type="submit">上传商品</button>
+  </form>
+  
+  <script>
+  document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const res = await fetch("https://c5c4dn0f95.execute-api.ap-southeast-1.amazonaws.com/dev/uploadProduct", {
+      method: "POST",
+      body: formData
+    });
+    const data = await res.json();
+    alert(JSON.stringify(data));
+  });
+  </script>
+  

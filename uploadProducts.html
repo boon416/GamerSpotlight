@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <title>上传商品</title>
+  <style>
+    body {
+      background-color: white;
+      color: black;
+      padding: 2rem;
+      font-family: sans-serif;
+    }
+    input, textarea {
+      display: block;
+      margin-bottom: 1rem;
+      width: 100%;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🛒 上传商品</h2>
+
+  <form id="uploadForm">
+    <input type="text" name="name" placeholder="商品名称" required>
+    <textarea name="description" placeholder="商品描述" rows="3" required></textarea>
+    <input type="number" name="price" placeholder="起标价 (RM)" required>
+    <input type="text" name="tags" placeholder="输入标签（逗号分隔）">
+    <input type="file" name="images" id="images" multiple accept="image/*">
+    <label><input type="checkbox" name="isBiddable"> 可竞标</label>
+    <br>
+    <button type="submit">📤 上传商品</button>
+  </form>
+
+  <script>
+    const endpoint = "https://c5c4dn0f95.execute-api.ap-southeast-1.amazonaws.com/dev/uploadProduct";
+
+    document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const token = sessionStorage.getItem("idToken");
+      if (!token) {
+        alert("⚠️ 请先登录");
+        return;
+      }
+
+      const form = e.target;
+      const formData = new FormData();
+
+      formData.append("name", form.name.value);
+      formData.append("description", form.description.value);
+      formData.append("price", form.price.value);
+      formData.append("tags", form.tags.value);
+      formData.append("isBiddable", form.isBiddable.checked.toString());
+
+      const images = document.getElementById("images").files;
+      for (let i = 0; i < images.length; i++) {
+        formData.append(`file${i}`, images[i]); // ⬅️ 每张图都用不同 key
+      }
+
+      try {
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: formData
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          window.location.href = "store.html?success=1";
+        } else {
+          alert("❌ 上传失败：" + (result.detail || result.message));
+        }
+      } catch (err) {
+        alert("❌ 上传失败：" + err.message);
+        console.error("上传失败:", err);
+      }
+    });
+  </script>
+</body>
+</html>

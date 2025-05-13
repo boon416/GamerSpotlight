@@ -3,252 +3,834 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Esport</title>
+  <title>GamerSpotlight-Comminity</title>
 
   <!-- Bootstrap CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-  <!-- Font Awesome (Updated to a Reliable Version) -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="./css/style.css" />
 
+  <!-- Cognito SDK and JWT Decode -->
+  <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.0.1/dist/amazon-cognito-identity.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+
   <style>
-    /* Sticky Filter Card */
-    .mobile-sticky {
-      position: sticky;
-      top: 20px;
-      z-index: 1020; /* Ensures it stays above content */
-    }
-
-    .card {
-      background-color: #1e1e1e;
-      border: none;
-    }
-
-    .list-group-item {
-      background-color: #1e1e1e;
-      color: white;
-      border: none;
-    }
-    .btn-primary {
-      background-color: #007bff;
-      border: none;
-    }
-    .btn-primary:hover {
-      background-color: #0056b3;
-    }
-    .sticky-sidebar {
-      position: sticky;
-      top: 20px;
-      height: fit-content;
-    }
-    .form-select {
-      color: rgb(0, 0, 0);
-      background-color: white;
-    }
-    .form-select option {
-      color: black;
-    }
-    h5 {
-      color: #f8f9fa; /* Light grayish white for better contrast */
-      font-weight: bold;
-    }
+    .mobile-sticky { position: sticky; top: 20px; z-index: 1020; }
+    .card { background-color: #1e1e1e; border: none; }
+    .list-group-item { background-color: #1e1e1e; color: white; border: none; }
+    .btn-primary { background-color: #007bff; border: none; }
+    .btn-primary:hover { background-color: #0056b3; }
+    .sticky-sidebar { position: sticky; top: 20px; height: fit-content; }
+    .form-select { color: black; background-color: white; }
+    .form-select option { color: black; }
+    h5 { color: #f8f9fa; font-weight: bold; }
   </style>
 </head>
 <body>
-  <!--header-->
   <header>
     <div class="container">
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <a class="navbar-brand site-title text-white" href="./index.html">GamerSpotlight</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="fas fa-bars text-white"></span>
           </button>
-
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" href="./index.html">HOME</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./tournament.html">Tournaments</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./videos.html">Videos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./community.html">Community</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./store.html">Store</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  More
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item"><a class="nav-link" href="./index.html">HOME</a></li>
+              <li class="nav-item"><a class="nav-link" href="./videos.html">Videos</a></li>
+              <li class="nav-item"><a class="nav-link" href="./store.html">MarketPlace</a></li>
+              <li class="nav-item"><a class="nav-link" href="./community.html">Community</a></li>
             </ul>
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="./assets/img/hero/hero-theshy.jpg" alt="User Avatar" class="rounded-circle me-2" width="40" height="40" />
-                  <span class="text-white d-none d-md-inline">User</span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                  <li class="text-center">
-                    <img src="./assets/img/hero/hero-theshy.jpg" alt="User Avatar" class="rounded-circle my-2" width="80" height="80" />
-                  </li>
-                  <li class="text-center"><strong>JohnDoe</strong></li>
-                  <li class="text-center text-muted">johndoe@example.com</li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li><a class="dropdown-item text-center" href="./profile.html">Profile</a></li>
-                  <li><a class="dropdown-item text-center text-danger" href="#">Logout</a></li>
-                </ul>
-              </li>
-            </ul>
+            <p id="welcomeText" class="text-white mt-3 me-3">Welcome!</p>
+            <div class="d-flex">
+              <button id="signInBtn" class="btn btn-outline-light mt-3 me-3">Sign In</button>
+              <button id="signOutBtn" class="btn btn-outline-danger" style="display:none;">Sign Out</button>
+            </div>
           </div>
         </div>
       </nav>
     </div>
   </header>
-  <!--/header-->
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Post</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="editTopic" class="form-control mb-2" placeholder="Edit Topic">
+          <textarea id="editContent" class="form-control" rows="4" placeholder="Edit Content"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" onclick="submitEdit()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <main class="container my-4">
-    <div class="row">
+      <div class="row">
+      <!-- Filter Sidebar -->
       <aside class="col-md-3">
         <div class="card p-3 mobile-sticky">
-          <h5>Filter Topics</h5>
-          <select class="form-select mb-3">
-            <option selected>Choose Topic</option>
-            <option value="1">Esports</option>
-            <option value="2">Tournaments</option>
-            <option value="3">Gaming Gear</option>
-          </select>
           <h5>Search</h5>
-          <input type="text" class="form-control" placeholder="Search topics..." />
+          <input type="text" class="form-control" id="searchInput" placeholder="Search topics..." oninput="filterPosts()" />
+          
+          <!-- Can see after login -->
+          <div id="filterButtons" class="btn-group mt-3" style="display: none;">
+            <button class="btn btn-outline-light" onclick="loadPosts()">All</button>
+            <button class="btn btn-outline-warning" onclick="loadPinnedOnly()">📌 Pinned</button>
+          </div>
         </div>
       </aside>
-
+        
+    
+      <!-- Main Section -->
       <section class="col-md-6">
-        <div class="card bg-secondary text-white mb-4 p-3">
-          <h4>Share a Thought</h4>
-          <form id="msgForm">
-            <input type="text" id="name" class="form-control mb-2" placeholder="Your name" required />
-            <textarea id="message" class="form-control mb-2" rows="3" placeholder="What's on your mind?" required></textarea>
-            <button type="submit" class="btn btn-primary">Post</button>
-          </form>
+        <!-- Header Row: Title + Upload Button -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="text-white m-0">Community Discussions</h2>
+          <button id="toggleUploadBtn" class="btn btn-outline-success btn-sm d-none">➕ Publish</button>
         </div>
 
-        <h2 class="text-white">Community Discussions</h2>
+        <!-- Post Form -->
+        <div class="card bg-dark text-white p-3 mb-4 d-none" id="postForm">
+          <h4>Share a Post</h4>
+          <input type="text" id="topic" class="form-control mb-2" placeholder="Topic" required />
+          <textarea id="content" class="form-control mb-2" placeholder="What's on your mind?" rows="4" required></textarea>
+          <input type="file" id="media" class="form-control mb-2" />
+          <button class="btn btn-outline-primary" onclick="submitPost()">Submit Post</button>
+        </div>
+
+        <!-- Post List -->
         <div id="messageList"></div>
       </section>
 
-      <aside class="col-md-3 sticky-sidebar">
-        <div class="card p-3">
-          <h5>Latest News</h5>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Esports World Championship 2025 Announced!</li>
-            <li class="list-group-item">New Gaming Laptop with RTX 5090 Released</li>
-            <li class="list-group-item">Top 10 Players in Esports This Month</li>
-            <li class="list-group-item">New Tournament Schedule for 2025</li>
-            <li class="list-group-item">Interview with Pro Player "ShadowFury"</li>
-          </ul>
-        </div>
-      </aside>
-    </div>
-  </main>
+    
+      <!-- Order -->
+        <aside class="col-md-3 sticky-sidebar mt-4">
+          <div class="card p-3 bg-dark text-white shadow">
+            <h5>🧾 Your Orders</h5>
+            <div class="row" id="orderList"></div>
+          </div>
+        </aside>
+      </div>
+    </main>
 
-    <!--Footer Start-->
-    <footer>    
+  <!-- Footer -->
+  <footer>
     <div class="footer-complete bg-dark text-white py-4">
-        <div class="container">
+      <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <h5>About GamerSpotlight</h5>
-                <p>Your ultimate destination for esports news, live tournaments, and community events. Stay updated with the latest happenings in the gaming world.</p>
-            </div>
-            <div class="col-md-4">
-                <h5>Quick Links</h5>
-                <ul class="list-unstyled">
-                <li><a href="#" class="text-white">Home</a></li>
-                <li><a href="#" class="text-white">Tournaments</a></li>
-                <li><a href="#" class="text-white">Videos</a></li>
-                <li><a href="#" class="text-white">Community</a></li>
-                <li><a href="#" class="text-white">Store</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <h5>Follow Us</h5>
-                <ul class="list-inline">
-                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a></li>
-                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-twitter"></i></a></li>
-                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
-                <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-youtube"></i></a></li>
-                </ul>
-            </div>
+          <div class="col-md-4">
+            <h5>About GamerSpotlight</h5>
+            <p>Empowering gamers to buy, bid, share, and discuss esports products and videos — all in one unified platform.</p>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-unstyled">
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Lim Boon Chong | 19ACB03229</h5>
+            <p>E-Sports Web Page Development Hosted in AWS</p>
+          </div>
         </div>
         <div class="text-center mt-3">
-            <p>&copy; 2025 GamerSpotlight. All Rights Reserved.</p>
+          <p>&copy; 2025 GamerSpotlight. All Rights Reserved.</p>
         </div>
-        </div>
+      </div>
     </div>
-    </footer>
-    <!--Footer End-->
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="./js/main.js"></script>
   <script>
-    const apiUrl = "https://9s3a64dbcj.execute-api.ap-southeast-1.amazonaws.com/dev/message";
+    const clientId = 'p36ba0bp3u8sqr55fc682n714';
+    const domain = 'https://ap-southeast-1ypgkwwghv.auth.ap-southeast-1.amazoncognito.com';
+    const redirectUri = 'https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/community.html';
+    const logoutUri = redirectUri;
 
-    document.getElementById("msgForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const name = document.getElementById("name").value;
-      const message = document.getElementById("message").value;
+    window.addEventListener('load', () => {
+      const { idToken, accessToken } = getTokenFromHash();
+      if (idToken) {
+        sessionStorage.setItem('idToken', idToken);
+        sessionStorage.setItem('accessToken', accessToken);
+        window.history.replaceState(null, null, window.location.pathname);
+        location.reload(); // 强制刷新一次，保证 pin 和权限识别正确
+      }
+      const stored = sessionStorage.getItem('idToken');
+      if (stored) {
+        const user = jwt_decode(stored);
+        const name = user.preferred_username || user.email || "User";
+        document.getElementById('welcomeText').innerText = `Welcome, ${name}`;
+        document.getElementById('signInBtn').style.display = 'none';
+        document.getElementById('signOutBtn').style.display = 'inline-block';
+      }
 
-      const res = await fetch(apiUrl, {
+      document.getElementById('signInBtn').addEventListener('click', () => {
+        const url = `${domain}/login?client_id=${clientId}&response_type=token&scope=email+openid+profile&redirect_uri=${encodeURIComponent(redirectUri)}`;
+        window.location.href = url;
+    });
+      document.getElementById('signOutBtn').addEventListener('click', () => {
+        sessionStorage.clear();
+        const url = `${domain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+        window.location.href = url;
+      });
+    });
+
+    function getTokenFromHash() {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      return { idToken: params.get('id_token'), accessToken: params.get('access_token') };
+    }
+
+    window.addEventListener('load', () => {
+        const storedToken = sessionStorage.getItem('idToken');
+        if (storedToken) {
+            // 显示发帖表单
+            document.getElementById('postForm').style.display = 'block';
+        } else {
+            // 如果未登入，也可以选这里直接隐藏或提示
+            document.getElementById('postForm').style.display = 'none';
+        }
+    });
+
+    //submit post
+    async function submitPost() {
+      const topic = document.getElementById("topic").value;
+      const content = document.getElementById("content").value;
+      const media = document.getElementById("media").files[0];
+
+      if (!topic || !content) {
+        alert("Please enter both topic and content.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("topic", topic);
+      formData.append("content", content);
+      if (media) formData.append("file", media);
+
+      try {
+        const idToken = sessionStorage.getItem("idToken");
+        const res = await fetch("https://zibvb6azo4.execute-api.ap-southeast-1.amazonaws.com/dev/handleFileUpload", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+          body: formData,
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          alert("✅ Post submitted!");
+          document.getElementById("topic").value = "";
+          document.getElementById("content").value = "";
+          document.getElementById("media").value = null;
+          loadPosts(); // ✨ 自动刷新帖子
+        } else {
+          throw new Error(result.error || "Failed to post");
+        }
+      } catch (err) {
+        console.error("❌ Failed to submit post:", err);
+        alert("Post submission failed.");
+      }
+    }
+
+
+
+
+  //delete post
+  async function deletePost(postId, timestamp) {
+    if (!confirm("Are you sure you want to delete this post?")) return;
+
+    try {
+      const res = await fetch("https://c2nhutae7j.execute-api.ap-southeast-1.amazonaws.com/dev/deletePost", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, message })
+        body: JSON.stringify({ postId, timestamp }) // ✨ 加上 timestamp
       });
 
       const result = await res.json();
-      console.log("✅ Posted:", result);
-      loadMessages();
-      e.target.reset();
-    });
+      if (res.ok) {
+        alert("✅ Post deleted!");
+        loadPosts();
+      } else {
+        alert("❌ Failed to delete post: " + result.error);
+      }
+    } catch (err) {
+      console.error("❌ Delete error:", err);
+      alert("❌ Network or server error");
+    }
+  }
 
-    async function loadMessages() {
-      const res = await fetch(apiUrl);
-      const messages = await res.json();
+  //load post
+  async function loadPosts() {
+    try {
+      const res = await fetch("https://ayxpfim881.execute-api.ap-southeast-1.amazonaws.com/dev/posts");
+      const json = await res.json();
+      const posts = json.posts;
+
+      // 获取当前用户（从 Cognito token）
+      const storedToken = sessionStorage.getItem('idToken');
+      let currentUsername = null;
+      if (storedToken) {
+        const user = jwt_decode(storedToken);
+        currentUsername = user.preferred_username || user.email;
+      }
+
+      // 排序
+      posts.sort((a, b) => new Date(b.timestamp || b.createdAt) - new Date(a.timestamp || a.createdAt));
+
       const container = document.getElementById("messageList");
       container.innerHTML = "";
 
-      messages.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+      posts.forEach(post => {
+        if (!post.postId) {
+          console.warn("⚠️ Skipping post with missing postId:", post);
+          return;
+        }
 
-      messages.forEach(msg => {
+        const ts = post.timestamp || post.createdAt || "";
+        const date = new Date(ts);
+        const formattedDate = isNaN(date.getTime()) ? "Unknown Time" : date.toLocaleString();
+        const canDelete = currentUsername && post.username === currentUsername;
+
+        // 评论 HTML
+        let commentHtml = "";
+        if (Array.isArray(post.comments)) {
+          commentHtml = post.comments.map(c => {
+            const showDelete = currentUsername && c.username === currentUsername;
+            return `
+              <div class="ms-2 mt-1 d-flex justify-content-between align-items-center">
+                <small><strong>${c.username}</strong>: ${c.text}</small>
+                ${showDelete ? `<button class="btn btn-sm btn-outline-danger" onclick="deleteComment('${post.postId}', '${ts}', '${c.timestamp}')">🗑️</button>` : ""}
+              </div>
+            `;
+          }).join("");
+        }
+
+        const fileUrl = typeof post.fileUrl === "string" ? post.fileUrl : "";
+        const isVideo = fileUrl.toLowerCase().endsWith(".mp4");
+
         const card = document.createElement("div");
-        card.className = "card bg-dark text-white mb-3";
+        card.className = "card bg-dark text-white mb-3 p-3 position-relative";
+
         card.innerHTML = `
-          <div class="card-body">
-            <h5 class="card-title">${msg.name}</h5>
-            <p class="card-text">${msg.message}</p>
-            <div class="d-flex justify-content-between mt-2">
-              <small class="text-muted">${new Date(msg.timestamp).toLocaleString()}</small>
+          ${canDelete ? `
+            <div class="position-absolute top-0 end-0 m-2 d-flex">
+              <button class="btn btn-sm btn-outline-warning me-1 pin-btn" data-postid="${post.postId}" data-username="${post.username}">📌</button>
+              <button class="btn btn-sm btn-outline-warning me-1" onclick="openEditModal('${post.postId}', '${ts}', \`${post.topic.replace(/`/g, "\\`")}\`, \`${post.content.replace(/`/g, "\\`")}\`)">✏️</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="deletePost('${post.postId}', '${ts}')">🗑️</button>
+            </div>` : ""}
+          <h5>${post.topic}</h5>
+          <p>${post.content}</p>
+          <small>By ${post.username} • ${formattedDate}</small>
+          ${isVideo
+            ? `<video class="w-100 mt-2" controls src="${fileUrl}"></video>`
+            : fileUrl
+              ? `<img src="${fileUrl}" class="img-fluid mt-2"/>`
+              : ""}
+          <button class="btn btn-outline-light btn-sm mt-2" onclick="toggleComment('${post.postId}')">💬 Show Comments</button>
+          <div id="commentSection-${post.postId}" style="display:none;" class="mt-2">
+            <div id="commentList-${post.postId}">${commentHtml}</div>
+            <div class="input-group mt-2">
+              <input type="text" class="form-control" placeholder="Write a comment..." id="commentInput-${post.postId}">
+              <button class="btn btn-outline-success text-white" onclick="submitComment('${post.postId}', '${ts}')">Comment</button>
             </div>
-          </div>`;
+          </div>
+        `;
         container.appendChild(card);
+      });
+
+    } catch (err) {
+      console.error("❌ Error loading posts:", err);
+    }
+  }
+
+  //delete comments
+  async function deleteComment(postId, postTimestamp, commentTimestamp) {
+    const token = sessionStorage.getItem("idToken");
+    if (!token) {
+      alert("You must be signed in to delete a comment.");
+      return;
+    }
+
+    if (!confirm("Are you sure you want to delete this comment?")) return;
+
+    try {
+      const res = await fetch("https://awhitb5wfb.execute-api.ap-southeast-1.amazonaws.com/dev/handleDeleteComment", {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ postId, timestamp: postTimestamp, commentTimestamp })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        loadPosts(); // 刷新
+      } else {
+        alert("❌ Failed to delete comment: " + data.error);
+      }
+
+    } catch (err) {
+      console.error("❌ Error deleting comment:", err);
+      alert("Something went wrong.");
+    }
+  }
+
+  //Submit Comment
+  async function submitComment(postId, timestamp) {
+    const input = document.getElementById(`commentInput-${postId}`);
+    const text = input.value.trim();
+    if (!text) return alert("Comment cannot be empty.");
+
+    const token = sessionStorage.getItem("idToken");
+    if (!token) {
+      alert("You must be signed in to comment.");
+      return;
+    }
+
+    try {
+      const res = await fetch("https://j29hnf3l67.execute-api.ap-southeast-1.amazonaws.com/dev/handleSubmitComment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ postId, timestamp, text }) // 带 timestamp
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        input.value = "";
+        loadPosts(); // 重新加载显示评论
+      } else {
+        alert("❌ Failed to comment: " + data.error);
+      }
+
+    } catch (err) {
+      console.error("❌ Error submitting comment:", err);
+      alert("Something went wrong.");
+    }
+  }
+
+    function toggleComment(postId) {
+    const section = document.getElementById(`commentSection-${postId}`);
+    if (!section) {
+      console.warn("⚠️ Cannot find comment section for:", postId);
+      return;
+    }
+
+    section.style.display = section.style.display === "none" ? "block" : "none";
+  }
+
+  //edir post
+  let currentEditPost = {};
+
+  function openEditModal(postId, timestamp, topic, content) {
+    document.getElementById("editTopic").value = topic;
+    document.getElementById("editContent").value = content;
+    currentEditPost = { postId, timestamp };
+
+    const modal = new bootstrap.Modal(document.getElementById("editModal"));
+    modal.show();
+  }
+
+  async function submitEdit() {
+    const topic = document.getElementById("editTopic").value.trim();
+    const content = document.getElementById("editContent").value.trim();
+
+    const token = sessionStorage.getItem("idToken");
+    if (!token) return alert("Not logged in!");
+
+    const res = await fetch("https://3rf95gykib.execute-api.ap-southeast-1.amazonaws.com/dev/handleEditPost", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        ...currentEditPost,
+        topic,
+        content
+      })
+    });
+
+    if (res.ok) {
+      bootstrap.Modal.getInstance(document.getElementById("editModal")).hide();
+      loadPosts();
+    } else {
+      const err = await res.json();
+      alert("Edit failed: " + err.error);
+    }
+  }
+
+  //search post
+  let allPosts = []; // 储存所有的原始帖子
+
+  async function loadPosts() {
+    try {
+      const res = await fetch("https://ayxpfim881.execute-api.ap-southeast-1.amazonaws.com/dev/posts");
+      const json = await res.json();
+      const posts = json.posts;
+
+      const storedToken = sessionStorage.getItem('idToken');
+      let currentUsername = null;
+      if (storedToken) {
+        const user = jwt_decode(storedToken);
+        currentUsername = user.preferred_username || user.email;
+      }
+
+      posts.sort((a, b) => new Date(b.timestamp || b.createdAt) - new Date(a.timestamp || a.createdAt));
+      allPosts = posts; // 储存到全局变量
+
+      renderPosts(posts, currentUsername); // 渲染函数提取出来
+    } catch (err) {
+      console.error("❌ Error loading posts:", err);
+    }
+  }
+
+  function filterPosts() {
+    const keyword = document.getElementById("searchInput").value.toLowerCase();
+    const storedToken = sessionStorage.getItem('idToken');
+    let currentUsername = null;
+    if (storedToken) {
+      const user = jwt_decode(storedToken);
+      currentUsername = user.preferred_username || user.email;
+    }
+
+    const filtered = allPosts.filter(post =>
+      post.topic.toLowerCase().includes(keyword)
+    );
+
+    renderPosts(filtered, currentUsername);
+  }
+
+  function renderPosts(posts, currentUsername) {
+    const container = document.getElementById("messageList");
+    container.innerHTML = "";
+
+    posts.forEach(post => {
+      if (!post.postId) return;
+
+      const ts = post.timestamp || post.createdAt || "";
+      const date = new Date(ts);
+      const formattedDate = isNaN(date.getTime()) ? "Unknown Time" : date.toLocaleString();
+      const canDelete = currentUsername && post.username === currentUsername;
+
+      let commentHtml = "";
+      commentHtml = post.comments.map(c => {
+        const showDelete = currentUsername && c.username === currentUsername;
+        return `
+          <div class="ms-2 mt-1 d-flex justify-content-between align-items-center">
+            <small><strong>${c.username}</strong>: ${c.text}</small>
+            ${showDelete ? `<button class="btn btn-sm btn-outline-danger btn-sm" onclick="deleteComment('${post.postId}', '${ts}', '${c.timestamp}')">🗑️</button>` : ""}
+          </div>
+        `;
+      }).join("");
+
+      const card = document.createElement("div");
+      card.className = "card bg-dark text-white mb-3 p-3 position-relative";
+
+      card.innerHTML = `
+        ${canDelete ? `
+          <div class="position-absolute top-0 end-0 m-2">
+            <button class="btn btn-sm btn-outline-warning me-1" onclick="openEditModal('${post.postId}', '${ts}', \`${post.topic.replace(/`/g, "\\`")}\`, \`${post.content.replace(/`/g, "\\`")}\`)">✏️</button>
+            <button class="btn btn-sm btn-outline-danger" onclick="deletePost('${post.postId}', '${ts}')">🗑️</button>
+          </div>
+        ` : ""}
+        <h5>${post.topic}</h5>
+        <p>${post.content}</p>
+        <small>By ${post.username} • ${formattedDate}</small>
+        ${post.fileUrl ? `<img src="${post.fileUrl}" class="img-fluid mt-2"/>` : ""}
+        <button class="btn btn-outline-light btn-sm mt-2" onclick="toggleComment('${post.postId}')">💬 Show Comments</button>
+        <div id="commentSection-${post.postId}" style="display:none;" class="mt-2">
+          <div id="commentList-${post.postId}">${commentHtml}</div>
+          <div class="input-group mt-2">
+            <input type="text" class="form-control" placeholder="Write a comment..." id="commentInput-${post.postId}">
+            <button class="btn btn-outline-success text-white" onclick="submitComment('${post.postId}', '${ts}')">Comment</button>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+  }
+
+  //pinposts
+  const pinApiUrl = "https://0ttvdet1u0.execute-api.ap-southeast-1.amazonaws.com/dev/handlePinPosts";
+    let pinnedPostIds = [];
+
+    function getIdToken() {
+      return sessionStorage.getItem("idToken");
+    }
+
+    async function fetchPinnedPosts() {
+      const token = getIdToken();
+      if (!token) return;
+
+      try {
+        const res = await fetch(pinApiUrl, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const data = await res.json();
+        pinnedPostIds = data.pinned || [];
+      } catch (err) {
+        console.error("❌ Failed to fetch pinned posts:", err);
+      }
+    }
+
+    async function togglePin(postId, isPinned, btn) {
+      const token = getIdToken();
+      if (!token) return;
+
+      const method = isPinned ? "DELETE" : "POST";
+
+      try {
+        const res = await fetch(pinApiUrl, {
+          method,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ postId })
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          if (isPinned) {
+            pinnedPostIds = pinnedPostIds.filter(id => id !== postId);
+          } else {
+            pinnedPostIds.push(postId);
+          }
+
+          btn.classList.toggle("btn-warning", !isPinned);
+          btn.classList.toggle("btn-outline-warning", isPinned);
+          btn.innerText = "📌";
+
+          loadPosts();
+        } else {
+          alert("收藏失败: " + (result.error || "未知错误"));
+        }
+      } catch (err) {
+        console.error("❌ Toggle pin error:", err);
+        alert("网络错误，无法收藏/取消收藏");
+      }
+    }
+
+    async function loadPinnedOnly() {
+      await fetchPinnedPosts();
+      const token = getIdToken();
+      let currentUsername = null;
+      if (token) {
+        const user = jwt_decode(token);
+        currentUsername = user.preferred_username || user.email;
+      }
+
+      const filtered = allPosts.filter(p => pinnedPostIds.includes(p.postId));
+      renderPosts(filtered, currentUsername);
+    }
+
+    function renderPosts(posts, currentUsername) {
+      const container = document.getElementById("messageList");
+      container.innerHTML = "";
+
+      posts.forEach(post => {
+        if (!post.postId) return;
+
+        const ts = post.timestamp || post.createdAt || "";
+        const date = new Date(ts);
+        const formattedDate = isNaN(date.getTime()) ? "Unknown Time" : date.toLocaleString();
+        const canEdit = currentUsername && post.username === currentUsername;
+        const isPinned = pinnedPostIds.includes(post.postId);
+        const fileUrl = typeof post.fileUrl === "string" ? post.fileUrl : "";
+        const isVideo = fileUrl.toLowerCase().endsWith(".mp4");
+
+        let commentHtml = "";
+        if (Array.isArray(post.comments)) {
+          commentHtml = post.comments.map(c => {
+            const showDelete = currentUsername && c.username === currentUsername;
+            return `
+              <div class="ms-2 mt-1 d-flex justify-content-between align-items-center">
+                <small><strong>${c.username}</strong>: ${c.text}</small>
+                ${showDelete ? `<button class="btn btn-sm btn-outline-danger" onclick="deleteComment('${post.postId}', '${ts}', '${c.timestamp}')">🗑️</button>` : ""}
+              </div>
+            `;
+          }).join("");
+        }
+
+        const card = document.createElement("div");
+        card.className = "card bg-dark text-white mb-3 p-3 position-relative";
+
+        card.innerHTML = `
+          <div class="position-absolute top-0 end-0 m-2 d-flex">
+            ${currentUsername ? `
+              <button class="btn btn-sm ${isPinned ? 'btn-warning' : 'btn-outline-warning'} me-1 pin-btn" data-postid="${post.postId}">
+                📌
+              </button>
+            ` : ""}
+            ${canEdit ? `
+              <button class="btn btn-sm btn-outline-warning me-1" onclick="openEditModal('${post.postId}', '${ts}', \`${post.topic.replace(/`/g, "\\`")}\`, \`${post.content.replace(/`/g, "\\`")}\`)">✏️</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="deletePost('${post.postId}', '${ts}')">🗑️</button>
+            ` : ""}
+          </div>
+          <h5>${post.topic}</h5>
+          <p>${post.content}</p>
+          <small>By ${post.username} • ${formattedDate}</small>
+          ${isVideo
+            ? `<video class="w-100 mt-2" controls src="${fileUrl}"></video>`
+            : fileUrl ? `<img src="${fileUrl}" class="img-fluid mt-2"/>` : ""}
+          <button class="btn btn-outline-light btn-sm mt-2" onclick="toggleComment('${post.postId}')">💬 Show Comments</button>
+          <div id="commentSection-${post.postId}" style="display:none;" class="mt-2">
+            <div id="commentList-${post.postId}">${commentHtml}</div>
+            <div class="input-group mt-2">
+              <input type="text" class="form-control" placeholder="Write a comment..." id="commentInput-${post.postId}">
+              <button class="btn btn-outline-success text-white" onclick="submitComment('${post.postId}', '${ts}')">Comment</button>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      document.querySelectorAll(".pin-btn").forEach(btn => {
+        const postId = btn.dataset.postid;
+        const isPinned = pinnedPostIds.includes(postId);
+        btn.addEventListener("click", () => {
+          togglePin(postId, isPinned, btn);
+        });
       });
     }
 
-    loadMessages();
+    // 控制 Filter 按钮显示（Search 永远显示，Filter 只有登入才显示）
+    function toggleFilterButtons() {
+      const token = getIdToken();
+      const filterButtons = document.getElementById("filterButtons");
+      if (filterButtons) {
+        filterButtons.style.display = token ? "flex" : "none";
+      }
+    }
+
+    //Load Order
+    async function loadOrders() {
+      try {
+        const storedToken = sessionStorage.getItem("idToken");
+        if (!storedToken) throw new Error("No token found in sessionStorage.");
+
+        const user = jwt_decode(storedToken);
+        const currentUsername = user.preferred_username || user.email;
+
+        // 先加载产品清单
+        const productRes = await fetch("https://q9h5tl8i5j.execute-api.ap-southeast-1.amazonaws.com/dev/getProducts");
+        const products = await productRes.json();
+
+        // 再加载订单
+        const orderRes = await fetch("https://74z3uuvrfa.execute-api.ap-southeast-1.amazonaws.com/dev/getOrders", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${storedToken}`
+          }
+        });
+
+        if (!orderRes.ok) throw new Error("❌ Unauthorized or fetch failed");
+        const orders = await orderRes.json();
+
+        orders.sort((a, b) =>
+          new Date(b.createdAt || b.timestamp || 0) - new Date(a.createdAt || a.timestamp || 0)
+        );
+
+        const container = document.getElementById("orderList");
+        container.innerHTML = "";
+
+        if (orders.length === 0) {
+          container.innerHTML = "<p>No orders found.</p>";
+          return;
+        }
+
+        orders.forEach(order => {
+          const ts = order.createdAt || order.timestamp || "";
+          const date = new Date(ts);
+          const formattedDate = isNaN(date.getTime()) ? "Unknown Time" : date.toLocaleString();
+          const username = order.username || "Unknown";
+          const status = order.status || "Pending";
+          const statusColor =
+            status === "Paid" ? "text-bg-success" :
+            status === "Cancelled" ? "text-bg-danger" :
+            "text-bg-warning text-dark";
+          const bidAmount = parseFloat(order.bidAmount || 0).toFixed(2);
+
+          // 从 Products 里匹配 productId 拿名称
+          const productName = order.productName || order.productId || "Unknown Product";
+
+          const collapseId = `orderDetail-${order.orderId}`;
+          const card = document.createElement("div");
+          card.className = "col-12";
+
+          card.innerHTML = `
+            <div class="card bg-dark text-white mb-3 border border-secondary rounded-3 shadow-sm">
+              <div class="card-header">
+                <button class="btn btn-link text-white text-start w-100 text-decoration-none" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="false" aria-controls="${collapseId}">
+                  <strong>${productName}</strong>
+                  <span class="badge ${statusColor} ms-2">${status}</span>
+                </button>
+              </div>
+              <div id="${collapseId}" class="collapse">
+                <div class="card-body">
+                  <p class="mb-1"><strong>Order ID:</strong> ${order.orderId}</p>
+                  <p class="mb-1"><strong>Bid Amount:</strong> <span class="text-success">RM ${bidAmount}</span></p>
+                  <p class="mb-0"><small>By ${username} • ${formattedDate}</small></p>
+                </div>
+              </div>
+            </div>
+          `;
+
+          container.appendChild(card);
+        });
+
+      } catch (err) {
+        console.error("❌ Error loading orders:", err);
+        document.getElementById("orderList").innerHTML = "<p class='text-danger'></p>";
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+    const token = sessionStorage.getItem("idToken");
+    const toggleBtn = document.getElementById("toggleUploadBtn");
+    const postForm = document.getElementById("postForm");
+
+    if (token) {
+      toggleBtn.classList.remove("d-none");
+      toggleBtn.addEventListener("click", () => {
+        postForm.classList.toggle("d-none");
+        toggleBtn.innerText = postForm.classList.contains("d-none") ? "➕ Upload" : "✖️ Cancel";
+      });
+    }
+  });
+
+
+  // Auto-load orders on page load
+  window.addEventListener("DOMContentLoaded", loadOrders);
+    document.addEventListener("DOMContentLoaded", toggleFilterButtons);
+    window.addEventListener("load", loadPosts);
   </script>
 </body>
 </html>

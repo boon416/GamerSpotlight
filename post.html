@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lambda 上传测试</title>
+</head>
+<body>
+  <h2>上传 Post</h2>
+  <form id="uploadForm">
+    <input type="text" id="topic" placeholder="标题"><br><br>
+    <textarea id="content" placeholder="内容..." rows="4" cols="40"></textarea><br><br>
+    <input type="text" id="username" placeholder="用户名"><br><br>
+    <input type="file" id="media"><br><br>
+    <button type="submit">上传</button>
+  </form>
+
+  <script>
+    const api = "https://zibvb6azo4.execute-api.ap-southeast-1.amazonaws.com/dev/handleFileUpload";
+
+    document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const topic = document.getElementById("topic").value;
+      const content = document.getElementById("content").value;
+      const username = document.getElementById("username").value;
+      const file = document.getElementById("media").files[0];
+
+      const formData = new FormData();
+      formData.append("topic", topic);
+      formData.append("content", content);
+      formData.append("username", username);
+      if (file) formData.append("file", file);
+
+      try {
+        const res = await fetch(api, { method: "POST", body: formData });
+        const data = await res.json();
+        if (res.ok) {
+          alert("✅ 上传成功: " + JSON.stringify(data));
+        } else {
+          console.error("❌ 上传失败: ", data);
+          alert("❌ 错误：" + data.error);
+        }
+      } catch (err) {
+        console.error("❌ 网络错误:", err);
+        alert("❌ 网络出错，请查看 console 日志");
+      }
+    });
+  </script>
+</body>
+</html>
