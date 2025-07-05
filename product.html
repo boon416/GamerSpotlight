@@ -279,7 +279,7 @@
             const result = await res.json().catch(() => ({}));
             if (res.ok) {
               alert("✅ Product removed.");
-              window.location.href = "https://amerpotlight-20250416103317-hostingbucket-dev.s3.ap-southeast-1.amazonaws.com/store.html"; // 返回首页
+              window.location.href = "https://gamerspotlight.s3.ap-southeast-1.amazonaws.com/store.html"; // 返回首页
             } else {
               alert("❌ Failed to delete: " + (result.detail || result.message || "Unknown error"));
             }
